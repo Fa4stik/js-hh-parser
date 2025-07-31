@@ -1,0 +1,5273 @@
+{
+  "общие навыки и компетенции": {
+    "termId": "node_15572_13",
+    "children": {
+      "водительские права": {
+        "termId": "node_17224_13",
+        "children": {
+          "автобусы": {
+            "termId": "node_20719_13",
+            "children": {
+              "водительские права категории D": {
+                "termId": "node_20701_13",
+                "children": {}
+              },
+              "водительские права категории D1": {
+                "termId": "node_20720_13",
+                "children": {}
+              },
+              "водительские права категории D1E": {
+                "termId": "node_20722_13",
+                "children": {}
+              },
+              "водительские права категории DE": {
+                "termId": "node_20721_13",
+                "children": {}
+              }
+            }
+          },
+          "водительские удостоверения для специальных транспортных средств": {
+            "termId": "node_20724_13",
+            "children": {
+              "водительские права для военных транспортных средств": {
+                "termId": "node_20725_13",
+                "children": {}
+              },
+              "водительские права для железнодорожного тягового подвижного состава": {
+                "termId": "node_20726_13",
+                "children": {}
+              },
+              "водительские права для машин скорой помощи": {
+                "termId": "node_20729_13",
+                "children": {
+                  "водительские права для машин скорой помощи": {
+                    "termId": "node_20733_13",
+                    "children": {}
+                  },
+                  "водительские права, чтобы транспортировать кровь или органы для трансплантации": {
+                    "termId": "node_30139_13",
+                    "children": {}
+                  }
+                }
+              },
+              "водительские права для пожарных машин": {
+                "termId": "node_20730_13",
+                "children": {}
+              },
+              "водительские права для тракторов и тяжелой техники": {
+                "termId": "node_20723_13",
+                "children": {
+                  "водительские права категории F": {
+                    "termId": "node_20702_13",
+                    "children": {}
+                  },
+                  "водительские права категории G": {
+                    "termId": "node_20703_13",
+                    "children": {}
+                  },
+                  "водительские права категории L": {
+                    "termId": "node_20705_13",
+                    "children": {}
+                  },
+                  "водительские права категории T": {
+                    "termId": "node_20706_13",
+                    "children": {}
+                  }
+                }
+              },
+              "водительские удостоверения для перевозки пассажиров": {
+                "termId": "node_20734_13",
+                "children": {
+                  "водительские права для такси": {
+                    "termId": "node_20732_13",
+                    "children": {}
+                  },
+                  "водительские права для школьного автобуса": {
+                    "termId": "node_20731_13",
+                    "children": {}
+                  }
+                }
+              },
+              "лицензия капитана судна": {
+                "termId": "node_20727_13",
+                "children": {}
+              },
+              "свидетельство пилота": {
+                "termId": "node_20728_13",
+                "children": {
+                  "лицензия пилота для воздушных шаров": {
+                    "termId": "node_30144_13",
+                    "children": {}
+                  },
+                  "лицензия пилота для планеров": {
+                    "termId": "node_30143_13",
+                    "children": {}
+                  },
+                  "лицензия пилота инструктора": {
+                    "termId": "node_30148_13",
+                    "children": {}
+                  },
+                  "лицензия пилотов для коммерческих вертолетов": {
+                    "termId": "node_30146_13",
+                    "children": {}
+                  },
+                  "лицензия пилотов для коммерческих самолетов": {
+                    "termId": "node_30141_13",
+                    "children": {}
+                  },
+                  "лицензия пилотов транспортной авиации": {
+                    "termId": "node_30142_13",
+                    "children": {}
+                  },
+                  "лицензия пилотов транспортной авиации для вертолетов": {
+                    "termId": "node_30147_13",
+                    "children": {}
+                  },
+                  "лицензия частного пилота для вертолетов": {
+                    "termId": "node_30145_13",
+                    "children": {}
+                  },
+                  "лицензия частного пилота для самолетов": {
+                    "termId": "node_30140_13",
+                    "children": {}
+                  }
+                }
+              }
+            }
+          },
+          "личные автомобили (легковые)": {
+            "termId": "node_20712_13",
+            "children": {
+              "водительские права категории B": {
+                "termId": "node_20699_13",
+                "children": {}
+              },
+              "водительские права категории BE": {
+                "termId": "node_20713_13",
+                "children": {}
+              }
+            }
+          },
+          "мотоциклы и мопеды": {
+            "termId": "node_20708_13",
+            "children": {
+              "водительские права категории A": {
+                "termId": "node_20698_13",
+                "children": {}
+              },
+              "водительские права категории A1": {
+                "termId": "node_20710_13",
+                "children": {}
+              },
+              "водительские права категории A2": {
+                "termId": "node_20711_13",
+                "children": {}
+              },
+              "водительские права категории AM": {
+                "termId": "node_20709_13",
+                "children": {}
+              },
+              "водительские права категории M": {
+                "termId": "node_20704_13",
+                "children": {}
+              },
+              "водительские права категории S": {
+                "termId": "node_20714_13",
+                "children": {}
+              }
+            }
+          },
+          "тяжелые грузовые автомобили": {
+            "termId": "node_20715_13",
+            "children": {
+              "водительские права категории C": {
+                "termId": "node_20700_13",
+                "children": {}
+              },
+              "водительские права категории C1": {
+                "termId": "node_20716_13",
+                "children": {}
+              },
+              "водительские права категории C1E": {
+                "termId": "node_20718_13",
+                "children": {}
+              },
+              "водительские права категории CE": {
+                "termId": "node_20717_13",
+                "children": {}
+              }
+            }
+          }
+        }
+      },
+      "компьютерные навыки и компетенции": {
+        "termId": "node_15567_13",
+        "children": {
+          "sistemi za upravljanje baz podatkov": {
+            "termId": "node_22859_13",
+            "children": {
+              "Adabas": {
+                "termId": "node_22860_13",
+                "children": {}
+              },
+              "Caché": {
+                "termId": "node_22861_13",
+                "children": {}
+              },
+              "DB2": {
+                "termId": "node_22862_13",
+                "children": {}
+              },
+              "dBase": {
+                "termId": "node_22863_13",
+                "children": {}
+              },
+              "FileMaker": {
+                "termId": "node_22864_13",
+                "children": {}
+              },
+              "Firebird": {
+                "termId": "node_22865_13",
+                "children": {}
+              },
+              "GUPTA": {
+                "termId": "node_22866_13",
+                "children": {}
+              },
+              "IMS": {
+                "termId": "node_22867_13",
+                "children": {}
+              },
+              "Informix": {
+                "termId": "node_22868_13",
+                "children": {}
+              },
+              "Ingres": {
+                "termId": "node_22869_13",
+                "children": {}
+              },
+              "InterBase": {
+                "termId": "node_22870_13",
+                "children": {}
+              },
+              "Lotus Domino": {
+                "termId": "node_22871_13",
+                "children": {}
+              },
+              "Microsoft SQL Server": {
+                "termId": "node_22872_13",
+                "children": {}
+              },
+              "MySQL": {
+                "termId": "node_22874_13",
+                "children": {}
+              },
+              "OpenOffice.org Base": {
+                "termId": "node_22875_13",
+                "children": {}
+              },
+              "Oracle": {
+                "termId": "node_22876_13",
+                "children": {}
+              },
+              "Paradox": {
+                "termId": "node_22877_13",
+                "children": {}
+              },
+              "PostgreSQL": {
+                "termId": "node_22878_13",
+                "children": {}
+              },
+              "Progress": {
+                "termId": "node_22879_13",
+                "children": {}
+              },
+              "Sybase": {
+                "termId": "node_22880_13",
+                "children": {}
+              }
+            }
+          },
+          "базовые знания интернета": {
+            "termId": "node_15168_13",
+            "children": {}
+          },
+          "защита данных и системы безопасности данных": {
+            "termId": "node_22852_13",
+            "children": {
+              "BackupExec": {
+                "termId": "node_22858_13",
+                "children": {}
+              },
+              "BitDefender": {
+                "termId": "node_22854_13",
+                "children": {}
+              },
+              "F-Secure": {
+                "termId": "node_22853_13",
+                "children": {}
+              },
+              "Kapersky": {
+                "termId": "node_22855_13",
+                "children": {}
+              },
+              "McAfee": {
+                "termId": "node_22857_13",
+                "children": {}
+              },
+              "Norton AntiVirus": {
+                "termId": "node_22856_13",
+                "children": {}
+              }
+            }
+          },
+          "знание определенных приложений": {
+            "termId": "node_22891_13",
+            "children": {
+              "MS Office": {
+                "termId": "node_15153_13",
+                "children": {
+                  "MS Access": {
+                    "termId": "node_15157_13",
+                    "children": {}
+                  },
+                  "MS Excel": {
+                    "termId": "node_15155_13",
+                    "children": {}
+                  },
+                  "MS Outlook": {
+                    "termId": "node_15176_13",
+                    "children": {}
+                  },
+                  "MS Outlook Express": {
+                    "termId": "node_15177_13",
+                    "children": {}
+                  },
+                  "MS Powerpoint": {
+                    "termId": "node_15158_13",
+                    "children": {}
+                  },
+                  "MS Word": {
+                    "termId": "node_15154_13",
+                    "children": {}
+                  }
+                }
+              },
+              "OpenOffice": {
+                "termId": "node_22915_13",
+                "children": {}
+              },
+              "spletni brskalniki": {
+                "termId": "node_15169_13",
+                "children": {
+                  "Firefox": {
+                    "termId": "node_15170_13",
+                    "children": {}
+                  },
+                  "Internet Explorer": {
+                    "termId": "node_15172_13",
+                    "children": {}
+                  },
+                  "Netscape Navigator": {
+                    "termId": "node_15171_13",
+                    "children": {}
+                  },
+                  "Opera": {
+                    "termId": "node_15337_13",
+                    "children": {}
+                  }
+                }
+              },
+              "StarOffice": {
+                "termId": "node_15159_13",
+                "children": {}
+              },
+              "автомобильное программного обеспечения": {
+                "termId": "node_22905_13",
+                "children": {
+                  "Audatex": {
+                    "termId": "node_22906_13",
+                    "children": {}
+                  }
+                }
+              },
+              "графические программы": {
+                "termId": "node_22555_13",
+                "children": {
+                  "Adobe Freehand": {
+                    "termId": "node_22559_13",
+                    "children": {}
+                  },
+                  "Adobe Illustrator": {
+                    "termId": "node_22557_13",
+                    "children": {}
+                  },
+                  "Adobe InDesign": {
+                    "termId": "node_22558_13",
+                    "children": {}
+                  },
+                  "Adobe Lightroom": {
+                    "termId": "node_22560_13",
+                    "children": {}
+                  },
+                  "Adobe Photoshop": {
+                    "termId": "node_22556_13",
+                    "children": {}
+                  },
+                  "PaintShop Pro": {
+                    "termId": "node_22561_13",
+                    "children": {}
+                  },
+                  "Quark XPress": {
+                    "termId": "node_22562_13",
+                    "children": {}
+                  }
+                }
+              },
+              "деловое программное обеспечение": {
+                "termId": "node_22894_13",
+                "children": {
+                  "Baan": {
+                    "termId": "node_22901_13",
+                    "children": {}
+                  },
+                  "BMD-Business-Software": {
+                    "termId": "node_22902_13",
+                    "children": {}
+                  },
+                  "Navision": {
+                    "termId": "node_22903_13",
+                    "children": {}
+                  },
+                  "Peoplesoft": {
+                    "termId": "node_22904_13",
+                    "children": {}
+                  },
+                  "SAP": {
+                    "termId": "node_22895_13",
+                    "children": {}
+                  }
+                }
+              },
+              "знание конкретных коммерческих программ": {
+                "termId": "node_22553_13",
+                "children": {
+                  "бизнес-приложения": {
+                    "termId": "node_22523_13",
+                    "children": {}
+                  },
+                  "информационные системы управления": {
+                    "termId": "node_22544_13",
+                    "children": {}
+                  },
+                  "компьютерные программы для продаж и маркетинга": {
+                    "termId": "node_22542_13",
+                    "children": {}
+                  },
+                  "программное обеспечение для недвижимости": {
+                    "termId": "node_22548_13",
+                    "children": {
+                      "программное обеспечение для управления зданиями": {
+                        "termId": "node_22551_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "программное обеспечение для управления персоналом и расчета заработной платы": {
+                    "termId": "node_22540_13",
+                    "children": {}
+                  },
+                  "программное обеспечение для центров обработки вызовов": {
+                    "termId": "node_22530_13",
+                    "children": {}
+                  },
+                  "программное обеспечение для электронной коммерции": {
+                    "termId": "node_22534_13",
+                    "children": {}
+                  },
+                  "программы для офисной связи": {
+                    "termId": "node_22525_13",
+                    "children": {}
+                  },
+                  "программы для управления материальными ресурсами": {
+                    "termId": "node_22538_13",
+                    "children": {}
+                  },
+                  "системы CRM": {
+                    "termId": "node_22532_13",
+                    "children": {}
+                  },
+                  "системы ERP": {
+                    "termId": "node_22546_13",
+                    "children": {}
+                  },
+                  "торговое программное обеспечение": {
+                    "termId": "node_22536_13",
+                    "children": {}
+                  }
+                }
+              },
+              "мультимедийные программы и разработка сайта": {
+                "termId": "node_22563_13",
+                "children": {
+                  "Adobe Director": {
+                    "termId": "node_22565_13",
+                    "children": {}
+                  },
+                  "Adobe Dreamweaver": {
+                    "termId": "node_22566_13",
+                    "children": {}
+                  },
+                  "Adobe GoLive": {
+                    "termId": "node_22564_13",
+                    "children": {}
+                  },
+                  "Flash": {
+                    "termId": "node_22568_13",
+                    "children": {}
+                  },
+                  "MS Frontpage": {
+                    "termId": "node_22567_13",
+                    "children": {}
+                  }
+                }
+              },
+              "программное обеспечение для проектирования": {
+                "termId": "node_22892_13",
+                "children": {
+                  "MS Project": {
+                    "termId": "node_22893_13",
+                    "children": {}
+                  }
+                }
+              },
+              "программное обеспечение для туристических агентств": {
+                "termId": "node_22907_13",
+                "children": {
+                  "Amadeus (программное обеспечение для туристических агентств)": {
+                    "termId": "node_22908_13",
+                    "children": {}
+                  },
+                  "Galileo (программное обеспечение для туристических агентств)": {
+                    "termId": "node_22909_13",
+                    "children": {}
+                  },
+                  "Protel": {
+                    "termId": "node_22911_13",
+                    "children": {}
+                  },
+                  "ReiseZ.I.E.L.": {
+                    "termId": "node_22914_13",
+                    "children": {}
+                  },
+                  "ИАТА (бухгалтерская программа)": {
+                    "termId": "node_22910_13",
+                    "children": {}
+                  }
+                }
+              },
+              "программы для обработки видео": {
+                "termId": "node_22569_13",
+                "children": {
+                  "Adobe Premiere": {
+                    "termId": "node_22570_13",
+                    "children": {}
+                  },
+                  "Avid": {
+                    "termId": "node_22571_13",
+                    "children": {}
+                  },
+                  "Final Cut Pro": {
+                    "termId": "node_22572_13",
+                    "children": {}
+                  },
+                  "Media 100": {
+                    "termId": "node_22573_13",
+                    "children": {}
+                  }
+                }
+              },
+              "программы для обработки звука": {
+                "termId": "node_22574_13",
+                "children": {
+                  "Reason": {
+                    "termId": "node_22576_13",
+                    "children": {}
+                  },
+                  "Steinberg": {
+                    "termId": "node_22575_13",
+                    "children": {}
+                  }
+                }
+              },
+              "программы для технического рисования": {
+                "termId": "node_16394_13",
+                "children": {}
+              }
+            }
+          },
+          "знание офисных программ": {
+            "termId": "node_30218_13",
+            "children": {
+              "знание текстовых процессоров": {
+                "termId": "node_17219_13",
+                "children": {}
+              },
+              "электронные таблицы": {
+                "termId": "node_17220_13",
+                "children": {}
+              }
+            }
+          },
+          "инструменты для разработки программ": {
+            "termId": "node_22837_13",
+            "children": {
+              "CASE-Tools": {
+                "termId": "node_22838_13",
+                "children": {
+                  "case/4/0": {
+                    "termId": "node_22840_13",
+                    "children": {}
+                  },
+                  "Innovator": {
+                    "termId": "node_22841_13",
+                    "children": {}
+                  },
+                  "objectiF": {
+                    "termId": "node_22842_13",
+                    "children": {}
+                  },
+                  "Oracle Designer": {
+                    "termId": "node_22843_13",
+                    "children": {}
+                  },
+                  "Rational Rose": {
+                    "termId": "node_22839_13",
+                    "children": {}
+                  }
+                }
+              },
+              "разработка и реализация среды": {
+                "termId": "node_22844_13",
+                "children": {}
+              }
+            }
+          },
+          "использование электронной почты": {
+            "termId": "node_15166_13",
+            "children": {}
+          },
+          "конкретные операционные системы и серверные программы": {
+            "termId": "node_22763_13",
+            "children": {
+              "Apache server": {
+                "termId": "node_22773_13",
+                "children": {}
+              },
+              "Applovi operacijski sistemi": {
+                "termId": "node_22774_13",
+                "children": {
+                  "MAC OS 9": {
+                    "termId": "node_22775_13",
+                    "children": {}
+                  },
+                  "MAC OS X": {
+                    "termId": "node_22776_13",
+                    "children": {}
+                  }
+                }
+              },
+              "Citrix": {
+                "termId": "node_22777_13",
+                "children": {
+                  "Citrix MetaFrame": {
+                    "termId": "node_22778_13",
+                    "children": {}
+                  },
+                  "Citrix Presentation Server": {
+                    "termId": "node_22779_13",
+                    "children": {}
+                  }
+                }
+              },
+              "LINUX": {
+                "termId": "node_22780_13",
+                "children": {
+                  "Debian GNU/Linux": {
+                    "termId": "node_22781_13",
+                    "children": {}
+                  },
+                  "Fedora": {
+                    "termId": "node_22782_13",
+                    "children": {}
+                  },
+                  "GNOME": {
+                    "termId": "node_22791_13",
+                    "children": {}
+                  },
+                  "KDE": {
+                    "termId": "node_22790_13",
+                    "children": {}
+                  },
+                  "Knoppix": {
+                    "termId": "node_22783_13",
+                    "children": {}
+                  },
+                  "Open LINUX": {
+                    "termId": "node_22784_13",
+                    "children": {}
+                  },
+                  "Red Hat LINUX": {
+                    "termId": "node_22785_13",
+                    "children": {
+                      "Red Hat Enterprise Linux": {
+                        "termId": "node_22786_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "sistemi LAMP": {
+                    "termId": "node_22789_13",
+                    "children": {}
+                  },
+                  "SuSE Linux": {
+                    "termId": "node_22787_13",
+                    "children": {}
+                  },
+                  "Ubuntu LINUX": {
+                    "termId": "node_22788_13",
+                    "children": {}
+                  }
+                }
+              },
+              "MS DOS": {
+                "termId": "node_22792_13",
+                "children": {}
+              },
+              "Novell-Server": {
+                "termId": "node_22823_13",
+                "children": {
+                  "Novell Netware": {
+                    "termId": "node_22825_13",
+                    "children": {}
+                  },
+                  "OES": {
+                    "termId": "node_22824_13",
+                    "children": {}
+                  }
+                }
+              },
+              "OS/2": {
+                "termId": "node_22793_13",
+                "children": {}
+              },
+              "Samba-Server": {
+                "termId": "node_22794_13",
+                "children": {}
+              },
+              "Symbian OS": {
+                "termId": "node_22795_13",
+                "children": {}
+              },
+              "UNIX": {
+                "termId": "node_22796_13",
+                "children": {
+                  "AIX": {
+                    "termId": "node_22797_13",
+                    "children": {}
+                  },
+                  "Free-BSD": {
+                    "termId": "node_22798_13",
+                    "children": {}
+                  },
+                  "HP UX": {
+                    "termId": "node_22799_13",
+                    "children": {}
+                  },
+                  "IRIX": {
+                    "termId": "node_22800_13",
+                    "children": {}
+                  },
+                  "Open UNIX": {
+                    "termId": "node_22801_13",
+                    "children": {}
+                  },
+                  "POSIX": {
+                    "termId": "node_22802_13",
+                    "children": {}
+                  },
+                  "SINIX / Reliant UNIX": {
+                    "termId": "node_22803_13",
+                    "children": {}
+                  },
+                  "Solaris": {
+                    "termId": "node_22804_13",
+                    "children": {}
+                  },
+                  "True64 UNIX": {
+                    "termId": "node_22805_13",
+                    "children": {}
+                  }
+                }
+              },
+              "WebSphere Application Server": {
+                "termId": "node_22806_13",
+                "children": {}
+              },
+              "Windows": {
+                "termId": "node_22807_13",
+                "children": {
+                  "Windows 2000": {
+                    "termId": "node_22813_13",
+                    "children": {}
+                  },
+                  "Windows 2000 Professional": {
+                    "termId": "node_22814_13",
+                    "children": {}
+                  },
+                  "Windows 2003": {
+                    "termId": "node_22816_13",
+                    "children": {}
+                  },
+                  "Windows 3.x": {
+                    "termId": "node_22808_13",
+                    "children": {
+                      "Windows 3.1": {
+                        "termId": "node_22809_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "Windows 95": {
+                    "termId": "node_22810_13",
+                    "children": {}
+                  },
+                  "Windows 98": {
+                    "termId": "node_22811_13",
+                    "children": {}
+                  },
+                  "Windows CE": {
+                    "termId": "node_22821_13",
+                    "children": {}
+                  },
+                  "Windows ME": {
+                    "termId": "node_22815_13",
+                    "children": {}
+                  },
+                  "Windows Mobile": {
+                    "termId": "node_22822_13",
+                    "children": {}
+                  },
+                  "Windows NT": {
+                    "termId": "node_22812_13",
+                    "children": {}
+                  },
+                  "Windows VISTA": {
+                    "termId": "node_22820_13",
+                    "children": {}
+                  },
+                  "Windows XP": {
+                    "termId": "node_22817_13",
+                    "children": {}
+                  }
+                }
+              },
+              "операционные системы для мэйнфреймов": {
+                "termId": "node_22764_13",
+                "children": {
+                  "OS/390": {
+                    "termId": "node_22765_13",
+                    "children": {}
+                  },
+                  "OS/400": {
+                    "termId": "node_22766_13",
+                    "children": {}
+                  },
+                  "VMS": {
+                    "termId": "node_22767_13",
+                    "children": {}
+                  }
+                }
+              },
+              "операционные системы работающие в режиме реального времени": {
+                "termId": "node_22769_13",
+                "children": {}
+              }
+            }
+          },
+          "программное обеспечение для управления сетью": {
+            "termId": "node_22826_13",
+            "children": {
+              "CA SPECTRUM": {
+                "termId": "node_22827_13",
+                "children": {}
+              },
+              "IBM Tivoli": {
+                "termId": "node_22828_13",
+                "children": {}
+              },
+              "Metrica": {
+                "termId": "node_22829_13",
+                "children": {}
+              },
+              "Microsoft Operations Manager": {
+                "termId": "node_22830_13",
+                "children": {}
+              },
+              "MRTG": {
+                "termId": "node_22831_13",
+                "children": {}
+              },
+              "Nagios": {
+                "termId": "node_22832_13",
+                "children": {}
+              },
+              "OpenNMS": {
+                "termId": "node_22833_13",
+                "children": {}
+              },
+              "OpenRelax": {
+                "termId": "node_22834_13",
+                "children": {}
+              },
+              "OpenSMART": {
+                "termId": "node_22835_13",
+                "children": {}
+              },
+              "OpenView Network Node Manager": {
+                "termId": "node_22836_13",
+                "children": {}
+              }
+            }
+          },
+          "промежуточное программное обеспечение": {
+            "termId": "node_22881_13",
+            "children": {
+              "Corba": {
+                "termId": "node_22882_13",
+                "children": {}
+              },
+              "DCOM": {
+                "termId": "node_22883_13",
+                "children": {}
+              },
+              "ObjectBroker": {
+                "termId": "node_22888_13",
+                "children": {}
+              },
+              "ORACLE Fusion": {
+                "termId": "node_22885_13",
+                "children": {}
+              },
+              "Transparent Inter Process Communication": {
+                "termId": "node_22889_13",
+                "children": {}
+              },
+              "Visibroker": {
+                "termId": "node_22887_13",
+                "children": {}
+              },
+              "WebSphere MQ": {
+                "termId": "node_22884_13",
+                "children": {}
+              },
+              "инфраструктура для обмена SAP": {
+                "termId": "node_22886_13",
+                "children": {}
+              }
+            }
+          },
+          "способность изучать новые программные приложения": {
+            "termId": "node_15571_13",
+            "children": {}
+          },
+          "файл менеджеры": {
+            "termId": "node_20440_13",
+            "children": {}
+          }
+        }
+      },
+      "личностные характеристики": {
+        "termId": "node_17215_13",
+        "children": {
+          "когнитивные навыки и способность решать проблемы": {
+            "termId": "node_17218_13",
+            "children": {
+              "аналитическое мышление": {
+                "termId": "node_16191_13",
+                "children": {}
+              },
+              "желание учиться": {
+                "termId": "node_15763_13",
+                "children": {}
+              },
+              "изобретательность": {
+                "termId": "node_15131_13",
+                "children": {}
+              },
+              "использование профессиональных методов": {
+                "termId": "node_30321_13",
+                "children": {}
+              },
+              "любознательность": {
+                "termId": "node_15678_13",
+                "children": {}
+              },
+              "математические навыки": {
+                "termId": "node_16490_13",
+                "children": {}
+              },
+              "наблюдение": {
+                "termId": "node_15755_13",
+                "children": {}
+              },
+              "навыки решения проблем": {
+                "termId": "node_16202_13",
+                "children": {
+                  "выявление проблем": {
+                    "termId": "node_15784_13",
+                    "children": {}
+                  }
+                }
+              },
+              "навыки счета": {
+                "termId": "node_15219_13",
+                "children": {}
+              },
+              "находчивость": {
+                "termId": "node_15549_13",
+                "children": {}
+              },
+              "общие технические навыки": {
+                "termId": "node_30322_13",
+                "children": {}
+              },
+              "память": {
+                "termId": "node_15663_13",
+                "children": {}
+              },
+              "понимание рабочих сред": {
+                "termId": "node_30323_13",
+                "children": {}
+              },
+              "рассуждение": {
+                "termId": "node_15724_13",
+                "children": {}
+              },
+              "самооценка": {
+                "termId": "node_15565_13",
+                "children": {}
+              },
+              "сбор информации": {
+                "termId": "node_20441_13",
+                "children": {}
+              },
+              "системный подход": {
+                "termId": "node_15762_13",
+                "children": {}
+              },
+              "соблюдение законов, правил и руководств": {
+                "termId": "node_30320_13",
+                "children": {}
+              },
+              "способности к обучению": {
+                "termId": "node_15637_13",
+                "children": {}
+              },
+              "способность изучать новые языки": {
+                "termId": "node_15656_13",
+                "children": {}
+              },
+              "способность концентрироваться": {
+                "termId": "node_15574_13",
+                "children": {}
+              },
+              "техническое понимание": {
+                "termId": "node_15218_13",
+                "children": {}
+              },
+              "умение критиковать": {
+                "termId": "node_15607_13",
+                "children": {}
+              },
+              "умение считать": {
+                "termId": "node_15129_13",
+                "children": {}
+              },
+              "умение читать и писать": {
+                "termId": "node_15638_13",
+                "children": {
+                  "письмо": {
+                    "termId": "node_15722_13",
+                    "children": {}
+                  },
+                  "чтение": {
+                    "termId": "node_15721_13",
+                    "children": {}
+                  }
+                }
+              }
+            }
+          },
+          "личные качества и способности": {
+            "termId": "node_15981_13",
+            "children": {
+              "авантюрность": {
+                "termId": "node_15599_13",
+                "children": {}
+              },
+              "бескорыстие": {
+                "termId": "node_16169_13",
+                "children": {}
+              },
+              "вежливость": {
+                "termId": "node_15768_13",
+                "children": {}
+              },
+              "внимание": {
+                "termId": "node_15970_13",
+                "children": {}
+              },
+              "восприимчивость": {
+                "termId": "node_15747_13",
+                "children": {
+                  "интерес к текущим делам": {
+                    "termId": "node_15240_13",
+                    "children": {}
+                  }
+                }
+              },
+              "выносливость (моральная)": {
+                "termId": "node_15754_13",
+                "children": {}
+              },
+              "гибкость": {
+                "termId": "node_15558_13",
+                "children": {}
+              },
+              "гигиена": {
+                "termId": "node_15235_13",
+                "children": {}
+              },
+              "готовность к работе в ночное время и в выходные дни": {
+                "termId": "node_15557_13",
+                "children": {}
+              },
+              "доброта": {
+                "termId": "node_15231_13",
+                "children": {}
+              },
+              "изобретательность": {
+                "termId": "node_15132_13",
+                "children": {}
+              },
+              "инициатива": {
+                "termId": "node_20442_13",
+                "children": {}
+              },
+              "лояльность": {
+                "termId": "node_15725_13",
+                "children": {}
+              },
+              "мужество": {
+                "termId": "node_15597_13",
+                "children": {}
+              },
+              "надежность": {
+                "termId": "node_15758_13",
+                "children": {}
+              },
+              "напористость": {
+                "termId": "node_16368_13",
+                "children": {}
+              },
+              "независимость": {
+                "termId": "node_15676_13",
+                "children": {}
+              },
+              "несущая способность": {
+                "termId": "node_15642_13",
+                "children": {}
+              },
+              "оригинальность": {
+                "termId": "node_15130_13",
+                "children": {}
+              },
+              "осторожность": {
+                "termId": "node_15252_13",
+                "children": {}
+              },
+              "ответственность": {
+                "termId": "node_15570_13",
+                "children": {}
+              },
+              "отсутствие фобий": {
+                "termId": "node_15927_13",
+                "children": {
+                  "отстуствие боязни высоты": {
+                    "termId": "node_15527_13",
+                    "children": {}
+                  },
+                  "отсутствие клаустрофобии": {
+                    "termId": "node_15529_13",
+                    "children": {}
+                  }
+                }
+              },
+              "переносимость фрустрации": {
+                "termId": "node_15810_13",
+                "children": {}
+              },
+              "полезность": {
+                "termId": "node_15232_13",
+                "children": {}
+              },
+              "понимание безопасности": {
+                "termId": "node_15345_13",
+                "children": {}
+              },
+              "психологическая устойчивость": {
+                "termId": "node_15809_13",
+                "children": {}
+              },
+              "пунктуальность": {
+                "termId": "node_15756_13",
+                "children": {}
+              },
+              "самоуверенность": {
+                "termId": "node_15577_13",
+                "children": {}
+              },
+              "сбалансированная личность": {
+                "termId": "node_15239_13",
+                "children": {}
+              },
+              "симпатии и антипатии": {
+                "termId": "node_15775_13",
+                "children": {
+                  "готовность к командировкам": {
+                    "termId": "node_15736_13",
+                    "children": {}
+                  },
+                  "готовность к сверхурочной работе": {
+                    "termId": "node_15779_13",
+                    "children": {}
+                  },
+                  "предпочтение командной работы": {
+                    "termId": "node_15548_13",
+                    "children": {}
+                  },
+                  "предпочтение работы в закрытых помещениях": {
+                    "termId": "node_15770_13",
+                    "children": {}
+                  },
+                  "предпочтение работы на открытой местности": {
+                    "termId": "node_15771_13",
+                    "children": {}
+                  },
+                  "предпочтение работы неподалеку": {
+                    "termId": "node_15769_13",
+                    "children": {}
+                  },
+                  "предпочтение работы с людьми": {
+                    "termId": "node_15773_13",
+                    "children": {}
+                  },
+                  "предпочтение самостоятельной работы": {
+                    "termId": "node_15772_13",
+                    "children": {}
+                  }
+                }
+              },
+              "сообразительность": {
+                "termId": "node_15733_13",
+                "children": {}
+              },
+              "сопереживание": {
+                "termId": "node_15639_13",
+                "children": {
+                  "сопереживание к больным людям": {
+                    "termId": "node_15644_13",
+                    "children": {}
+                  },
+                  "сопереживание к детям": {
+                    "termId": "node_15641_13",
+                    "children": {}
+                  },
+                  "сопереживание к животным": {
+                    "termId": "node_15640_13",
+                    "children": {}
+                  },
+                  "сопереживание к пожилым людям": {
+                    "termId": "node_15643_13",
+                    "children": {}
+                  }
+                }
+              },
+              "соперничество": {
+                "termId": "node_15467_13",
+                "children": {}
+              },
+              "способность к монотонной деятельности": {
+                "termId": "node_15776_13",
+                "children": {}
+              },
+              "способность к сотрудничеству": {
+                "termId": "node_15592_13",
+                "children": {}
+              },
+              "способность нести ответственность": {
+                "termId": "node_15716_13",
+                "children": {}
+              },
+              "способность хранить секреты": {
+                "termId": "node_15632_13",
+                "children": {}
+              },
+              "суждение": {
+                "termId": "node_15698_13",
+                "children": {}
+              },
+              "тотовность работать на открытом воздухе": {
+                "termId": "node_15554_13",
+                "children": {}
+              },
+              "убедительность": {
+                "termId": "node_15243_13",
+                "children": {}
+              },
+              "умение работать в коллективе": {
+                "termId": "node_15546_13",
+                "children": {}
+              },
+              "хорошая переносимость изменений и неопределенности": {
+                "termId": "node_16102_13",
+                "children": {}
+              },
+              "честность": {
+                "termId": "node_15341_13",
+                "children": {}
+              },
+              "чувство направления": {
+                "termId": "node_15760_13",
+                "children": {}
+              },
+              "чувство юмора": {
+                "termId": "node_15796_13",
+                "children": {}
+              },
+              "энтузиазм": {
+                "termId": "node_15648_13",
+                "children": {}
+              }
+            }
+          },
+          "физические характеристики и способности": {
+            "termId": "node_15117_13",
+            "children": {}
+          }
+        }
+      },
+      "материалы, инструменты, продукты и программное обеспечение": {
+        "termId": "node_16865_13",
+        "children": {
+          "IT продукты": {
+            "termId": "node_18789_13",
+            "children": {
+              "аппаратные средства": {
+                "termId": "node_18790_13",
+                "children": {}
+              },
+              "программное обеспечение": {
+                "termId": "node_18791_13",
+                "children": {}
+              }
+            }
+          },
+          "антиквариат": {
+            "termId": "node_18770_13",
+            "children": {}
+          },
+          "велосипеды": {
+            "termId": "node_18823_13",
+            "children": {
+              "велосипеды и аксессуары": {
+                "termId": "node_18824_13",
+                "children": {}
+              },
+              "мотоциклы": {
+                "termId": "node_18825_13",
+                "children": {}
+              },
+              "принадлежности для мотоциклов / спортивная одежда": {
+                "termId": "node_18826_13",
+                "children": {}
+              }
+            }
+          },
+          "вычислительные системы": {
+            "termId": "node_22742_13",
+            "children": {
+              "DEC VAX": {
+                "termId": "node_22750_13",
+                "children": {}
+              },
+              "HP9000": {
+                "termId": "node_22749_13",
+                "children": {}
+              },
+              "информационные системы IBM": {
+                "termId": "node_22746_13",
+                "children": {
+                  "IBM AS/400": {
+                    "termId": "node_22747_13",
+                    "children": {}
+                  },
+                  "IBM RS/6000": {
+                    "termId": "node_22748_13",
+                    "children": {}
+                  }
+                }
+              },
+              "ПК": {
+                "termId": "node_22743_13",
+                "children": {
+                  "настольные компьютеры": {
+                    "termId": "node_22744_13",
+                    "children": {}
+                  },
+                  "ноутбуки": {
+                    "termId": "node_22745_13",
+                    "children": {}
+                  }
+                }
+              }
+            }
+          },
+          "дерево": {
+            "termId": "node_15352_13",
+            "children": {}
+          },
+          "древесина и изделия из дерева": {
+            "termId": "node_18787_13",
+            "children": {}
+          },
+          "игрушки": {
+            "termId": "node_18812_13",
+            "children": {}
+          },
+          "изделия для сада": {
+            "termId": "node_18781_13",
+            "children": {}
+          },
+          "изделия из кожи": {
+            "termId": "node_18794_13",
+            "children": {}
+          },
+          "измерители": {
+            "termId": "node_22732_13",
+            "children": {
+              "аналоговые измерители": {
+                "termId": "node_22740_13",
+                "children": {}
+              },
+              "аналоговые измерительные приборы": {
+                "termId": "node_22733_13",
+                "children": {}
+              },
+              "оптические измерительные приборы": {
+                "termId": "node_22739_13",
+                "children": {}
+              },
+              "пневматические измерители": {
+                "termId": "node_22734_13",
+                "children": {}
+              },
+              "цифровые измерители": {
+                "termId": "node_22741_13",
+                "children": {}
+              },
+              "электросчетчики": {
+                "termId": "node_22735_13",
+                "children": {
+                  "амперметры": {
+                    "termId": "node_22737_13",
+                    "children": {}
+                  },
+                  "вольтметр": {
+                    "termId": "node_22736_13",
+                    "children": {}
+                  },
+                  "осциллографы": {
+                    "termId": "node_22738_13",
+                    "children": {}
+                  }
+                }
+              }
+            }
+          },
+          "камень": {
+            "termId": "node_15551_13",
+            "children": {}
+          },
+          "канцелярские и офисные принадлежности": {
+            "termId": "node_18810_13",
+            "children": {}
+          },
+          "корма и аксессуары для животных": {
+            "termId": "node_18822_13",
+            "children": {}
+          },
+          "краски и лаки": {
+            "termId": "node_18779_13",
+            "children": {}
+          },
+          "лекарственные препараты": {
+            "termId": "node_18771_13",
+            "children": {}
+          },
+          "мебель": {
+            "termId": "node_18796_13",
+            "children": {}
+          },
+          "медикаменты и химия": {
+            "termId": "node_18772_13",
+            "children": {
+              "косметика и парфюмерия": {
+                "termId": "node_18774_13",
+                "children": {}
+              },
+              "средства личной гигиены": {
+                "termId": "node_18773_13",
+                "children": {}
+              }
+            }
+          },
+          "металл": {
+            "termId": "node_15343_13",
+            "children": {
+              "алюминий": {
+                "termId": "node_16384_13",
+                "children": {}
+              },
+              "железо": {
+                "termId": "node_15344_13",
+                "children": {}
+              },
+              "золото": {
+                "termId": "node_15350_13",
+                "children": {}
+              },
+              "медь": {
+                "termId": "node_15346_13",
+                "children": {}
+              },
+              "олово": {
+                "termId": "node_15349_13",
+                "children": {}
+              },
+              "серебро": {
+                "termId": "node_15351_13",
+                "children": {}
+              },
+              "сталь": {
+                "termId": "node_15347_13",
+                "children": {}
+              },
+              "цинк": {
+                "termId": "node_15348_13",
+                "children": {}
+              }
+            }
+          },
+          "моторные части и принадлежности транспортных средств": {
+            "termId": "node_18792_13",
+            "children": {}
+          },
+          "музыкальные инструменты": {
+            "termId": "node_16866_13",
+            "children": {
+              "духовые инструменты": {
+                "termId": "node_16875_13",
+                "children": {
+                  "гобой": {
+                    "termId": "node_16881_13",
+                    "children": {}
+                  },
+                  "кларнет": {
+                    "termId": "node_16880_13",
+                    "children": {}
+                  },
+                  "рекордер": {
+                    "termId": "node_16877_13",
+                    "children": {}
+                  },
+                  "рог": {
+                    "termId": "node_16879_13",
+                    "children": {}
+                  },
+                  "саксофон": {
+                    "termId": "node_16883_13",
+                    "children": {}
+                  },
+                  "тромбон": {
+                    "termId": "node_16882_13",
+                    "children": {}
+                  },
+                  "труба": {
+                    "termId": "node_16884_13",
+                    "children": {}
+                  },
+                  "туба": {
+                    "termId": "node_16885_13",
+                    "children": {}
+                  },
+                  "фагот": {
+                    "termId": "node_16876_13",
+                    "children": {}
+                  },
+                  "флейта": {
+                    "termId": "node_16878_13",
+                    "children": {}
+                  }
+                }
+              },
+              "клавишные инструменты": {
+                "termId": "node_16867_13",
+                "children": {
+                  "аккордеон": {
+                    "termId": "node_16872_13",
+                    "children": {}
+                  },
+                  "клавесин": {
+                    "termId": "node_16869_13",
+                    "children": {}
+                  },
+                  "клавиатура": {
+                    "termId": "node_16874_13",
+                    "children": {}
+                  },
+                  "орган": {
+                    "termId": "node_16870_13",
+                    "children": {
+                      "церковный орган": {
+                        "termId": "node_16871_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "пианино": {
+                    "termId": "node_16868_13",
+                    "children": {}
+                  },
+                  "фисгармония": {
+                    "termId": "node_16873_13",
+                    "children": {}
+                  }
+                }
+              },
+              "строковые и струнные инструменты": {
+                "termId": "node_16886_13",
+                "children": {
+                  "E-Басс гитара": {
+                    "termId": "node_16894_13",
+                    "children": {}
+                  },
+                  "альт": {
+                    "termId": "node_16887_13",
+                    "children": {}
+                  },
+                  "арфа": {
+                    "termId": "node_16895_13",
+                    "children": {}
+                  },
+                  "банджо": {
+                    "termId": "node_16891_13",
+                    "children": {}
+                  },
+                  "виолончель": {
+                    "termId": "node_16888_13",
+                    "children": {}
+                  },
+                  "гитара": {
+                    "termId": "node_16892_13",
+                    "children": {}
+                  },
+                  "контрабас": {
+                    "termId": "node_16890_13",
+                    "children": {}
+                  },
+                  "скрипка": {
+                    "termId": "node_16889_13",
+                    "children": {}
+                  },
+                  "цитра": {
+                    "termId": "node_16896_13",
+                    "children": {}
+                  },
+                  "электрогитара": {
+                    "termId": "node_16893_13",
+                    "children": {}
+                  }
+                }
+              },
+              "ударные": {
+                "termId": "node_16897_13",
+                "children": {
+                  "барабан": {
+                    "termId": "node_16903_13",
+                    "children": {}
+                  },
+                  "барабаны": {
+                    "termId": "node_16901_13",
+                    "children": {}
+                  },
+                  "виброфон": {
+                    "termId": "node_16904_13",
+                    "children": {}
+                  },
+                  "кимвал": {
+                    "termId": "node_16898_13",
+                    "children": {}
+                  },
+                  "колокол": {
+                    "termId": "node_16899_13",
+                    "children": {}
+                  },
+                  "ксилофон": {
+                    "termId": "node_16905_13",
+                    "children": {}
+                  },
+                  "литавры": {
+                    "termId": "node_16900_13",
+                    "children": {}
+                  },
+                  "треугольник": {
+                    "termId": "node_16902_13",
+                    "children": {}
+                  }
+                }
+              }
+            }
+          },
+          "напольные покрытия": {
+            "termId": "node_16422_13",
+            "children": {
+              "кладка блоков (деревянные полы)": {
+                "termId": "node_16428_13",
+                "children": {}
+              },
+              "ламинат": {
+                "termId": "node_15357_13",
+                "children": {}
+              },
+              "линолеум": {
+                "termId": "node_15358_13",
+                "children": {}
+              },
+              "паркетные полы": {
+                "termId": "node_16425_13",
+                "children": {}
+              },
+              "пластиковый пол": {
+                "termId": "node_16426_13",
+                "children": {}
+              },
+              "половая доска из массива": {
+                "termId": "node_16429_13",
+                "children": {}
+              },
+              "пробковые полы": {
+                "termId": "node_16423_13",
+                "children": {}
+              },
+              "текстильные напольные покрытия": {
+                "termId": "node_16427_13",
+                "children": {}
+              },
+              "тераццо": {
+                "termId": "node_16385_13",
+                "children": {}
+              }
+            }
+          },
+          "обои и домашний текстиль": {
+            "termId": "node_18815_13",
+            "children": {}
+          },
+          "оборудование, инструменты, машины": {
+            "termId": "node_18775_13",
+            "children": {}
+          },
+          "обувь и продукты по уходу за обувью": {
+            "termId": "node_18811_13",
+            "children": {}
+          },
+          "одежда": {
+            "termId": "node_18816_13",
+            "children": {
+              "детская одежда": {
+                "termId": "node_18820_13",
+                "children": {}
+              },
+              "женская, верхняя одежда для девочек": {
+                "termId": "node_18817_13",
+                "children": {}
+              },
+              "мужская, верхняя одежда для мальчиков": {
+                "termId": "node_18819_13",
+                "children": {}
+              },
+              "спортивная одежда": {
+                "termId": "node_18818_13",
+                "children": {}
+              }
+            }
+          },
+          "осветительное оборудование": {
+            "termId": "node_18793_13",
+            "children": {}
+          },
+          "печатная продукция": {
+            "termId": "node_16911_13",
+            "children": {
+              "аудиокниги": {
+                "termId": "node_16915_13",
+                "children": {}
+              },
+              "календари": {
+                "termId": "node_16916_13",
+                "children": {}
+              },
+              "книги": {
+                "termId": "node_16912_13",
+                "children": {}
+              }
+            }
+          },
+          "печатные машины": {
+            "termId": "node_16909_13",
+            "children": {
+              "печатные машины Heidelberg": {
+                "termId": "node_16910_13",
+                "children": {}
+              }
+            }
+          },
+          "питание": {
+            "termId": "node_18797_13",
+            "children": {
+              "биологические и натуральные продукты питания": {
+                "termId": "node_18799_13",
+                "children": {}
+              },
+              "гастрономический магазин": {
+                "termId": "node_18802_13",
+                "children": {}
+              },
+              "диетические продукты": {
+                "termId": "node_18801_13",
+                "children": {}
+              },
+              "кондитерские изделия": {
+                "termId": "node_18808_13",
+                "children": {}
+              },
+              "мясные продукты": {
+                "termId": "node_18804_13",
+                "children": {}
+              },
+              "напитки": {
+                "termId": "node_18805_13",
+                "children": {}
+              },
+              "рыбные продукты": {
+                "termId": "node_18803_13",
+                "children": {}
+              },
+              "специи": {
+                "termId": "node_18806_13",
+                "children": {}
+              },
+              "товары для диабетиков": {
+                "termId": "node_18800_13",
+                "children": {}
+              },
+              "фрукты и овощи": {
+                "termId": "node_18807_13",
+                "children": {}
+              },
+              "хлебобулочные и кондитерские изделия": {
+                "termId": "node_18798_13",
+                "children": {}
+              }
+            }
+          },
+          "пластик": {
+            "termId": "node_15353_13",
+            "children": {}
+          },
+          "подарки": {
+            "termId": "node_18782_13",
+            "children": {}
+          },
+          "разнорабочий": {
+            "termId": "node_18785_13",
+            "children": {}
+          },
+          "санитарно-технические изделия": {
+            "termId": "node_18809_13",
+            "children": {}
+          },
+          "сетевые компоненты (IT)": {
+            "termId": "node_22751_13",
+            "children": {
+              "волоконно-оптические кабели": {
+                "termId": "node_22762_13",
+                "children": {}
+              },
+              "компоненты Cisco": {
+                "termId": "node_22761_13",
+                "children": {}
+              },
+              "концентраторы": {
+                "termId": "node_22758_13",
+                "children": {}
+              },
+              "маршрутизатор": {
+                "termId": "node_22756_13",
+                "children": {}
+              },
+              "модемы": {
+                "termId": "node_22754_13",
+                "children": {}
+              },
+              "мультиплексор": {
+                "termId": "node_22755_13",
+                "children": {}
+              },
+              "переключатели": {
+                "termId": "node_22753_13",
+                "children": {}
+              },
+              "повторитель": {
+                "termId": "node_22752_13",
+                "children": {}
+              },
+              "сетевой кабель (IT)": {
+                "termId": "node_22759_13",
+                "children": {}
+              },
+              "сетевой разъем (IT)": {
+                "termId": "node_22760_13",
+                "children": {}
+              },
+              "шлюз": {
+                "termId": "node_22757_13",
+                "children": {}
+              }
+            }
+          },
+          "спортивные товары и оборудование": {
+            "termId": "node_18813_13",
+            "children": {}
+          },
+          "средства гигиены": {
+            "termId": "node_18788_13",
+            "children": {}
+          },
+          "станки с ЧПУ": {
+            "termId": "node_15152_13",
+            "children": {
+              "программирование станков с ЧПУ": {
+                "termId": "node_16130_13",
+                "children": {}
+              },
+              "эксплуатация станки с ЧПУ": {
+                "termId": "node_16129_13",
+                "children": {}
+              }
+            }
+          },
+          "стекло": {
+            "termId": "node_16430_13",
+            "children": {
+              "защитное стекло": {
+                "termId": "node_16437_13",
+                "children": {}
+              },
+              "зеркальное стекло": {
+                "termId": "node_16436_13",
+                "children": {}
+              },
+              "изоляционное стекло": {
+                "termId": "node_16438_13",
+                "children": {}
+              },
+              "небьющееся стекло": {
+                "termId": "node_16432_13",
+                "children": {
+                  "пуленепробиваемое стекло": {
+                    "termId": "node_16433_13",
+                    "children": {}
+                  }
+                }
+              },
+              "огнестойкие стекла": {
+                "termId": "node_16441_13",
+                "children": {}
+              },
+              "плоское стекло": {
+                "termId": "node_16440_13",
+                "children": {}
+              },
+              "полированное стекло": {
+                "termId": "node_16434_13",
+                "children": {}
+              },
+              "солнцезащитное стекло": {
+                "termId": "node_16431_13",
+                "children": {}
+              },
+              "стеклянные камни": {
+                "termId": "node_16439_13",
+                "children": {}
+              },
+              "строительное стекло": {
+                "termId": "node_16442_13",
+                "children": {}
+              }
+            }
+          },
+          "стекло и фарфор": {
+            "termId": "node_18783_13",
+            "children": {}
+          },
+          "строительная техника": {
+            "termId": "node_16399_13",
+            "children": {
+              "автогрейдер": {
+                "termId": "node_16409_13",
+                "children": {
+                  "грейдер": {
+                    "termId": "node_15363_13",
+                    "children": {}
+                  }
+                }
+              },
+              "бетононасосы": {
+                "termId": "node_16418_13",
+                "children": {}
+              },
+              "вибраторы для бетона": {
+                "termId": "node_16419_13",
+                "children": {}
+              },
+              "гусеничные транспортные средства": {
+                "termId": "node_16408_13",
+                "children": {}
+              },
+              "дорожный каток": {
+                "termId": "node_15342_13",
+                "children": {}
+              },
+              "засыпка песком": {
+                "termId": "node_16406_13",
+                "children": {}
+              },
+              "комбайны": {
+                "termId": "node_16410_13",
+                "children": {}
+              },
+              "краны": {
+                "termId": "node_16412_13",
+                "children": {
+                  "автокраны": {
+                    "termId": "node_16416_13",
+                    "children": {}
+                  },
+                  "башенные краны": {
+                    "termId": "node_16415_13",
+                    "children": {}
+                  },
+                  "мобильные краны": {
+                    "termId": "node_16403_13",
+                    "children": {}
+                  },
+                  "мостовые краны": {
+                    "termId": "node_16405_13",
+                    "children": {}
+                  }
+                }
+              },
+              "мостильщик": {
+                "termId": "node_15362_13",
+                "children": {}
+              },
+              "фронтальные погрузчики": {
+                "termId": "node_16411_13",
+                "children": {}
+              },
+              "экскаватор": {
+                "termId": "node_16414_13",
+                "children": {
+                  "гидравлические экскаваторы": {
+                    "termId": "node_16400_13",
+                    "children": {}
+                  },
+                  "землечерпалка": {
+                    "termId": "node_16407_13",
+                    "children": {}
+                  },
+                  "колесные экскаваторы": {
+                    "termId": "node_16404_13",
+                    "children": {}
+                  },
+                  "скребковый экскаватор": {
+                    "termId": "node_16401_13",
+                    "children": {}
+                  }
+                }
+              }
+            }
+          },
+          "строительные материалы": {
+            "termId": "node_16386_13",
+            "children": {
+              "бетон": {
+                "termId": "node_16420_13",
+                "children": {
+                  "литой камень": {
+                    "termId": "node_16421_13",
+                    "children": {}
+                  }
+                }
+              },
+              "кирпич": {
+                "termId": "node_15540_13",
+                "children": {}
+              },
+              "стяжки": {
+                "termId": "node_20461_13",
+                "children": {}
+              }
+            }
+          },
+          "табак": {
+            "termId": "node_18814_13",
+            "children": {}
+          },
+          "учебные материалы": {
+            "termId": "node_22577_13",
+            "children": {}
+          },
+          "фото и видео оборудование": {
+            "termId": "node_18780_13",
+            "children": {}
+          },
+          "хозтовары": {
+            "termId": "node_18784_13",
+            "children": {}
+          },
+          "хранение данных, аудио, фото и видеотехники": {
+            "termId": "node_22710_13",
+            "children": {}
+          },
+          "часы, украшения, золото и серебро": {
+            "termId": "node_18821_13",
+            "children": {}
+          },
+          "электрические и электронные изделия": {
+            "termId": "node_22578_13",
+            "children": {
+              "бытовая техника и электроника": {
+                "termId": "node_22682_13",
+                "children": {
+                  "CD-проигрыватель": {
+                    "termId": "node_22686_13",
+                    "children": {}
+                  },
+                  "DVB-T-усилитель": {
+                    "termId": "node_22692_13",
+                    "children": {}
+                  },
+                  "DVD- плеер": {
+                    "termId": "node_22690_13",
+                    "children": {}
+                  },
+                  "DVD-рекордер": {
+                    "termId": "node_22691_13",
+                    "children": {}
+                  },
+                  "HIFI-аппаратура": {
+                    "termId": "node_22687_13",
+                    "children": {}
+                  },
+                  "MP3 - плеер": {
+                    "termId": "node_22688_13",
+                    "children": {}
+                  },
+                  "видеомагнитофоны": {
+                    "termId": "node_22689_13",
+                    "children": {}
+                  },
+                  "магнитофон": {
+                    "termId": "node_22685_13",
+                    "children": {}
+                  },
+                  "радиоаппаратура": {
+                    "termId": "node_22683_13",
+                    "children": {}
+                  },
+                  "спутниковые приемники": {
+                    "termId": "node_22693_13",
+                    "children": {}
+                  },
+                  "телевизоры": {
+                    "termId": "node_22684_13",
+                    "children": {}
+                  }
+                }
+              },
+              "бытовая электроника": {
+                "termId": "node_22670_13",
+                "children": {
+                  "микроволновые печи": {
+                    "termId": "node_22672_13",
+                    "children": {}
+                  },
+                  "морозильные камеры": {
+                    "termId": "node_22676_13",
+                    "children": {}
+                  },
+                  "печки": {
+                    "termId": "node_22671_13",
+                    "children": {}
+                  },
+                  "посудомоечные машины": {
+                    "termId": "node_22674_13",
+                    "children": {}
+                  },
+                  "стиральные машины": {
+                    "termId": "node_22673_13",
+                    "children": {}
+                  },
+                  "холодильники": {
+                    "termId": "node_22675_13",
+                    "children": {}
+                  }
+                }
+              },
+              "источники питания": {
+                "termId": "node_22579_13",
+                "children": {
+                  "аккумуляторы": {
+                    "termId": "node_22581_13",
+                    "children": {}
+                  },
+                  "батареи": {
+                    "termId": "node_22580_13",
+                    "children": {}
+                  },
+                  "топливные элементы": {
+                    "termId": "node_22582_13",
+                    "children": {}
+                  }
+                }
+              },
+              "ИТ-оборудование": {
+                "termId": "node_22653_13",
+                "children": {
+                  "видеокарты": {
+                    "termId": "node_22663_13",
+                    "children": {}
+                  },
+                  "запоминающие устройства": {
+                    "termId": "node_22654_13",
+                    "children": {
+                      "CD и DVD диски (IT)": {
+                        "termId": "node_22657_13",
+                        "children": {}
+                      },
+                      "жесткие диски": {
+                        "termId": "node_22655_13",
+                        "children": {}
+                      },
+                      "магнитные пленки (IT электроника)": {
+                        "termId": "node_22656_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "звуковые карты": {
+                    "termId": "node_22664_13",
+                    "children": {}
+                  },
+                  "материнские платы": {
+                    "termId": "node_22662_13",
+                    "children": {}
+                  },
+                  "устройства ввода": {
+                    "termId": "node_22658_13",
+                    "children": {
+                      "клавиатуры": {
+                        "termId": "node_22659_13",
+                        "children": {}
+                      },
+                      "компьютерные мышки (ИТ)": {
+                        "termId": "node_22660_13",
+                        "children": {}
+                      },
+                      "сенсорные панели": {
+                        "termId": "node_22661_13",
+                        "children": {}
+                      }
+                    }
+                  }
+                }
+              },
+              "ИТ-периферия": {
+                "termId": "node_22665_13",
+                "children": {
+                  "принтеры (IT)": {
+                    "termId": "node_22666_13",
+                    "children": {
+                      "лазерные принтеры": {
+                        "termId": "node_22668_13",
+                        "children": {}
+                      },
+                      "принтеры для струйной печати": {
+                        "termId": "node_22667_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "сканеры": {
+                    "termId": "node_22669_13",
+                    "children": {}
+                  }
+                }
+              },
+              "компоненты электрических систем": {
+                "termId": "node_22583_13",
+                "children": {
+                  "кабель": {
+                    "termId": "node_22585_13",
+                    "children": {
+                      "монтаж кабеля": {
+                        "termId": "node_22587_13",
+                        "children": {}
+                      },
+                      "производство кабеля": {
+                        "termId": "node_22586_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "линии": {
+                    "termId": "node_22584_13",
+                    "children": {}
+                  },
+                  "подстанция": {
+                    "termId": "node_22596_13",
+                    "children": {}
+                  },
+                  "преобразователь мощности": {
+                    "termId": "node_22592_13",
+                    "children": {
+                      "выпрямитель": {
+                        "termId": "node_22593_13",
+                        "children": {}
+                      },
+                      "инвертор": {
+                        "termId": "node_22594_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "распределительные устройства (электротехника)": {
+                    "termId": "node_22590_13",
+                    "children": {}
+                  },
+                  "трансформеры": {
+                    "termId": "node_22591_13",
+                    "children": {}
+                  },
+                  "шинопровода (электротехника)": {
+                    "termId": "node_22588_13",
+                    "children": {}
+                  }
+                }
+              },
+              "медицинские приборы": {
+                "termId": "node_22694_13",
+                "children": {
+                  "диагностическое оборудование": {
+                    "termId": "node_22695_13",
+                    "children": {
+                      "аудиометр": {
+                        "termId": "node_22696_13",
+                        "children": {}
+                      },
+                      "КТ сканеры": {
+                        "termId": "node_22697_13",
+                        "children": {}
+                      },
+                      "МРТ аппараты": {
+                        "termId": "node_22701_13",
+                        "children": {}
+                      },
+                      "рентгеновская аппаратура": {
+                        "termId": "node_22702_13",
+                        "children": {}
+                      },
+                      "эргометр": {
+                        "termId": "node_22698_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "терапевтический аппарат": {
+                    "termId": "node_22703_13",
+                    "children": {
+                      "аппараты искусственного дыхания": {
+                        "termId": "node_22704_13",
+                        "children": {}
+                      },
+                      "аппараты искусственного кровообращения": {
+                        "termId": "node_22706_13",
+                        "children": {}
+                      },
+                      "дефибрилляторы": {
+                        "termId": "node_22705_13",
+                        "children": {}
+                      },
+                      "кардиостимулятор": {
+                        "termId": "node_22707_13",
+                        "children": {}
+                      }
+                    }
+                  }
+                }
+              },
+              "оборудование для освещения": {
+                "termId": "node_22647_13",
+                "children": {
+                  "лампы накаливания": {
+                    "termId": "node_22648_13",
+                    "children": {}
+                  },
+                  "люминесцентные лампы": {
+                    "termId": "node_22650_13",
+                    "children": {}
+                  },
+                  "натриевые лампы": {
+                    "termId": "node_22651_13",
+                    "children": {}
+                  },
+                  "неоновые огни": {
+                    "termId": "node_22652_13",
+                    "children": {}
+                  },
+                  "свечение": {
+                    "termId": "node_16908_13",
+                    "children": {}
+                  },
+                  "фары": {
+                    "termId": "node_16907_13",
+                    "children": {}
+                  },
+                  "энергосберегающие лампы": {
+                    "termId": "node_22649_13",
+                    "children": {}
+                  }
+                }
+              },
+              "системы управления движением": {
+                "termId": "node_22708_13",
+                "children": {
+                  "светофоры": {
+                    "termId": "node_22709_13",
+                    "children": {}
+                  }
+                }
+              },
+              "телекоммуникационное оборудование": {
+                "termId": "node_22677_13",
+                "children": {
+                  "беспроводные телефоны": {
+                    "termId": "node_22678_13",
+                    "children": {}
+                  },
+                  "мобильные телефоны": {
+                    "termId": "node_22679_13",
+                    "children": {}
+                  },
+                  "телефонные системы": {
+                    "termId": "node_22680_13",
+                    "children": {}
+                  },
+                  "факсимильные аппараты": {
+                    "termId": "node_22681_13",
+                    "children": {}
+                  }
+                }
+              },
+              "электрические машины": {
+                "termId": "node_22640_13",
+                "children": {
+                  "генераторы": {
+                    "termId": "node_22642_13",
+                    "children": {
+                      "аварийное питание": {
+                        "termId": "node_22643_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "генераторы однофазного переменного тока": {
+                    "termId": "node_22646_13",
+                    "children": {}
+                  },
+                  "машины постоянного тока": {
+                    "termId": "node_22645_13",
+                    "children": {}
+                  },
+                  "фазовые машины": {
+                    "termId": "node_22644_13",
+                    "children": {}
+                  },
+                  "электродвигатели": {
+                    "termId": "node_22641_13",
+                    "children": {}
+                  }
+                }
+              },
+              "электронные компоненты": {
+                "termId": "node_22597_13",
+                "children": {
+                  "высокочастотные генераторы": {
+                    "termId": "node_22638_13",
+                    "children": {}
+                  },
+                  "дискретные электронные компоненты": {
+                    "termId": "node_22598_13",
+                    "children": {
+                      "диоды": {
+                        "termId": "node_22599_13",
+                        "children": {
+                          "полупроводниковые диоды": {
+                            "termId": "node_22600_13",
+                            "children": {}
+                          },
+                          "светодиоды": {
+                            "termId": "node_22601_13",
+                            "children": {}
+                          },
+                          "фотодиоды": {
+                            "termId": "node_22602_13",
+                            "children": {}
+                          }
+                        }
+                      },
+                      "конденсаторы": {
+                        "termId": "node_22608_13",
+                        "children": {}
+                      },
+                      "реле": {
+                        "termId": "node_22609_13",
+                        "children": {}
+                      },
+                      "тиристоры": {
+                        "termId": "node_22610_13",
+                        "children": {}
+                      },
+                      "транзисторы": {
+                        "termId": "node_22611_13",
+                        "children": {
+                          "биполярные транзисторы": {
+                            "termId": "node_22612_13",
+                            "children": {}
+                          },
+                          "однополярные транзисторы": {
+                            "termId": "node_22613_13",
+                            "children": {}
+                          },
+                          "полевой транзистор": {
+                            "termId": "node_22614_13",
+                            "children": {}
+                          },
+                          "фототранзисторы": {
+                            "termId": "node_22615_13",
+                            "children": {}
+                          }
+                        }
+                      },
+                      "электрические катушки": {
+                        "termId": "node_22603_13",
+                        "children": {}
+                      },
+                      "электрические резисторы": {
+                        "termId": "node_22604_13",
+                        "children": {
+                          "резисторы": {
+                            "termId": "node_22605_13",
+                            "children": {}
+                          }
+                        }
+                      },
+                      "электромагниты": {
+                        "termId": "node_22606_13",
+                        "children": {}
+                      },
+                      "электронные лампы": {
+                        "termId": "node_22607_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "интегрированные электронные компоненты": {
+                    "termId": "node_22616_13",
+                    "children": {
+                      "DSP": {
+                        "termId": "node_22633_13",
+                        "children": {}
+                      },
+                      "Halbleiter-Speicher": {
+                        "termId": "node_22623_13",
+                        "children": {
+                          "EEPROM": {
+                            "termId": "node_22628_13",
+                            "children": {}
+                          },
+                          "EPROM": {
+                            "termId": "node_22627_13",
+                            "children": {}
+                          },
+                          "Flash-Speicher": {
+                            "termId": "node_22629_13",
+                            "children": {}
+                          },
+                          "PROM": {
+                            "termId": "node_22626_13",
+                            "children": {}
+                          },
+                          "RAM": {
+                            "termId": "node_22625_13",
+                            "children": {}
+                          },
+                          "ROM": {
+                            "termId": "node_22624_13",
+                            "children": {}
+                          }
+                        }
+                      },
+                      "аналого-цифровой преобразователь": {
+                        "termId": "node_22622_13",
+                        "children": {}
+                      },
+                      "встроенный контроллер": {
+                        "termId": "node_22632_13",
+                        "children": {}
+                      },
+                      "датчики изображения": {
+                        "termId": "node_22634_13",
+                        "children": {
+                          "КМОП-датчики": {
+                            "termId": "node_22636_13",
+                            "children": {}
+                          },
+                          "ПЗС-датчики": {
+                            "termId": "node_22635_13",
+                            "children": {}
+                          }
+                        }
+                      },
+                      "микропроцессоры": {
+                        "termId": "node_22630_13",
+                        "children": {
+                          "микроконтроллер": {
+                            "termId": "node_22631_13",
+                            "children": {}
+                          }
+                        }
+                      },
+                      "программируемые логические устройства и ICs": {
+                        "termId": "node_22617_13",
+                        "children": {
+                          "ASIC": {
+                            "termId": "node_22620_13",
+                            "children": {}
+                          },
+                          "FPGA": {
+                            "termId": "node_22619_13",
+                            "children": {}
+                          },
+                          "PLD": {
+                            "termId": "node_22618_13",
+                            "children": {}
+                          }
+                        }
+                      },
+                      "цифро-аналоговый преобразователь": {
+                        "termId": "node_22621_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "лазерные диоды": {
+                    "termId": "node_22639_13",
+                    "children": {}
+                  },
+                  "усилитель высокой частоты": {
+                    "termId": "node_22637_13",
+                    "children": {}
+                  }
+                }
+              }
+            }
+          },
+          "электротехническая продукция": {
+            "termId": "node_18776_13",
+            "children": {}
+          },
+          "ювелирных материалов": {
+            "termId": "node_16387_13",
+            "children": {}
+          }
+        }
+      },
+      "основные глаголы действия": {
+        "termId": "node_22370_13",
+        "children": {
+          "анализировать": {
+            "termId": "node_22371_13",
+            "children": {}
+          },
+          "ассистировать": {
+            "termId": "node_22395_13",
+            "children": {}
+          },
+          "бить молотком": {
+            "termId": "node_15524_13",
+            "children": {}
+          },
+          "брать образцы": {
+            "termId": "node_22463_13",
+            "children": {}
+          },
+          "вести переговоры": {
+            "termId": "node_22505_13",
+            "children": {}
+          },
+          "вмешиваться": {
+            "termId": "node_22430_13",
+            "children": {}
+          },
+          "восстанавливать": {
+            "termId": "node_22452_13",
+            "children": {}
+          },
+          "выбирать": {
+            "termId": "node_22453_13",
+            "children": {}
+          },
+          "выделять": {
+            "termId": "node_22472_13",
+            "children": {}
+          },
+          "выписывать счет-фактуру": {
+            "termId": "node_22503_13",
+            "children": {}
+          },
+          "выплачивать": {
+            "termId": "node_22402_13",
+            "children": {}
+          },
+          "выполнять": {
+            "termId": "node_22411_13",
+            "children": {}
+          },
+          "выполнять (юриспруденция)": {
+            "termId": "node_22428_13",
+            "children": {}
+          },
+          "выставлять на продажу": {
+            "termId": "node_22500_13",
+            "children": {}
+          },
+          "гладить": {
+            "termId": "node_16125_13",
+            "children": {}
+          },
+          "делать выводы": {
+            "termId": "node_22495_13",
+            "children": {}
+          },
+          "делегировать": {
+            "termId": "node_22477_13",
+            "children": {}
+          },
+          "демонстрировать": {
+            "termId": "node_22499_13",
+            "children": {}
+          },
+          "демонстрировать что-то на экране": {
+            "termId": "node_22507_13",
+            "children": {}
+          },
+          "демонтировать": {
+            "termId": "node_22423_13",
+            "children": {}
+          },
+          "диагностировать": {
+            "termId": "node_22422_13",
+            "children": {}
+          },
+          "доставлять": {
+            "termId": "node_22498_13",
+            "children": {}
+          },
+          "дробить": {
+            "termId": "node_22420_13",
+            "children": {}
+          },
+          "заботиться": {
+            "termId": "node_22465_13",
+            "children": {}
+          },
+          "заботиться о ком-то": {
+            "termId": "node_22466_13",
+            "children": {}
+          },
+          "загружать": {
+            "termId": "node_22431_13",
+            "children": {}
+          },
+          "заказывать": {
+            "termId": "node_22438_13",
+            "children": {}
+          },
+          "идентифицировать": {
+            "termId": "node_22483_13",
+            "children": {}
+          },
+          "извлекать": {
+            "termId": "node_22386_13",
+            "children": {}
+          },
+          "излагать в письменной форме": {
+            "termId": "node_22454_13",
+            "children": {}
+          },
+          "измерять": {
+            "termId": "node_15525_13",
+            "children": {}
+          },
+          "изучать": {
+            "termId": "node_22391_13",
+            "children": {}
+          },
+          "иметь дело с": {
+            "termId": "node_22377_13",
+            "children": {}
+          },
+          "инвентаризировать": {
+            "termId": "node_22464_13",
+            "children": {}
+          },
+          "инструктировать": {
+            "termId": "node_22380_13",
+            "children": {}
+          },
+          "информировать": {
+            "termId": "node_30315_13",
+            "children": {}
+          },
+          "использовать": {
+            "termId": "node_22471_13",
+            "children": {}
+          },
+          "использовать маркетинговые стратегии": {
+            "termId": "node_22492_13",
+            "children": {}
+          },
+          "использовать ручные тележки": {
+            "termId": "node_15560_13",
+            "children": {}
+          },
+          "исправлять": {
+            "termId": "node_22449_13",
+            "children": {}
+          },
+          "калибровать": {
+            "termId": "node_22410_13",
+            "children": {}
+          },
+          "клеить": {
+            "termId": "node_15338_13",
+            "children": {}
+          },
+          "компиллировать (вычисления)": {
+            "termId": "node_22375_13",
+            "children": {}
+          },
+          "конвертировать": {
+            "termId": "node_22427_13",
+            "children": {}
+          },
+          "консультировать по юридическим вопросам": {
+            "termId": "node_30314_13",
+            "children": {}
+          },
+          "контактировать": {
+            "termId": "node_22496_13",
+            "children": {}
+          },
+          "контролировать": {
+            "termId": "node_22416_13",
+            "children": {}
+          },
+          "конфигурировать": {
+            "termId": "node_22415_13",
+            "children": {}
+          },
+          "координировать": {
+            "termId": "node_22475_13",
+            "children": {}
+          },
+          "копать": {
+            "termId": "node_15522_13",
+            "children": {}
+          },
+          "кормить": {
+            "termId": "node_22460_13",
+            "children": {}
+          },
+          "кормить (технологии)": {
+            "termId": "node_22461_13",
+            "children": {}
+          },
+          "культивировать": {
+            "termId": "node_22419_13",
+            "children": {}
+          },
+          "лечить": {
+            "termId": "node_22469_13",
+            "children": {}
+          },
+          "ликвидировать": {
+            "termId": "node_22424_13",
+            "children": {}
+          },
+          "менять": {
+            "termId": "node_22384_13",
+            "children": {}
+          },
+          "модифицировать": {
+            "termId": "node_22435_13",
+            "children": {}
+          },
+          "монтировать": {
+            "termId": "node_22405_13",
+            "children": {}
+          },
+          "наблюдать": {
+            "termId": "node_22479_13",
+            "children": {}
+          },
+          "найм сотрудников": {
+            "termId": "node_22488_13",
+            "children": {}
+          },
+          "находить замену": {
+            "termId": "node_22489_13",
+            "children": {}
+          },
+          "обнаруживать": {
+            "termId": "node_22421_13",
+            "children": {}
+          },
+          "обновлять": {
+            "termId": "node_22393_13",
+            "children": {}
+          },
+          "обрабатывать": {
+            "termId": "node_22444_13",
+            "children": {}
+          },
+          "обрабатывать данные": {
+            "termId": "node_22443_13",
+            "children": {}
+          },
+          "обслуживать": {
+            "termId": "node_22510_13",
+            "children": {}
+          },
+          "объяснять": {
+            "termId": "node_22385_13",
+            "children": {}
+          },
+          "оперировать (медицина)": {
+            "termId": "node_22417_13",
+            "children": {}
+          },
+          "описывать": {
+            "termId": "node_22378_13",
+            "children": {}
+          },
+          "определять": {
+            "termId": "node_22379_13",
+            "children": {}
+          },
+          "оптимизировать": {
+            "termId": "node_22437_13",
+            "children": {}
+          },
+          "организовывать": {
+            "termId": "node_22485_13",
+            "children": {}
+          },
+          "осуществлять аудиторскую проверку": {
+            "termId": "node_30313_13",
+            "children": {}
+          },
+          "осуществлять медицинский уход": {
+            "termId": "node_22467_13",
+            "children": {}
+          },
+          "оценивать": {
+            "termId": "node_22480_13",
+            "children": {}
+          },
+          "паять": {
+            "termId": "node_15526_13",
+            "children": {}
+          },
+          "перерабатывать": {
+            "termId": "node_22442_13",
+            "children": {}
+          },
+          "пилить": {
+            "termId": "node_16123_13",
+            "children": {}
+          },
+          "пилотировать": {
+            "termId": "node_22440_13",
+            "children": {}
+          },
+          "планировать": {
+            "termId": "node_22486_13",
+            "children": {}
+          },
+          "повышать осведомленность сотрудников": {
+            "termId": "node_22487_13",
+            "children": {}
+          },
+          "подготавливать": {
+            "termId": "node_22398_13",
+            "children": {}
+          },
+          "поддерживать": {
+            "termId": "node_22399_13",
+            "children": {}
+          },
+          "покупать": {
+            "termId": "node_22493_13",
+            "children": {}
+          },
+          "полировать": {
+            "termId": "node_15339_13",
+            "children": {}
+          },
+          "получать": {
+            "termId": "node_22448_13",
+            "children": {}
+          },
+          "предотвращать": {
+            "termId": "node_22441_13",
+            "children": {}
+          },
+          "представлять": {
+            "termId": "node_22508_13",
+            "children": {}
+          },
+          "презентовать": {
+            "termId": "node_22519_13",
+            "children": {}
+          },
+          "приветствовать кого-то": {
+            "termId": "node_22400_13",
+            "children": {}
+          },
+          "придавать": {
+            "termId": "node_22387_13",
+            "children": {}
+          },
+          "признавать": {
+            "termId": "node_22517_13",
+            "children": {}
+          },
+          "прикручивать": {
+            "termId": "node_16126_13",
+            "children": {}
+          },
+          "принимать": {
+            "termId": "node_22462_13",
+            "children": {}
+          },
+          "принимать доставку товаров": {
+            "termId": "node_22447_13",
+            "children": {}
+          },
+          "принимать заказ": {
+            "termId": "node_22511_13",
+            "children": {}
+          },
+          "принимать товары": {
+            "termId": "node_22446_13",
+            "children": {}
+          },
+          "принимать участие в чем-то": {
+            "termId": "node_22397_13",
+            "children": {}
+          },
+          "проверять": {
+            "termId": "node_22412_13",
+            "children": {}
+          },
+          "прогнозировать": {
+            "termId": "node_22474_13",
+            "children": {}
+          },
+          "программировать": {
+            "termId": "node_22445_13",
+            "children": {}
+          },
+          "продавать": {
+            "termId": "node_22509_13",
+            "children": {}
+          },
+          "проектировать": {
+            "termId": "node_22512_13",
+            "children": {}
+          },
+          "производить": {
+            "termId": "node_22433_13",
+            "children": {}
+          },
+          "работать в команде": {
+            "termId": "node_22401_13",
+            "children": {}
+          },
+          "развивать": {
+            "termId": "node_22513_13",
+            "children": {}
+          },
+          "разводить": {
+            "termId": "node_22407_13",
+            "children": {}
+          },
+          "разгружать": {
+            "termId": "node_22470_13",
+            "children": {}
+          },
+          "разъединять (инженерия)": {
+            "termId": "node_22457_13",
+            "children": {}
+          },
+          "распространять": {
+            "termId": "node_22381_13",
+            "children": {}
+          },
+          "расследовать": {
+            "termId": "node_22383_13",
+            "children": {}
+          },
+          "растворять (химия)": {
+            "termId": "node_22456_13",
+            "children": {}
+          },
+          "расширять": {
+            "termId": "node_22478_13",
+            "children": {}
+          },
+          "резать": {
+            "termId": "node_15340_13",
+            "children": {}
+          },
+          "рекламировать что-то": {
+            "termId": "node_22494_13",
+            "children": {}
+          },
+          "ремонтировать": {
+            "termId": "node_22451_13",
+            "children": {}
+          },
+          "решать": {
+            "termId": "node_22455_13",
+            "children": {}
+          },
+          "решать конфликты": {
+            "termId": "node_22491_13",
+            "children": {}
+          },
+          "решать проблемы": {
+            "termId": "node_22490_13",
+            "children": {}
+          },
+          "рисовать": {
+            "termId": "node_16445_13",
+            "children": {}
+          },
+          "рисовать что-нибудь": {
+            "termId": "node_22382_13",
+            "children": {}
+          },
+          "сваривать метал": {
+            "termId": "node_15799_13",
+            "children": {}
+          },
+          "сверлить": {
+            "termId": "node_16447_13",
+            "children": {}
+          },
+          "сертифицировать": {
+            "termId": "node_22518_13",
+            "children": {}
+          },
+          "синтезировать": {
+            "termId": "node_22392_13",
+            "children": {}
+          },
+          "складировать": {
+            "termId": "node_22458_13",
+            "children": {}
+          },
+          "следить за": {
+            "termId": "node_22502_13",
+            "children": {}
+          },
+          "следовать": {
+            "termId": "node_22425_13",
+            "children": {}
+          },
+          "смешивать": {
+            "termId": "node_16128_13",
+            "children": {}
+          },
+          "снабжать": {
+            "termId": "node_22459_13",
+            "children": {}
+          },
+          "собирать": {
+            "termId": "node_22372_13",
+            "children": {}
+          },
+          "советовать": {
+            "termId": "node_22394_13",
+            "children": {}
+          },
+          "создавать": {
+            "termId": "node_22376_13",
+            "children": {}
+          },
+          "сообщать о": {
+            "termId": "node_22389_13",
+            "children": {}
+          },
+          "составлять": {
+            "termId": "node_22374_13",
+            "children": {}
+          },
+          "составлять бюджет": {
+            "termId": "node_22497_13",
+            "children": {}
+          },
+          "составлять контракты": {
+            "termId": "node_22482_13",
+            "children": {}
+          },
+          "сотрудничать": {
+            "termId": "node_22396_13",
+            "children": {}
+          },
+          "сравнивать": {
+            "termId": "node_22373_13",
+            "children": {}
+          },
+          "стирать": {
+            "termId": "node_22414_13",
+            "children": {}
+          },
+          "строить": {
+            "termId": "node_22408_13",
+            "children": {}
+          },
+          "структурировать": {
+            "termId": "node_22390_13",
+            "children": {}
+          },
+          "считать": {
+            "termId": "node_22409_13",
+            "children": {}
+          },
+          "транспортировать": {
+            "termId": "node_22468_13",
+            "children": {}
+          },
+          "улучшать": {
+            "termId": "node_22429_13",
+            "children": {}
+          },
+          "упаковывать": {
+            "termId": "node_22439_13",
+            "children": {}
+          },
+          "управлять": {
+            "termId": "node_22484_13",
+            "children": {}
+          },
+          "управлять машинным оборудованием": {
+            "termId": "node_22418_13",
+            "children": {}
+          },
+          "устанавливать расценки": {
+            "termId": "node_22501_13",
+            "children": {}
+          },
+          "утверждать": {
+            "termId": "node_22516_13",
+            "children": {}
+          },
+          "чистить": {
+            "termId": "node_22413_13",
+            "children": {}
+          },
+          "что-то осваивать": {
+            "termId": "node_22388_13",
+            "children": {}
+          },
+          "что-то рекламировать": {
+            "termId": "node_22506_13",
+            "children": {}
+          },
+          "экспериментировать": {
+            "termId": "node_22515_13",
+            "children": {}
+          }
+        }
+      },
+      "социальные и коммуникативные навыки и компетенции": {
+        "termId": "node_16180_13",
+        "children": {
+          "активное участие в обсуждениях": {
+            "termId": "node_15563_13",
+            "children": {}
+          },
+          "межкультурная компетенция": {
+            "termId": "node_15613_13",
+            "children": {}
+          },
+          "методы представления": {
+            "termId": "node_20446_13",
+            "children": {}
+          },
+          "навыки ведения переговоров": {
+            "termId": "node_15580_13",
+            "children": {
+              "дипломатические навыки": {
+                "termId": "node_15630_13",
+                "children": {}
+              },
+              "предотвращение конфликтов": {
+                "termId": "node_15569_13",
+                "children": {}
+              },
+              "разрешение конфликтов": {
+                "termId": "node_15581_13",
+                "children": {}
+              },
+              "способность приходить к консенсусу": {
+                "termId": "node_20444_13",
+                "children": {}
+              },
+              "талант к продажам": {
+                "termId": "node_15743_13",
+                "children": {}
+              },
+              "убедительность": {
+                "termId": "node_15741_13",
+                "children": {}
+              },
+              "умение находить компромиссы": {
+                "termId": "node_20443_13",
+                "children": {}
+              },
+              "урегулирование конфликтов": {
+                "termId": "node_15579_13",
+                "children": {}
+              }
+            }
+          },
+          "образовательная способность": {
+            "termId": "node_15141_13",
+            "children": {
+              "навыки преподавания": {
+                "termId": "node_15142_13",
+                "children": {}
+              }
+            }
+          },
+          "общение на английском языке": {
+            "termId": "node_30325_13",
+            "children": {}
+          },
+          "общение на иностранных языках": {
+            "termId": "node_30326_13",
+            "children": {}
+          },
+          "оонимание речи": {
+            "termId": "node_15124_13",
+            "children": {}
+          },
+          "основные навыки вербальной коммуникации": {
+            "termId": "node_20445_13",
+            "children": {
+              "грамотное письмо": {
+                "termId": "node_20450_13",
+                "children": {}
+              },
+              "правописание": {
+                "termId": "node_20451_13",
+                "children": {}
+              }
+            }
+          },
+          "письменные навыки": {
+            "termId": "node_15401_13",
+            "children": {
+              "обработка технической информации и документации": {
+                "termId": "node_15807_13",
+                "children": {}
+              },
+              "разработка": {
+                "termId": "node_15564_13",
+                "children": {}
+              },
+              "творческий стиль письма": {
+                "termId": "node_15603_13",
+                "children": {}
+              },
+              "четкий стиль письма": {
+                "termId": "node_15389_13",
+                "children": {}
+              },
+              "элегантный стиль письма": {
+                "termId": "node_15412_13",
+                "children": {}
+              }
+            }
+          },
+          "поддержание контактов": {
+            "termId": "node_20449_13",
+            "children": {}
+          },
+          "поддержка клиента": {
+            "termId": "node_30324_13",
+            "children": {}
+          },
+          "проведение интервью": {
+            "termId": "node_30328_13",
+            "children": {}
+          },
+          "проведение опросов": {
+            "termId": "node_20447_13",
+            "children": {}
+          },
+          "прослушивание": {
+            "termId": "node_14958_13",
+            "children": {}
+          },
+          "профессиональные навыки общения": {
+            "termId": "node_30327_13",
+            "children": {}
+          },
+          "профориентация": {
+            "termId": "node_15143_13",
+            "children": {
+              "ориентация на клиента": {
+                "termId": "node_15229_13",
+                "children": {}
+              }
+            }
+          },
+          "работа в команде": {
+            "termId": "node_15748_13",
+            "children": {
+              "способность мотивации": {
+                "termId": "node_15675_13",
+                "children": {}
+              },
+              "тимбилдинг": {
+                "termId": "node_15805_13",
+                "children": {}
+              },
+              "управленческая команда": {
+                "termId": "node_15804_13",
+                "children": {}
+              }
+            }
+          },
+          "риторические навыки": {
+            "termId": "node_15788_13",
+            "children": {}
+          },
+          "установление контактов": {
+            "termId": "node_20448_13",
+            "children": {}
+          },
+          "устное выражение": {
+            "termId": "node_15122_13",
+            "children": {}
+          },
+          "участие в заседаниях": {
+            "termId": "node_30329_13",
+            "children": {}
+          },
+          "ясное и четкое произношение": {
+            "termId": "node_15378_13",
+            "children": {}
+          }
+        }
+      },
+      "управленческие и организационные навыки": {
+        "termId": "node_15596_13",
+        "children": {
+          "внедрение стандартов": {
+            "termId": "node_30319_13",
+            "children": {}
+          },
+          "задатки лидерства": {
+            "termId": "node_15686_13",
+            "children": {}
+          },
+          "координирование": {
+            "termId": "node_15140_13",
+            "children": {}
+          },
+          "методы управления": {
+            "termId": "node_30317_13",
+            "children": {}
+          },
+          "многозадачность": {
+            "termId": "node_15740_13",
+            "children": {}
+          },
+          "мониторинг стандартов эффективности организации": {
+            "termId": "node_15715_13",
+            "children": {}
+          },
+          "надзор": {
+            "termId": "node_15236_13",
+            "children": {}
+          },
+          "независимость": {
+            "termId": "node_15244_13",
+            "children": {}
+          },
+          "оперативное планирование": {
+            "termId": "node_30318_13",
+            "children": {}
+          },
+          "постановка целей": {
+            "termId": "node_15566_13",
+            "children": {}
+          },
+          "предпринимательское мышление": {
+            "termId": "node_15434_13",
+            "children": {}
+          },
+          "принятие риска": {
+            "termId": "node_15792_13",
+            "children": {}
+          },
+          "решительность": {
+            "termId": "node_15616_13",
+            "children": {}
+          },
+          "способность к самоорганизации": {
+            "termId": "node_15749_13",
+            "children": {}
+          },
+          "стратегическое планирование": {
+            "termId": "node_15717_13",
+            "children": {}
+          },
+          "тайм менеджмент": {
+            "termId": "node_15664_13",
+            "children": {}
+          },
+          "управление материальными ресурсами": {
+            "termId": "node_15138_13",
+            "children": {}
+          },
+          "управление средствами": {
+            "termId": "node_15137_13",
+            "children": {}
+          },
+          "управление трудовой деятельностью": {
+            "termId": "node_30316_13",
+            "children": {}
+          },
+          "управление человеческими ресурсами": {
+            "termId": "node_15139_13",
+            "children": {}
+          }
+        }
+      },
+      "художественные навыки и компетенции": {
+        "termId": "node_15116_13",
+        "children": {
+          "актерский талант": {
+            "termId": "node_15208_13",
+            "children": {}
+          },
+          "креативность": {
+            "termId": "node_16302_13",
+            "children": {}
+          },
+          "музыкальность": {
+            "termId": "node_15118_13",
+            "children": {
+              "чувство ритма": {
+                "termId": "node_15210_13",
+                "children": {}
+              }
+            }
+          },
+          "способность имитировать": {
+            "termId": "node_16335_13",
+            "children": {}
+          },
+          "талант к музыке": {
+            "termId": "node_16346_13",
+            "children": {}
+          },
+          "талант к рисованию": {
+            "termId": "node_15209_13",
+            "children": {}
+          },
+          "чувство моды и стиля": {
+            "termId": "node_15120_13",
+            "children": {}
+          },
+          "чувство эстетики": {
+            "termId": "node_16091_13",
+            "children": {
+              "чувство формы и пространства": {
+                "termId": "node_15215_13",
+                "children": {}
+              },
+              "чувство цвета": {
+                "termId": "node_15213_13",
+                "children": {}
+              }
+            }
+          }
+        }
+      },
+      "языки": {
+        "termId": "node_15179_13",
+        "children": {
+          "албанский": {
+            "termId": "node_15105_13",
+            "children": {}
+          },
+          "английский": {
+            "termId": "node_15647_13",
+            "children": {
+              "деловой английский": {
+                "termId": "node_15264_13",
+                "children": {}
+              },
+              "технический английский": {
+                "termId": "node_15104_13",
+                "children": {}
+              }
+            }
+          },
+          "арабский": {
+            "termId": "node_15499_13",
+            "children": {}
+          },
+          "африканский": {
+            "termId": "node_15498_13",
+            "children": {}
+          },
+          "баскский": {
+            "termId": "node_15106_13",
+            "children": {}
+          },
+          "белорусский": {
+            "termId": "node_15501_13",
+            "children": {}
+          },
+          "бенгальский": {
+            "termId": "node_15502_13",
+            "children": {}
+          },
+          "болгарский": {
+            "termId": "node_15167_13",
+            "children": {}
+          },
+          "боснийский": {
+            "termId": "node_15503_13",
+            "children": {}
+          },
+          "венгерский": {
+            "termId": "node_15673_13",
+            "children": {}
+          },
+          "вьетнамский": {
+            "termId": "node_15520_13",
+            "children": {}
+          },
+          "гаэльский": {
+            "termId": "node_15509_13",
+            "children": {}
+          },
+          "голландский": {
+            "termId": "node_15635_13",
+            "children": {}
+          },
+          "греческий": {
+            "termId": "node_15665_13",
+            "children": {}
+          },
+          "датский": {
+            "termId": "node_15615_13",
+            "children": {}
+          },
+          "иврит": {
+            "termId": "node_15510_13",
+            "children": {}
+          },
+          "исландский": {
+            "termId": "node_15674_13",
+            "children": {}
+          },
+          "испанский": {
+            "termId": "node_15710_13",
+            "children": {}
+          },
+          "итальянский": {
+            "termId": "node_15680_13",
+            "children": {}
+          },
+          "кантонский": {
+            "termId": "node_15504_13",
+            "children": {}
+          },
+          "каталонский": {
+            "termId": "node_15107_13",
+            "children": {}
+          },
+          "китайский": {
+            "termId": "node_15505_13",
+            "children": {}
+          },
+          "корейский": {
+            "termId": "node_15515_13",
+            "children": {}
+          },
+          "латвийский": {
+            "termId": "node_15700_13",
+            "children": {}
+          },
+          "литовский": {
+            "termId": "node_15701_13",
+            "children": {}
+          },
+          "македонский": {
+            "termId": "node_15108_13",
+            "children": {}
+          },
+          "малайский": {
+            "termId": "node_15516_13",
+            "children": {}
+          },
+          "мальтийский": {
+            "termId": "node_15702_13",
+            "children": {}
+          },
+          "мандарин": {
+            "termId": "node_15109_13",
+            "children": {}
+          },
+          "немецкий": {
+            "termId": "node_15661_13",
+            "children": {}
+          },
+          "норвежский": {
+            "termId": "node_15703_13",
+            "children": {}
+          },
+          "польский": {
+            "termId": "node_15704_13",
+            "children": {}
+          },
+          "португальский": {
+            "termId": "node_15705_13",
+            "children": {}
+          },
+          "ретороманский диалект": {
+            "termId": "node_15111_13",
+            "children": {}
+          },
+          "родной язык": {
+            "termId": "node_15713_13",
+            "children": {}
+          },
+          "румынский": {
+            "termId": "node_15706_13",
+            "children": {}
+          },
+          "русский": {
+            "termId": "node_15113_13",
+            "children": {}
+          },
+          "сардинский": {
+            "termId": "node_15114_13",
+            "children": {}
+          },
+          "сербский": {
+            "termId": "node_15517_13",
+            "children": {}
+          },
+          "словацкий": {
+            "termId": "node_15707_13",
+            "children": {}
+          },
+          "словенский": {
+            "termId": "node_15709_13",
+            "children": {}
+          },
+          "тайский": {
+            "termId": "node_15518_13",
+            "children": {}
+          },
+          "турецкий": {
+            "termId": "node_15712_13",
+            "children": {}
+          },
+          "украинский": {
+            "termId": "node_15115_13",
+            "children": {}
+          },
+          "урду": {
+            "termId": "node_15519_13",
+            "children": {}
+          },
+          "фарси": {
+            "termId": "node_15507_13",
+            "children": {}
+          },
+          "финский": {
+            "termId": "node_15657_13",
+            "children": {}
+          },
+          "фламандский": {
+            "termId": "node_15508_13",
+            "children": {}
+          },
+          "французский": {
+            "termId": "node_15660_13",
+            "children": {
+              "провансальский": {
+                "termId": "node_15110_13",
+                "children": {}
+              }
+            }
+          },
+          "хинди": {
+            "termId": "node_15513_13",
+            "children": {}
+          },
+          "хорватский": {
+            "termId": "node_15506_13",
+            "children": {}
+          },
+          "чешский": {
+            "termId": "node_15614_13",
+            "children": {}
+          },
+          "шведский": {
+            "termId": "node_15711_13",
+            "children": {}
+          },
+          "эстонский": {
+            "termId": "node_15651_13",
+            "children": {}
+          },
+          "японский": {
+            "termId": "node_15514_13",
+            "children": {}
+          }
+        }
+      }
+    }
+  },
+  "специальные знания и умения в области профессиональной деятельности": {
+    "termId": "node_16135_13",
+    "children": {
+      "информационные технологии": {
+        "termId": "node_15573_13",
+        "children": {
+          "IT-консультации": {
+            "termId": "node_17540_13",
+            "children": {
+              "выбор IT-системы": {
+                "termId": "node_30201_13",
+                "children": {}
+              },
+              "вычисление аппаратного обеспечения": {
+                "termId": "node_30199_13",
+                "children": {}
+              },
+              "дизайн IT-системы": {
+                "termId": "node_30200_13",
+                "children": {}
+              },
+              "определение программного обеспечения": {
+                "termId": "node_30202_13",
+                "children": {}
+              }
+            }
+          },
+          "IT-лицензии": {
+            "termId": "node_30205_13",
+            "children": {}
+          },
+          "IT поддержка": {
+            "termId": "node_17554_13",
+            "children": {
+              "поддержка IT-оборудования": {
+                "termId": "node_17555_13",
+                "children": {}
+              },
+              "поддержка IT-разработчика": {
+                "termId": "node_17557_13",
+                "children": {}
+              },
+              "поддержка пользователей (IT)": {
+                "termId": "node_17558_13",
+                "children": {}
+              },
+              "поддержка программного обеспечения (IT)": {
+                "termId": "node_17556_13",
+                "children": {}
+              }
+            }
+          },
+          "IT-управление": {
+            "termId": "node_17550_13",
+            "children": {
+              "мониторинг информационных систем": {
+                "termId": "node_30197_13",
+                "children": {}
+              },
+              "управление программным обеспечением": {
+                "termId": "node_30198_13",
+                "children": {}
+              }
+            }
+          },
+          "IT-установка и настройка": {
+            "termId": "node_17541_13",
+            "children": {
+              "ITобслуживание, техническое обслуживание и ремонт": {
+                "termId": "node_30204_13",
+                "children": {}
+              },
+              "конфигурация аппаратных средств": {
+                "termId": "node_17543_13",
+                "children": {}
+              },
+              "конфигурация операционной системы": {
+                "termId": "node_17547_13",
+                "children": {}
+              },
+              "конфигурация программного обеспечения": {
+                "termId": "node_17545_13",
+                "children": {}
+              },
+              "конфигурация сети": {
+                "termId": "node_17549_13",
+                "children": {}
+              },
+              "поиск и устранение неисправностей IT-оборудования": {
+                "termId": "node_30203_13",
+                "children": {}
+              },
+              "сетевая установка (IT)": {
+                "termId": "node_17548_13",
+                "children": {}
+              },
+              "установка аппаратного обеспечения": {
+                "termId": "node_17542_13",
+                "children": {}
+              },
+              "установка операционной системы": {
+                "termId": "node_17546_13",
+                "children": {}
+              },
+              "установка программного обеспечения": {
+                "termId": "node_17544_13",
+                "children": {}
+              }
+            }
+          },
+          "анализ IT": {
+            "termId": "node_17283_13",
+            "children": {
+              "анализ процессов (IT)": {
+                "termId": "node_17287_13",
+                "children": {}
+              },
+              "операционный анализ (IT)": {
+                "termId": "node_17286_13",
+                "children": {}
+              },
+              "составление технических характеристик": {
+                "termId": "node_17284_13",
+                "children": {}
+              },
+              "составление целевых характеристик": {
+                "termId": "node_17285_13",
+                "children": {}
+              }
+            }
+          },
+          "документация (IT)": {
+            "termId": "node_17418_13",
+            "children": {
+              "кодовая документация": {
+                "termId": "node_17419_13",
+                "children": {}
+              },
+              "пользовательская документация (IT)": {
+                "termId": "node_17420_13",
+                "children": {}
+              },
+              "эксплуатационная документация (IT)": {
+                "termId": "node_17421_13",
+                "children": {}
+              }
+            }
+          },
+          "знание баз данных": {
+            "termId": "node_17492_13",
+            "children": {
+              "OLAP": {
+                "termId": "node_17513_13",
+                "children": {}
+              },
+              "анализ баз данных": {
+                "termId": "node_30192_13",
+                "children": {}
+              },
+              "модели баз данных": {
+                "termId": "node_17493_13",
+                "children": {
+                  "иерархическая модель баз данных": {
+                    "termId": "node_17494_13",
+                    "children": {}
+                  },
+                  "объектно-ориентированная модель баз данных": {
+                    "termId": "node_17497_13",
+                    "children": {}
+                  },
+                  "реляционная модель базы данных": {
+                    "termId": "node_17496_13",
+                    "children": {}
+                  },
+                  "сетевая модель баз данных": {
+                    "termId": "node_17495_13",
+                    "children": {}
+                  }
+                }
+              },
+              "оптимизация баз данных": {
+                "termId": "node_17512_13",
+                "children": {}
+              },
+              "организация хранилищ данных": {
+                "termId": "node_17514_13",
+                "children": {}
+              },
+              "развитие баз данных": {
+                "termId": "node_17506_13",
+                "children": {
+                  "внедрение баз данных": {
+                    "termId": "node_30194_13",
+                    "children": {}
+                  },
+                  "моделирование данных": {
+                    "termId": "node_17507_13",
+                    "children": {
+                      "IDEF1X": {
+                        "termId": "node_17510_13",
+                        "children": {}
+                      },
+                      "сущностно-реляционная модель данных": {
+                        "termId": "node_17508_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "проектирование базы данных": {
+                    "termId": "node_30193_13",
+                    "children": {}
+                  }
+                }
+              },
+              "сбор данных": {
+                "termId": "node_17515_13",
+                "children": {}
+              },
+              "управление базами данных": {
+                "termId": "node_17511_13",
+                "children": {}
+              },
+              "языки баз данных": {
+                "termId": "node_17498_13",
+                "children": {
+                  "Clipper": {
+                    "termId": "node_17504_13",
+                    "children": {}
+                  },
+                  "Natural": {
+                    "termId": "node_17505_13",
+                    "children": {}
+                  },
+                  "SQL": {
+                    "termId": "node_17499_13",
+                    "children": {
+                      "PL/SQL": {
+                        "termId": "node_17501_13",
+                        "children": {}
+                      },
+                      "SQL+": {
+                        "termId": "node_17502_13",
+                        "children": {}
+                      },
+                      "T-SQL": {
+                        "termId": "node_17503_13",
+                        "children": {}
+                      },
+                      "встроенный SQL": {
+                        "termId": "node_17500_13",
+                        "children": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "интернет и мультимедиа": {
+            "termId": "node_17516_13",
+            "children": {
+              "веб-администрирование": {
+                "termId": "node_17520_13",
+                "children": {
+                  "администрирование электронной почты": {
+                    "termId": "node_30195_13",
+                    "children": {}
+                  },
+                  "управление веб-сайтами": {
+                    "termId": "node_30196_13",
+                    "children": {}
+                  }
+                }
+              },
+              "доступный веб-дизайн": {
+                "termId": "node_17521_13",
+                "children": {}
+              },
+              "мультимедийное программирование": {
+                "termId": "node_17517_13",
+                "children": {}
+              },
+              "разработка мультимедийного программного обеспечения": {
+                "termId": "node_17518_13",
+                "children": {}
+              },
+              "управление мультимедийными проектами": {
+                "termId": "node_17519_13",
+                "children": {}
+              },
+              "цифровые аудио и видео форматы": {
+                "termId": "node_17522_13",
+                "children": {
+                  "AAC": {
+                    "termId": "node_17525_13",
+                    "children": {}
+                  },
+                  "ATRAC": {
+                    "termId": "node_17527_13",
+                    "children": {}
+                  },
+                  "AVI": {
+                    "termId": "node_17537_13",
+                    "children": {}
+                  },
+                  "BMP": {
+                    "termId": "node_17535_13",
+                    "children": {}
+                  },
+                  "DiVX": {
+                    "termId": "node_17538_13",
+                    "children": {}
+                  },
+                  "DV (цифровые аудио и видео форматы)": {
+                    "termId": "node_17532_13",
+                    "children": {}
+                  },
+                  "FLAC": {
+                    "termId": "node_17528_13",
+                    "children": {}
+                  },
+                  "JPEG": {
+                    "termId": "node_17529_13",
+                    "children": {
+                      "JPEG 2000": {
+                        "termId": "node_17530_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "MP3": {
+                    "termId": "node_17523_13",
+                    "children": {}
+                  },
+                  "MPEG": {
+                    "termId": "node_17531_13",
+                    "children": {}
+                  },
+                  "OGG-Vorbis": {
+                    "termId": "node_17524_13",
+                    "children": {}
+                  },
+                  "PNG": {
+                    "termId": "node_17534_13",
+                    "children": {}
+                  },
+                  "PSD": {
+                    "termId": "node_17536_13",
+                    "children": {}
+                  },
+                  "TIFF": {
+                    "termId": "node_17533_13",
+                    "children": {}
+                  },
+                  "WAV": {
+                    "termId": "node_17539_13",
+                    "children": {}
+                  },
+                  "WMA": {
+                    "termId": "node_17526_13",
+                    "children": {}
+                  }
+                }
+              }
+            }
+          },
+          "информационная безопасность": {
+            "termId": "node_17475_13",
+            "children": {
+              "IDS": {
+                "termId": "node_17484_13",
+                "children": {}
+              },
+              "анализ информационной безопасности": {
+                "termId": "node_17488_13",
+                "children": {
+                  "базовая проверка безопасности": {
+                    "termId": "node_17489_13",
+                    "children": {}
+                  }
+                }
+              },
+              "брандмауэр": {
+                "termId": "node_17483_13",
+                "children": {}
+              },
+              "защита данных": {
+                "termId": "node_17491_13",
+                "children": {}
+              },
+              "защита от вирусов": {
+                "termId": "node_17482_13",
+                "children": {}
+              },
+              "концепции безопасности IT": {
+                "termId": "node_17490_13",
+                "children": {}
+              },
+              "криптография": {
+                "termId": "node_17480_13",
+                "children": {}
+              },
+              "стандарты безопасности данных": {
+                "termId": "node_17476_13",
+                "children": {
+                  "ITSEC": {
+                    "termId": "node_17478_13",
+                    "children": {}
+                  },
+                  "TCSEC": {
+                    "termId": "node_17479_13",
+                    "children": {}
+                  },
+                  "Общие критерии оценки безопасности информационных технологий": {
+                    "termId": "node_17477_13",
+                    "children": {}
+                  }
+                }
+              },
+              "стратегии резервного копирования": {
+                "termId": "node_17481_13",
+                "children": {}
+              },
+              "фильтрация контента": {
+                "termId": "node_17485_13",
+                "children": {
+                  "защита от спама": {
+                    "termId": "node_17486_13",
+                    "children": {}
+                  },
+                  "защита от фишинга": {
+                    "termId": "node_18851_13",
+                    "children": {}
+                  }
+                }
+              },
+              "цифровые подписи": {
+                "termId": "node_17487_13",
+                "children": {}
+              }
+            }
+          },
+          "конкретные сферы IT": {
+            "termId": "node_17559_13",
+            "children": {
+              "администрирование информационных систем": {
+                "termId": "node_17590_13",
+                "children": {}
+              },
+              "библиотека программного обеспечения": {
+                "termId": "node_17574_13",
+                "children": {}
+              },
+              "бизнес-информационные системы": {
+                "termId": "node_17575_13",
+                "children": {
+                  "CRM (IT)": {
+                    "termId": "node_17577_13",
+                    "children": {}
+                  },
+                  "информационные системы предприятий": {
+                    "termId": "node_17576_13",
+                    "children": {}
+                  },
+                  "системы электронной коммерции": {
+                    "termId": "node_17578_13",
+                    "children": {}
+                  }
+                }
+              },
+              "био- информационные системы": {
+                "termId": "node_17587_13",
+                "children": {}
+              },
+              "взаимодействие человека с компьютером": {
+                "termId": "node_18854_13",
+                "children": {}
+              },
+              "внедрение компилятора": {
+                "termId": "node_17561_13",
+                "children": {}
+              },
+              "высокопроизводительные вычисления": {
+                "termId": "node_17563_13",
+                "children": {}
+              },
+              "геополитические информационные системы": {
+                "termId": "node_17586_13",
+                "children": {}
+              },
+              "графическая обработка данных": {
+                "termId": "node_17568_13",
+                "children": {
+                  "виртуальная реальность": {
+                    "termId": "node_17569_13",
+                    "children": {}
+                  }
+                }
+              },
+              "информационные системы в области экологии": {
+                "termId": "node_17585_13",
+                "children": {}
+              },
+              "информационные системы СМИ": {
+                "termId": "node_17589_13",
+                "children": {}
+              },
+              "Информационные технологии и общество": {
+                "termId": "node_17591_13",
+                "children": {}
+              },
+              "искусственный интеллект": {
+                "termId": "node_18853_13",
+                "children": {}
+              },
+              "медицинская информатика": {
+                "termId": "node_17588_13",
+                "children": {}
+              },
+              "моделирование (IT)": {
+                "termId": "node_17571_13",
+                "children": {}
+              },
+              "одновременные вычисления": {
+                "termId": "node_18855_13",
+                "children": {}
+              },
+              "офисное программное обеспечение": {
+                "termId": "node_17573_13",
+                "children": {}
+              },
+              "параллельные вычисления": {
+                "termId": "node_17564_13",
+                "children": {}
+              },
+              "преступность в области информационных технологий": {
+                "termId": "node_30215_13",
+                "children": {}
+              },
+              "программное обеспечение с открытым исходным кодом": {
+                "termId": "node_17584_13",
+                "children": {}
+              },
+              "распознавание языков (IT)": {
+                "termId": "node_17570_13",
+                "children": {}
+              },
+              "распределенные вычисления": {
+                "termId": "node_17562_13",
+                "children": {}
+              },
+              "сельскохозяйственные информационные системы": {
+                "termId": "node_17593_13",
+                "children": {}
+              },
+              "системная архитектура": {
+                "termId": "node_18852_13",
+                "children": {}
+              },
+              "системы реального времени": {
+                "termId": "node_17565_13",
+                "children": {}
+              },
+              "социальные информационные системы": {
+                "termId": "node_17592_13",
+                "children": {}
+              },
+              "телематика": {
+                "termId": "node_17566_13",
+                "children": {
+                  "интеллектуальные транспортные системы": {
+                    "termId": "node_17567_13",
+                    "children": {}
+                  }
+                }
+              },
+              "теоретическая информатика": {
+                "termId": "node_17560_13",
+                "children": {}
+              },
+              "управление знаниями (IT)": {
+                "termId": "node_17572_13",
+                "children": {}
+              },
+              "электронное обучение": {
+                "termId": "node_17581_13",
+                "children": {
+                  "обучение на базе компьютера": {
+                    "termId": "node_17582_13",
+                    "children": {}
+                  },
+                  "онлайн-курсы": {
+                    "termId": "node_17583_13",
+                    "children": {}
+                  }
+                }
+              }
+            }
+          },
+          "обучение (IT)": {
+            "termId": "node_17551_13",
+            "children": {
+              "обучение для ключевых пользователей (IT)": {
+                "termId": "node_17553_13",
+                "children": {}
+              },
+              "тренинг для новичков в области IT": {
+                "termId": "node_17552_13",
+                "children": {}
+              }
+            }
+          },
+          "операционные системы": {
+            "termId": "node_17422_13",
+            "children": {
+              "концепции операционных систем": {
+                "termId": "node_17423_13",
+                "children": {}
+              },
+              "системная администрация": {
+                "termId": "node_17424_13",
+                "children": {}
+              }
+            }
+          },
+          "программирование": {
+            "termId": "node_17288_13",
+            "children": {
+              "адаптация компьютерной программы": {
+                "termId": "node_30211_13",
+                "children": {}
+              },
+              "аппаратное программирование": {
+                "termId": "node_17395_13",
+                "children": {
+                  "программирование встроенных систем": {
+                    "termId": "node_17396_13",
+                    "children": {}
+                  }
+                }
+              },
+              "библиотеки и интерфейсы программирования": {
+                "termId": "node_17365_13",
+                "children": {
+                  "CLX": {
+                    "termId": "node_17366_13",
+                    "children": {}
+                  },
+                  "COM": {
+                    "termId": "node_17367_13",
+                    "children": {}
+                  },
+                  "DDE": {
+                    "termId": "node_17368_13",
+                    "children": {}
+                  },
+                  "DirectX": {
+                    "termId": "node_17369_13",
+                    "children": {}
+                  },
+                  "DLL": {
+                    "termId": "node_17376_13",
+                    "children": {}
+                  },
+                  "DOM": {
+                    "termId": "node_17377_13",
+                    "children": {}
+                  },
+                  "MFS": {
+                    "termId": "node_17378_13",
+                    "children": {}
+                  },
+                  "OCI": {
+                    "termId": "node_17379_13",
+                    "children": {}
+                  },
+                  "ODBC": {
+                    "termId": "node_17380_13",
+                    "children": {}
+                  },
+                  "OLE": {
+                    "termId": "node_17381_13",
+                    "children": {}
+                  },
+                  "OpenGL": {
+                    "termId": "node_17382_13",
+                    "children": {}
+                  },
+                  "OWL (IT)": {
+                    "termId": "node_17389_13",
+                    "children": {}
+                  },
+                  "PEAR": {
+                    "termId": "node_17383_13",
+                    "children": {}
+                  },
+                  "Smarty": {
+                    "termId": "node_17384_13",
+                    "children": {}
+                  },
+                  "STL": {
+                    "termId": "node_17385_13",
+                    "children": {}
+                  },
+                  "VCL": {
+                    "termId": "node_17386_13",
+                    "children": {}
+                  },
+                  "WFC": {
+                    "termId": "node_17387_13",
+                    "children": {}
+                  },
+                  "Windows DNA": {
+                    "termId": "node_17388_13",
+                    "children": {}
+                  }
+                }
+              },
+              "объектно-ориентированное программирование": {
+                "termId": "node_17290_13",
+                "children": {}
+              },
+              "оптимизация компьютерной программы": {
+                "termId": "node_30212_13",
+                "children": {}
+              },
+              "организационное программирование": {
+                "termId": "node_17392_13",
+                "children": {}
+              },
+              "отладки программного обеспечения": {
+                "termId": "node_30214_13",
+                "children": {}
+              },
+              "пакетное программирование": {
+                "termId": "node_17393_13",
+                "children": {}
+              },
+              "прикладное программирование": {
+                "termId": "node_17390_13",
+                "children": {}
+              },
+              "программирование в реальном времени": {
+                "termId": "node_17394_13",
+                "children": {}
+              },
+              "системное программирование": {
+                "termId": "node_17391_13",
+                "children": {}
+              },
+              "структурное программирование": {
+                "termId": "node_17289_13",
+                "children": {}
+              },
+              "функциональное программирование": {
+                "termId": "node_17291_13",
+                "children": {}
+              },
+              "языки программирования": {
+                "termId": "node_17292_13",
+                "children": {
+                  "Ada": {
+                    "termId": "node_17332_13",
+                    "children": {}
+                  },
+                  "Algol": {
+                    "termId": "node_17331_13",
+                    "children": {}
+                  },
+                  "APL": {
+                    "termId": "node_17334_13",
+                    "children": {}
+                  },
+                  "Assembler": {
+                    "termId": "node_17333_13",
+                    "children": {}
+                  },
+                  "Basic": {
+                    "termId": "node_17336_13",
+                    "children": {}
+                  },
+                  "C": {
+                    "termId": "node_17335_13",
+                    "children": {}
+                  },
+                  "C#": {
+                    "termId": "node_17338_13",
+                    "children": {}
+                  },
+                  "C++": {
+                    "termId": "node_17337_13",
+                    "children": {}
+                  },
+                  "Cobol": {
+                    "termId": "node_17340_13",
+                    "children": {}
+                  },
+                  "Delphi": {
+                    "termId": "node_17339_13",
+                    "children": {}
+                  },
+                  "Forth": {
+                    "termId": "node_17342_13",
+                    "children": {}
+                  },
+                  "Fortman": {
+                    "termId": "node_17341_13",
+                    "children": {}
+                  },
+                  "Haskell": {
+                    "termId": "node_17343_13",
+                    "children": {}
+                  },
+                  "Java": {
+                    "termId": "node_17344_13",
+                    "children": {}
+                  },
+                  "LISP": {
+                    "termId": "node_17345_13",
+                    "children": {}
+                  },
+                  "Logo": {
+                    "termId": "node_17346_13",
+                    "children": {}
+                  },
+                  "ML": {
+                    "termId": "node_17347_13",
+                    "children": {}
+                  },
+                  "Modula": {
+                    "termId": "node_17348_13",
+                    "children": {}
+                  },
+                  "NATRUAL": {
+                    "termId": "node_17349_13",
+                    "children": {}
+                  },
+                  "Oberon": {
+                    "termId": "node_17350_13",
+                    "children": {}
+                  },
+                  "Pascal": {
+                    "termId": "node_17352_13",
+                    "children": {
+                      "Turbo Pascal": {
+                        "termId": "node_17353_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "Perl": {
+                    "termId": "node_17351_13",
+                    "children": {}
+                  },
+                  "PL/I": {
+                    "termId": "node_17355_13",
+                    "children": {}
+                  },
+                  "Prolog": {
+                    "termId": "node_17354_13",
+                    "children": {}
+                  },
+                  "Python": {
+                    "termId": "node_17357_13",
+                    "children": {}
+                  },
+                  "Smalltalk": {
+                    "termId": "node_17356_13",
+                    "children": {}
+                  },
+                  "VBA": {
+                    "termId": "node_17359_13",
+                    "children": {}
+                  },
+                  "Visual Basic": {
+                    "termId": "node_17358_13",
+                    "children": {}
+                  },
+                  "Visual C": {
+                    "termId": "node_17361_13",
+                    "children": {}
+                  },
+                  "Visual C++": {
+                    "termId": "node_17360_13",
+                    "children": {}
+                  },
+                  "XML": {
+                    "termId": "node_17362_13",
+                    "children": {
+                      "XSL": {
+                        "termId": "node_17363_13",
+                        "children": {}
+                      },
+                      "XSLT": {
+                        "termId": "node_17364_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "языки описания страниц": {
+                    "termId": "node_17293_13",
+                    "children": {
+                      "PCL": {
+                        "termId": "node_17294_13",
+                        "children": {}
+                      },
+                      "PDF": {
+                        "termId": "node_17297_13",
+                        "children": {}
+                      },
+                      "PostScript": {
+                        "termId": "node_17295_13",
+                        "children": {}
+                      },
+                      "Prescribe": {
+                        "termId": "node_17296_13",
+                        "children": {}
+                      },
+                      "SVG": {
+                        "termId": "node_17298_13",
+                        "children": {}
+                      },
+                      "TeX": {
+                        "termId": "node_17299_13",
+                        "children": {
+                          "LaTeX": {
+                            "termId": "node_17300_13",
+                            "children": {}
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "языки программирования интернет и мультимедиа": {
+                    "termId": "node_17301_13",
+                    "children": {
+                      "ASP": {
+                        "termId": "node_17302_13",
+                        "children": {}
+                      },
+                      "CGL": {
+                        "termId": "node_17303_13",
+                        "children": {}
+                      },
+                      "ColdFusion": {
+                        "termId": "node_17304_13",
+                        "children": {}
+                      },
+                      "CSS": {
+                        "termId": "node_17305_13",
+                        "children": {}
+                      },
+                      "DHTML": {
+                        "termId": "node_17306_13",
+                        "children": {}
+                      },
+                      "HTML": {
+                        "termId": "node_17307_13",
+                        "children": {}
+                      },
+                      "JavaScript": {
+                        "termId": "node_17308_13",
+                        "children": {}
+                      },
+                      "JSP": {
+                        "termId": "node_17313_13",
+                        "children": {}
+                      },
+                      "LINGO": {
+                        "termId": "node_17309_13",
+                        "children": {}
+                      },
+                      "PHP": {
+                        "termId": "node_17310_13",
+                        "children": {}
+                      },
+                      "SGML": {
+                        "termId": "node_17311_13",
+                        "children": {}
+                      },
+                      "SSI": {
+                        "termId": "node_17315_13",
+                        "children": {}
+                      },
+                      "VRML": {
+                        "termId": "node_17314_13",
+                        "children": {}
+                      },
+                      "XHTML": {
+                        "termId": "node_17312_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "языки разметки": {
+                    "termId": "node_30213_13",
+                    "children": {}
+                  },
+                  "языки скриптов": {
+                    "termId": "node_17316_13",
+                    "children": {
+                      "ActionScript": {
+                        "termId": "node_17317_13",
+                        "children": {}
+                      },
+                      "AppleScript": {
+                        "termId": "node_17318_13",
+                        "children": {}
+                      },
+                      "Lotus script": {
+                        "termId": "node_17319_13",
+                        "children": {}
+                      },
+                      "REBOL": {
+                        "termId": "node_17320_13",
+                        "children": {}
+                      },
+                      "Rexx": {
+                        "termId": "node_17321_13",
+                        "children": {}
+                      },
+                      "Ruby": {
+                        "termId": "node_17322_13",
+                        "children": {}
+                      },
+                      "UNIX-Shells": {
+                        "termId": "node_17323_13",
+                        "children": {
+                          "bash": {
+                            "termId": "node_17324_13",
+                            "children": {}
+                          },
+                          "Buorne-Shell": {
+                            "termId": "node_17325_13",
+                            "children": {}
+                          },
+                          "csh": {
+                            "termId": "node_17326_13",
+                            "children": {}
+                          },
+                          "ksh": {
+                            "termId": "node_17327_13",
+                            "children": {}
+                          },
+                          "tcsh": {
+                            "termId": "node_17328_13",
+                            "children": {}
+                          }
+                        }
+                      },
+                      "Vbscript": {
+                        "termId": "node_17329_13",
+                        "children": {}
+                      },
+                      "WSH": {
+                        "termId": "node_17330_13",
+                        "children": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "развитие программного обеспечения": {
+            "termId": "node_17397_13",
+            "children": {
+              "алгоритмы": {
+                "termId": "node_17398_13",
+                "children": {}
+              },
+              "дизайн программного обеспечения": {
+                "termId": "node_17407_13",
+                "children": {}
+              },
+              "методы разработки программного обеспечения": {
+                "termId": "node_17400_13",
+                "children": {
+                  "объектно-ориентированный дизайн": {
+                    "termId": "node_17402_13",
+                    "children": {
+                      "UML": {
+                        "termId": "node_17403_13",
+                        "children": {}
+                      }
+                    }
+                  },
+                  "разработка кроссплатформенного программного обеспечения": {
+                    "termId": "node_17405_13",
+                    "children": {}
+                  },
+                  "структурный дизайн": {
+                    "termId": "node_17401_13",
+                    "children": {}
+                  },
+                  "экстремальное программирование": {
+                    "termId": "node_17404_13",
+                    "children": {}
+                  }
+                }
+              },
+              "пользовательская настройка": {
+                "termId": "node_17409_13",
+                "children": {}
+              },
+              "разработка прикладного программного обеспечения": {
+                "termId": "node_17410_13",
+                "children": {}
+              },
+              "разработка систем программного обеспечения": {
+                "termId": "node_17411_13",
+                "children": {}
+              },
+              "системная интеграция": {
+                "termId": "node_17408_13",
+                "children": {}
+              },
+              "спецификация (IT)": {
+                "termId": "node_17406_13",
+                "children": {}
+              },
+              "структуры данных": {
+                "termId": "node_17399_13",
+                "children": {}
+              }
+            }
+          },
+          "сетевые технологии (IT)": {
+            "termId": "node_17425_13",
+            "children": {
+              "администрирование сети": {
+                "termId": "node_17474_13",
+                "children": {}
+              },
+              "модель OSI": {
+                "termId": "node_17426_13",
+                "children": {}
+              },
+              "мониторинг и диагностика сети": {
+                "termId": "node_30208_13",
+                "children": {}
+              },
+              "обработка ошибок сети": {
+                "termId": "node_30207_13",
+                "children": {}
+              },
+              "оптимизации сети": {
+                "termId": "node_30209_13",
+                "children": {}
+              },
+              "сетевая безопасность": {
+                "termId": "node_30210_13",
+                "children": {}
+              },
+              "сетевое планирование": {
+                "termId": "node_17473_13",
+                "children": {}
+              },
+              "сетевые протоколы": {
+                "termId": "node_17438_13",
+                "children": {
+                  "Apple Talk": {
+                    "termId": "node_17439_13",
+                    "children": {}
+                  },
+                  "DSL protocols": {
+                    "termId": "node_17440_13",
+                    "children": {}
+                  },
+                  "EIGRP": {
+                    "termId": "node_17441_13",
+                    "children": {}
+                  },
+                  "E-mail protocols": {
+                    "termId": "node_17442_13",
+                    "children": {}
+                  },
+                  "Ethernet": {
+                    "termId": "node_17448_13",
+                    "children": {}
+                  },
+                  "FTP": {
+                    "termId": "node_17449_13",
+                    "children": {}
+                  },
+                  "HTTP": {
+                    "termId": "node_17450_13",
+                    "children": {}
+                  },
+                  "HTTPS": {
+                    "termId": "node_17451_13",
+                    "children": {}
+                  },
+                  "IPSec": {
+                    "termId": "node_17452_13",
+                    "children": {}
+                  },
+                  "IRC": {
+                    "termId": "node_17453_13",
+                    "children": {}
+                  },
+                  "ISDN protocols": {
+                    "termId": "node_17454_13",
+                    "children": {}
+                  },
+                  "LAT": {
+                    "termId": "node_17457_13",
+                    "children": {}
+                  },
+                  "modern protocols": {
+                    "termId": "node_17458_13",
+                    "children": {}
+                  },
+                  "OFTP": {
+                    "termId": "node_17461_13",
+                    "children": {}
+                  },
+                  "PAP": {
+                    "termId": "node_17462_13",
+                    "children": {}
+                  },
+                  "PPP": {
+                    "termId": "node_17463_13",
+                    "children": {}
+                  },
+                  "SNMP": {
+                    "termId": "node_17464_13",
+                    "children": {}
+                  },
+                  "TCP/IP": {
+                    "termId": "node_17465_13",
+                    "children": {}
+                  },
+                  "Telnet": {
+                    "termId": "node_17466_13",
+                    "children": {}
+                  },
+                  "voice/IP": {
+                    "termId": "node_17467_13",
+                    "children": {}
+                  },
+                  "VPN protocols": {
+                    "termId": "node_17468_13",
+                    "children": {}
+                  },
+                  "WAP": {
+                    "termId": "node_17472_13",
+                    "children": {}
+                  }
+                }
+              },
+              "сетевые типы и топологии": {
+                "termId": "node_17427_13",
+                "children": {
+                  "Extranet": {
+                    "termId": "node_17429_13",
+                    "children": {}
+                  },
+                  "Internet": {
+                    "termId": "node_17437_13",
+                    "children": {}
+                  },
+                  "Intranet": {
+                    "termId": "node_17428_13",
+                    "children": {}
+                  },
+                  "LAN": {
+                    "termId": "node_17434_13",
+                    "children": {}
+                  },
+                  "MAN": {
+                    "termId": "node_17435_13",
+                    "children": {}
+                  },
+                  "SAN": {
+                    "termId": "node_17430_13",
+                    "children": {}
+                  },
+                  "Token ring": {
+                    "termId": "node_17433_13",
+                    "children": {}
+                  },
+                  "WAN": {
+                    "termId": "node_17436_13",
+                    "children": {}
+                  },
+                  "клиент-сервер": {
+                    "termId": "node_17432_13",
+                    "children": {}
+                  },
+                  "пиринг": {
+                    "termId": "node_17431_13",
+                    "children": {}
+                  }
+                }
+              }
+            }
+          },
+          "тестирование (IT)": {
+            "termId": "node_17412_13",
+            "children": {
+              "верификация программного обеспечения": {
+                "termId": "node_30216_13",
+                "children": {}
+              },
+              "интеграционные тесты (IT)": {
+                "termId": "node_17414_13",
+                "children": {}
+              },
+              "приемочные испытания": {
+                "termId": "node_17416_13",
+                "children": {}
+              },
+              "системные тесты (IT)": {
+                "termId": "node_17415_13",
+                "children": {}
+              },
+              "составление тестовых скриптов": {
+                "termId": "node_17417_13",
+                "children": {}
+              },
+              "тесты модулей": {
+                "termId": "node_17413_13",
+                "children": {}
+              },
+              "тесты пользовательского интерфейса": {
+                "termId": "node_30217_13",
+                "children": {}
+              }
+            }
+          },
+          "управление ИТ-проектами": {
+            "termId": "node_17280_13",
+            "children": {
+              "ITIL": {
+                "termId": "node_17281_13",
+                "children": {}
+              },
+              "координация деятельности в области IT": {
+                "termId": "node_30206_13",
+                "children": {}
+              },
+              "оценка стоимости (IT)": {
+                "termId": "node_17282_13",
+                "children": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

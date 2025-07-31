@@ -1,0 +1,122 @@
+#!/usr/bin/env python3
+"""
+Упрощенная версия API без модели Qwen
+"""
+
+import json
+from pathlib import Path
+from typing import List, Dict
+
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+import uvicorn
+
+
+# Pydantic модели
+class VacancyRequest(BaseModel):
+    body: str
+
+
+class SkillsResponse(BaseModel):
+    soft: List[str]
+    hard: List[str]
+
+
+class SimpleSkillExtractor:
+    def __init__(self):
+        self.soft_skills = []
+        self.hard_skills = []
+        self._load_skills()
+        
+    def _load_skills(self):
+        """Загружает навыки из файлов"""
+        base_path = Path(__file__).parent.parent
+        
+        # Загружаем софт-скиллы
+        soft_path = base_path / "disco" / "skils" / "soft.txt"
+        if soft_path.exists():
+            with open(soft_path, 'r', encoding='utf-8') as f:
+                self.soft_skills = [line.strip() for line in f.readlines() if line.strip()]
+        
+        # Загружаем хард-скиллы
+        hard_path = base_path / "disco" / "skils" / "hard.txt"
+        if hard_path.exists():
+            with open(hard_path, 'r', encoding='utf-8') as f:
+                self.hard_skills = [line.strip() for line in f.readlines() if line.strip()]
+    
+    def extract_skills(self, description: str) -> Dict[str, List[str]]:
+        """Простое извлечение навыков на основе ключевых слов"""
+        description_lower = description.lower()
+        
+        # Ищем совпадения в софт-навыках
+        found_soft = []
+        for skill in self.soft_skills:
+            if skill.lower() in description_lower:
+                found_soft.append(skill)
+        
+        # Ищем совпадения в хард-навыках
+        found_hard = []
+        for skill in self.hard_skills:
+            if skill.lower() in description_lower:
+                found_hard.append(skill)
+        
+        return {
+            "soft": found_soft[:10],  # Ограничиваем количество
+            "hard": found_hard[:10]
+        }
+
+
+# Инициализируем экстрактор
+skill_extractor = SimpleSkillExtractor()
+
+# Создаем FastAPI приложение
+app = FastAPI(
+    title="Simple Vacancy Skills Extractor API",
+    description="Упрощенное API для извлечения навыков без модели Qwen",
+    version="1.0.0"
+)
+
+
+@app.get("/")
+async def root():
+    """Проверка работоспособности API"""
+    return {"message": "Simple Vacancy Skills Extractor API работает"}
+
+
+@app.post("/api/vacancy", response_model=SkillsResponse)
+async def extract_vacancy_skills(request: VacancyRequest):
+    """Извлекает навыки из описания вакансии"""
+    try:
+        if not request.body.strip():
+            raise HTTPException(status_code=400, detail="Описание вакансии не может быть пустым")
+        
+        skills = skill_extractor.extract_skills(request.body)
+        
+        return SkillsResponse(
+            soft=skills.get("soft", []),
+            hard=skills.get("hard", [])
+        )
+        
+    except Exception as e:
+        print(f"Ошибка при обработке вакансии: {e}")
+        raise HTTPException(status_code=500, detail=f"Ошибка обработки: {str(e)}")
+
+
+@app.get("/health")
+async def health_check():
+    """Проверка состояния API"""
+    return {
+        "status": "healthy",
+        "model_type": "simple_keyword_extraction",
+        "soft_skills_count": len(skill_extractor.soft_skills),
+        "hard_skills_count": len(skill_extractor.hard_skills)
+    }
+
+
+if __name__ == "__main__":
+    uvicorn.run(
+        "simple_api:app",
+        host="0.0.0.0", 
+        port=8000,
+        reload=True
+    ) 

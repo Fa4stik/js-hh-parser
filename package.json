@@ -1,0 +1,38 @@
+{
+  "name": "hh_parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "analyze": "ts-node src/disco/disco-analyzer.ts",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "api": "python start_api.py",
+    "update-deps": "python update_requirements.py",
+    "check-fix": "python check_fix.py"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/axios": "^0.14.4",
+    "@types/cheerio": "^0.22.35",
+    "@types/jsdom": "^21.1.7",
+    "@types/lodash": "^4.17.14",
+    "@types/node": "^22.10.9",
+    "@types/qs": "^6.9.18",
+    "@types/user-agents": "^1.0.4",
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.7",
+    "exceljs": "^4.4.0",
+    "https-proxy-agent": "^7.0.6",
+    "jsdom": "^26.1.0",
+    "lodash": "^4.17.21",
+    "prettier": "^3.4.2",
+    "qs": "^6.14.0",
+    "ts-node": "^10.9.2",
+    "user-agents": "^1.1.452",
+    "zod": "^3.24.1"
+  }
+}
