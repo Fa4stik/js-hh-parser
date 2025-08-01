@@ -124,7 +124,10 @@ class QwenSkillExtractor:
             if not isinstance(result.get('soft'), list) or not isinstance(result.get('hard'), list):
                 raise ValueError("Неверная структура JSON ответа")
             
-            return result
+            # Фильтруем навыки - оставляем только существующие
+            filtered_result = self._validate_and_filter_skills(result)
+            
+            return filtered_result
             
         except (json.JSONDecodeError, ValueError) as e:
             print(f"Ошибка парсинга ответа модели: {e}")
@@ -132,6 +135,46 @@ class QwenSkillExtractor:
             
             # Возвращаем пустой результат в случае ошибки
             return {"soft": [], "hard": []}
+    
+    def _validate_and_filter_skills(self, result: Dict[str, List[str]]) -> Dict[str, List[str]]:
+        """Валидирует и фильтрует навыки, оставляя только существующие"""
+        
+        def normalize_skill(skill: str) -> str:
+            """Нормализует навык для сравнения"""
+            return skill.strip().lower()
+        
+        def find_exact_skill(skill_to_find: str, skills_list: List[str]) -> str:
+            """Находит точное соответствие навыка в списке"""
+            normalized_to_find = normalize_skill(skill_to_find)
+            for original_skill in skills_list:
+                if normalize_skill(original_skill) == normalized_to_find:
+                    return original_skill
+            return None
+        
+        # Фильтруем софт-скиллы
+        filtered_soft = []
+        for skill in result.get('soft', []):
+            exact_skill = find_exact_skill(skill, self.soft_skills)
+            if exact_skill:
+                filtered_soft.append(exact_skill)
+            else:
+                print(f"❌ Навык '{skill}' не найден в списке софт-скиллов")
+        
+        # Фильтруем хард-скиллы
+        filtered_hard = []
+        for skill in result.get('hard', []):
+            exact_skill = find_exact_skill(skill, self.hard_skills)
+            if exact_skill:
+                filtered_hard.append(exact_skill)
+            else:
+                print(f"❌ Навык '{skill}' не найден в списке хард-скиллов")
+        
+        print(f"✅ Валидация завершена. Софт: {len(filtered_soft)}/{len(result.get('soft', []))}, Хард: {len(filtered_hard)}/{len(result.get('hard', []))}")
+        
+        return {
+            "soft": filtered_soft,
+            "hard": filtered_hard
+        }
     
     def extract_skills(self, description: str) -> Dict[str, List[str]]:
         """Извлекает навыки из описания вакансии"""
