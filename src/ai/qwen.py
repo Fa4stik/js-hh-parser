@@ -120,25 +120,11 @@ class QwenSkillExtractor:
             json_str = response[start_idx:end_idx + 1]
             result = json.loads(json_str)
             
-            # Поддерживаем оба варианта ключей: "soft"/"hard" и "soft_skills"/"hard_skills"
-            soft_skills = []
-            hard_skills = []
+            # Валидируем структуру
+            if not isinstance(result.get('soft'), list) or not isinstance(result.get('hard'), list):
+                raise ValueError("Неверная структура JSON ответа")
             
-            if 'soft' in result and isinstance(result['soft'], list):
-                soft_skills = result['soft']
-            elif 'soft_skills' in result and isinstance(result['soft_skills'], list):
-                soft_skills = result['soft_skills']
-            
-            if 'hard' in result and isinstance(result['hard'], list):
-                hard_skills = result['hard']
-            elif 'hard_skills' in result and isinstance(result['hard_skills'], list):
-                hard_skills = result['hard_skills']
-            
-            # Проверяем, что хотя бы один тип навыков найден
-            if not soft_skills and not hard_skills:
-                raise ValueError("Не найдены навыки в ответе модели")
-            
-            return {"soft": soft_skills, "hard": hard_skills}
+            return result
             
         except (json.JSONDecodeError, ValueError) as e:
             print(f"Ошибка парсинга ответа модели: {e}")
