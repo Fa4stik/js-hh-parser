@@ -137,7 +137,7 @@ class QwenSkillExtractor:
             return {"soft": [], "hard": []}
     
     def _validate_and_filter_skills(self, result: Dict[str, List[str]]) -> Dict[str, List[str]]:
-        """Валидирует и фильтрует навыки, оставляя только существующие"""
+        """Валидирует и фильтрует навыки, оставляя только существующие и уникальные"""
         
         def normalize_skill(skill: str) -> str:
             """Нормализует навык для сравнения"""
@@ -150,6 +150,17 @@ class QwenSkillExtractor:
                 if normalize_skill(original_skill) == normalized_to_find:
                     return original_skill
             return None
+        
+        def remove_duplicates(skills_list: List[str]) -> List[str]:
+            """Удаляет дубликаты, сохраняя порядок и оригинальный регистр"""
+            seen = set()
+            unique_skills = []
+            for skill in skills_list:
+                normalized = normalize_skill(skill)
+                if normalized not in seen:
+                    seen.add(normalized)
+                    unique_skills.append(skill)
+            return unique_skills
         
         # Фильтруем софт-скиллы
         filtered_soft = []
@@ -169,11 +180,27 @@ class QwenSkillExtractor:
             else:
                 print(f"❌ Навык '{skill}' не найден в списке хард-скиллов")
         
-        print(f"✅ Валидация завершена. Софт: {len(filtered_soft)}/{len(result.get('soft', []))}, Хард: {len(filtered_hard)}/{len(result.get('hard', []))}")
+        # Удаляем дубликаты
+        soft_before_dedup = len(filtered_soft)
+        hard_before_dedup = len(filtered_hard)
+        
+        unique_soft = remove_duplicates(filtered_soft)
+        unique_hard = remove_duplicates(filtered_hard)
+        
+        # Логируем информацию о дубликатах
+        soft_duplicates = soft_before_dedup - len(unique_soft)
+        hard_duplicates = hard_before_dedup - len(unique_hard)
+        
+        if soft_duplicates > 0:
+            print(f"🔄 Удалено дубликатов софт-скиллов: {soft_duplicates}")
+        if hard_duplicates > 0:
+            print(f"🔄 Удалено дубликатов хард-скиллов: {hard_duplicates}")
+        
+        print(f"✅ Валидация завершена. Софт: {len(unique_soft)}/{len(result.get('soft', []))}, Хард: {len(unique_hard)}/{len(result.get('hard', []))}")
         
         return {
-            "soft": filtered_soft,
-            "hard": filtered_hard
+            "soft": unique_soft,
+            "hard": unique_hard
         }
     
     def extract_skills(self, description: str) -> Dict[str, List[str]]:

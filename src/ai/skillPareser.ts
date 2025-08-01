@@ -32,7 +32,7 @@ interface ProcessingRecord {
 	cleanedDescription: string
 }
 
-// Основная функция для обработки первых 30 описаний вакансий
+// Основная функция для обработки первых 10 описаний вакансий
 export async function processVacancyDescriptions(): Promise<void> {
 	const workbook = new ExcelJS.Workbook()
 	const inputFilePath = path.resolve('merged_vacs.xlsx')
@@ -74,11 +74,11 @@ export async function processVacancyDescriptions(): Promise<void> {
 			console.log(`Найдена колонка description в позиции: ${descriptionColumnIndex}`)
 			console.log(`Найдена колонка id в позиции: ${idColumnIndex}`)
 
-			// Собираем данные для обработки (первые 30 записей)
+			// Собираем данные для обработки (первые 10 записей)
 			const recordsToProcess: ProcessingRecord[] = []
-			const maxRows = Math.min(31, worksheet.rowCount) // 31 потому что первая строка - заголовки
+			const maxRows = Math.min(11, worksheet.rowCount) // 11 потому что первая строка - заголовки
 
-			for (let rowNumber = 2; rowNumber <= maxRows && recordsToProcess.length < 30; rowNumber++) {
+			for (let rowNumber = 2; rowNumber <= maxRows && recordsToProcess.length < 10; rowNumber++) {
 				const row = worksheet.getRow(rowNumber)
 				const descriptionCell = row.getCell(descriptionColumnIndex)
 				const idCell = row.getCell(idColumnIndex)
