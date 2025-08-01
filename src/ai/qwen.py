@@ -50,6 +50,46 @@ class QwenSkillExtractor:
         with open(prompt_path, 'r', encoding='utf-8') as f:
             self.prompt_template = f.read().strip()
     
+    def _print_cuda_diagnostics(self):
+        """Выводит диагностическую информацию о CUDA"""
+        print("=" * 50)
+        print("🔍 ДИАГНОСТИКА CUDA")
+        print("=" * 50)
+        
+        # Основная информация о PyTorch
+        print(f"PyTorch версия: {torch.__version__}")
+        print(f"CUDA доступна: {torch.cuda.is_available()}")
+        
+        if torch.cuda.is_available():
+            print(f"CUDA версия (PyTorch): {torch.version.cuda}")
+            print(f"Количество GPU: {torch.cuda.device_count()}")
+            
+            # Информация о каждом GPU
+            for i in range(torch.cuda.device_count()):
+                props = torch.cuda.get_device_properties(i)
+                memory_gb = props.total_memory / (1024**3)
+                print(f"GPU {i}: {props.name} ({memory_gb:.1f} GB)")
+                
+                # Проверяем доступную память
+                free_memory = torch.cuda.get_device_properties(i).total_memory - torch.cuda.memory_reserved(i)
+                free_gb = free_memory / (1024**3)
+                print(f"        Свободная память: {free_gb:.1f} GB")
+        else:
+            print("❌ CUDA недоступна!")
+            print("Возможные причины:")
+            print("1. PyTorch установлен без поддержки CUDA")
+            print("2. NVIDIA драйверы не установлены")
+            print("3. CUDA toolkit не установлен")
+            print("4. Несовместимость версий")
+            
+            # Проверяем версию PyTorch
+            if "+cpu" in torch.__version__:
+                print("⚠️  Обнаружена CPU-версия PyTorch!")
+                print("💡 Установите PyTorch с поддержкой CUDA:")
+                print("   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121")
+        
+        print("=" * 50)
+    
     def _get_device_info(self) -> str:
         """Определяет информацию об устройстве модели"""
         if self.model is None:
@@ -90,6 +130,9 @@ class QwenSkillExtractor:
         if self.model is None:
             print("Загружаем модель Qwen3-8B...")
             model_name = "Qwen/Qwen3-8B"
+            
+            # Диагностика CUDA
+            self._print_cuda_diagnostics()
             
             # Создаем директорию кеша, если не существует
             cache_dir = Path(CACHE_DIR)
