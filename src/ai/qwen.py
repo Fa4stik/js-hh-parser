@@ -90,6 +90,57 @@ class QwenSkillExtractor:
         
         print("=" * 50)
     
+    def _print_model_device_details(self):
+        """Выводит детальную информацию о размещении модели"""
+        if self.model is None:
+            return
+            
+        print("\n" + "=" * 50)
+        print("📊 ДЕТАЛИ РАЗМЕЩЕНИЯ МОДЕЛИ")
+        print("=" * 50)
+        
+        try:
+            # Проверяем device_map
+            if hasattr(self.model, 'hf_device_map') and self.model.hf_device_map:
+                print("Device Map:")
+                for layer, device in self.model.hf_device_map.items():
+                    print(f"  {layer}: {device}")
+            
+            # Проверяем устройства параметров
+            device_counts = {}
+            total_params = 0
+            
+            for name, param in self.model.named_parameters():
+                device = str(param.device)
+                if device not in device_counts:
+                    device_counts[device] = 0
+                device_counts[device] += param.numel()
+                total_params += param.numel()
+            
+            print(f"\nРаспределение параметров ({total_params:,} всего):")
+            for device, count in device_counts.items():
+                percentage = (count / total_params) * 100
+                print(f"  {device}: {count:,} параметров ({percentage:.1f}%)")
+            
+            # Проверяем использование памяти GPU
+            if torch.cuda.is_available():
+                for i in range(torch.cuda.device_count()):
+                    allocated = torch.cuda.memory_allocated(i) / (1024**3)
+                    reserved = torch.cuda.memory_reserved(i) / (1024**3)
+                    total = torch.cuda.get_device_properties(i).total_memory / (1024**3)
+                    
+                    if allocated > 0:
+                        print(f"\nGPU {i} память:")
+                        print(f"  Использовано: {allocated:.2f} GB")
+                        print(f"  Зарезервировано: {reserved:.2f} GB")
+                        print(f"  Всего: {total:.1f} GB")
+                        print(f"  Свободно: {total - reserved:.1f} GB")
+            
+        except Exception as e:
+            print(f"Ошибка при получении деталей: {e}")
+        
+        print("=" * 50)
+    
     def _get_device_info(self) -> str:
         """Определяет информацию об устройстве модели"""
         if self.model is None:
@@ -146,18 +197,32 @@ class QwenSkillExtractor:
                     cache_dir=CACHE_DIR
                 )
                 
+                # Определяем device_map для принудительного использования GPU
+                if torch.cuda.is_available():
+                    print("💡 Принудительно загружаем модель на GPU...")
+                    device_map = {"": 0}  # Загружаем всю модель на GPU 0
+                    torch_dtype = torch.float16  # Используем float16 для экономии памяти
+                else:
+                    print("⚠️  GPU недоступна, используем CPU...")
+                    device_map = "cpu"
+                    torch_dtype = "auto"
+                
                 # Загружаем модель
                 self.model = AutoModelForCausalLM.from_pretrained(
                     model_name,
-                    torch_dtype="auto",
-                    device_map="auto",
-                    cache_dir=CACHE_DIR
+                    torch_dtype=torch_dtype,
+                    device_map=device_map,
+                    cache_dir=CACHE_DIR,
+                    low_cpu_mem_usage=True  # Оптимизация использования памяти
                 )
                 
                 # Проверяем устройство модели
                 device_info = self._get_device_info()
                 print(f"Модель загружена успешно")
                 print(f"🖥️  Устройство: {device_info}")
+                
+                # Показываем детальную информацию о размещении модели
+                self._print_model_device_details()
                 
             except Exception as e:
                 error_msg = str(e)
