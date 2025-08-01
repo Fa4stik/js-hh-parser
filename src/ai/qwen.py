@@ -9,6 +9,8 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import uvicorn
 
+# Константа для кеша модели
+CACHE_DIR = "/mnt/kernai_storage02/s.v.sharifulin/model_cache"
 
 # Pydantic модели для request/response
 class VacancyRequest(BaseModel):
@@ -54,15 +56,24 @@ class QwenSkillExtractor:
             print("Загружаем модель Qwen3-8B...")
             model_name = "Qwen/Qwen3-8B"
             
+            # Создаем директорию кеша, если не существует
+            cache_dir = Path(CACHE_DIR)
+            cache_dir.mkdir(parents=True, exist_ok=True)
+            print(f"Кеш модели будет сохранен в: {cache_dir}")
+            
             try:
                 # Загружаем токенайзер
-                self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+                self.tokenizer = AutoTokenizer.from_pretrained(
+                    model_name,
+                    cache_dir=CACHE_DIR
+                )
                 
                 # Загружаем модель
                 self.model = AutoModelForCausalLM.from_pretrained(
                     model_name,
                     torch_dtype="auto",
-                    device_map="auto"
+                    device_map="auto",
+                    cache_dir=CACHE_DIR
                 )
                 
                 print(f"Модель загружена успешно")
