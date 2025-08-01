@@ -50,6 +50,41 @@ class QwenSkillExtractor:
         with open(prompt_path, 'r', encoding='utf-8') as f:
             self.prompt_template = f.read().strip()
     
+    def _get_device_info(self) -> str:
+        """Определяет информацию об устройстве модели"""
+        if self.model is None:
+            return "Модель не загружена"
+        
+        try:
+            # Проверяем доступность CUDA
+            cuda_available = torch.cuda.is_available()
+            
+            if hasattr(self.model, 'hf_device_map') and self.model.hf_device_map:
+                # Если используется device_map, показываем распределение
+                device_map = self.model.hf_device_map
+                devices = list(set(str(dev) for dev in device_map.values() if dev != 'disk'))
+                
+                if any('cuda' in dev for dev in devices):
+                    gpu_devices = [dev for dev in devices if 'cuda' in dev]
+                    if len(gpu_devices) == 1:
+                        gpu_name = torch.cuda.get_device_name(0) if cuda_available else "GPU"
+                        return f"GPU ({gpu_name})"
+                    else:
+                        return f"Мульти-GPU ({', '.join(gpu_devices)})"
+                else:
+                    return "CPU"
+            else:
+                # Проверяем устройство первого параметра модели
+                first_param_device = next(self.model.parameters()).device
+                if first_param_device.type == 'cuda':
+                    gpu_name = torch.cuda.get_device_name(first_param_device.index) if cuda_available else "GPU"
+                    return f"GPU ({gpu_name})"
+                else:
+                    return "CPU"
+                    
+        except Exception as e:
+            return f"Неизвестно (ошибка: {e})"
+    
     def _load_model(self):
         """Загружает модель Qwen3-8B"""
         if self.model is None:
@@ -76,7 +111,10 @@ class QwenSkillExtractor:
                     cache_dir=CACHE_DIR
                 )
                 
+                # Проверяем устройство модели
+                device_info = self._get_device_info()
                 print(f"Модель загружена успешно")
+                print(f"🖥️  Устройство: {device_info}")
                 
             except Exception as e:
                 error_msg = str(e)

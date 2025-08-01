@@ -8,7 +8,7 @@ const ExtractSchema = z.object({
 
 export const extractSkills = async (description: string) =>
 	apiInstance(ExtractSchema).post({
-		path: 'http://10.230.206.201:8000/api/vacancy',
+		path: 'http://10.230.206.201:6381/api/vacancy',
 		body: {
 			body: description,
 		},
