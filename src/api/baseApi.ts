@@ -32,6 +32,18 @@ class BaseApi<TSchema extends z.ZodRawShape, TUri extends string = ''> {
 				this.schema.parse({ ...data, url: `${url}?${new URLSearchParams(params)}` }),
 			)
 	}
+
+	post<TBody extends object>({
+		path,
+		body,
+		httpsAgent,
+	}: {
+		path: string
+		body?: TBody
+		httpsAgent?: HttpsProxyAgent<TUri>
+	}) {
+		return axios.post(`${path.includes('http') ? '' : this.baseUrl}${path}`, body, { httpsAgent })
+	}
 }
 
 export default <TSchema extends z.ZodRawShape>(schema: z.ZodObject<TSchema>) => new BaseApi(schema)

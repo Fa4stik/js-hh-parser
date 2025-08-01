@@ -105,8 +105,3 @@ const mainEmployers = (workerName: string) => {
 }
 // mainEmployers('worker_employers')
 mainEmployers('worker_employer_page')
-
-// [data-qa="modal-page-benefits"] ul>li, e.g. 5 nodes
-// in every node
-// span:nth-child(2) - name
-// span:nth-child(1) > span - count
