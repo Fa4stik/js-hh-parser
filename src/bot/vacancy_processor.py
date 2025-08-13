@@ -39,7 +39,7 @@ class VacancyProcessor:
             payload = {"body": description}
             headers = {"Content-Type": "application/json"}
             
-            response = requests.post(self.api_url, json=payload, headers=headers, timeout=60)
+            response = requests.post(self.api_url, json=payload, headers=headers, timeout=20)
             response.raise_for_status()
             
             result = response.json()
@@ -54,7 +54,7 @@ class VacancyProcessor:
             print(f"Неожиданная ошибка: {e}")
             return {"soft": [], "hard": []}
     
-    def read_vacancies_batch(self, batch_size: int = 10, start_row: int = 0) -> List[Tuple[int, str]]:
+    def read_vacancies_batch(self, batch_size: int = 100, start_row: int = 0) -> List[Tuple[int, str]]:
         """Читает батч вакансий из Excel файла"""
         try:
             # Читаем только нужное количество строк
@@ -131,7 +131,7 @@ class VacancyProcessor:
         """Возвращает количество обработанных вакансий"""
         try:
             csv_files = [f for f in os.listdir(self.output_dir) if f.endswith('.csv')]
-            return len(csv_files) * 10
+            return len(csv_files) * 100
         except Exception:
             return 0
     
