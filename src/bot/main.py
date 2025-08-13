@@ -10,7 +10,7 @@ import logging
 import asyncio
 import threading
 from telegram import Update
-from telegram.ext import Application, CommandHandler, ContextTypes
+from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters, ConversationHandler
 from vacancy_processor import VacancyProcessor
 from meta import BOT_TOKEN
 
@@ -27,6 +27,9 @@ processor = VacancyProcessor("merged_vacs.xlsx")
 # Флаг для отслеживания состояния обработки
 processing_active = False
 processing_thread = None
+
+# Состояния для диалогов
+GET_OFFSET = 0
 
 
 def process_vacancies_background():
@@ -127,8 +130,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 Доступные команды:
 /get_process - показать количество обработанных вакансий
+/get_by_offset - получить CSV файл по offset
 /merge_vacs - объединить все CSV файлы в один
-/merge_by_id - объединить обработанные данные с оригинальным файлом
+/merge_by_id - объединить обработанные данные с оригинальным файлом (только обработанные)
 /start_processing - запустить обработку вручную
 /stop_processing - остановить обработку
 /help - показать это сообщение
@@ -144,11 +148,14 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 /get_process - Показывает количество обработанных вакансий
 Считается как: количество файлов в папке process_vacs × 100
 
+/get_by_offset - Возвращает CSV файл по offset
+Введите offset (4 = 100.csv, 150 = 200.csv и т.д.)
+
 /merge_vacs - Объединяет все CSV файлы в один merged_results.csv
 Полезно для создания единого файла со всеми обработанными данными
 
 /merge_by_id - Объединяет все обработанные вакансии с исходным файлом
-Добавляет колонки soft_skills и hard_skills к оригинальным данным
+Возвращает только те строки, которые были обработаны (не весь файл)
 
 /start_processing - Запускает обработку вакансий вручную
 Полезно если обработка была остановлена
@@ -247,15 +254,101 @@ async def stop_processing(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         logger.error(f"Error in stop_processing: {e}")
 
 
+async def get_by_offset_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Начинает диалог для получения файла по offset"""
+    await update.message.reply_text(
+        "📁 Введите offset для получения CSV файла:\n\n"
+        "Примеры:\n"
+        "• 4 → вернет 100.csv\n"
+        "• 150 → вернет 200.csv\n"
+        "• 250 → вернет 300.csv\n\n"
+        "Или /cancel для отмены"
+    )
+    return GET_OFFSET
+
+
+async def get_by_offset_handle(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Обрабатывает введенный offset"""
+    try:
+        user_input = update.message.text.strip()
+        
+        # Проверяем команду отмены
+        if user_input.lower() in ['/cancel', 'отмена']:
+            await update.message.reply_text("❌ Операция отменена")
+            return ConversationHandler.END
+        
+        # Парсим offset
+        try:
+            offset = int(user_input)
+        except ValueError:
+            await update.message.reply_text("❌ Неверный формат. Введите число или /cancel")
+            return GET_OFFSET
+        
+        if offset <= 0:
+            await update.message.reply_text("❌ Offset должен быть положительным числом")
+            return GET_OFFSET
+        
+        # Определяем имя файла на основе offset
+        # offset 4 → 100.csv, offset 150 → 200.csv
+        file_offset = ((offset - 1) // 100 + 1) * 100
+        filename = f"{file_offset}.csv"
+        filepath = os.path.join(processor.output_dir, filename)
+        
+        # Проверяем существование файла
+        if not os.path.exists(filepath):
+            await update.message.reply_text(
+                f"❌ Файл {filename} не найден!\n"
+                f"Offset {offset} соответствует файлу {filename}, который еще не обработан."
+            )
+            return ConversationHandler.END
+        
+        # Отправляем файл
+        await update.message.reply_text(f"📄 Отправляю файл {filename}...")
+        
+        with open(filepath, 'rb') as file:
+            await update.message.reply_document(
+                document=file,
+                filename=filename,
+                caption=f"CSV файл для offset {offset} (файл {filename})"
+            )
+        
+        return ConversationHandler.END
+        
+    except Exception as e:
+        error_message = f"❌ Ошибка при получении файла: {str(e)}"
+        await update.message.reply_text(error_message)
+        logger.error(f"Error in get_by_offset_handle: {e}")
+        return ConversationHandler.END
+
+
+async def cancel_conversation(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Отменяет диалог"""
+    await update.message.reply_text("❌ Операция отменена")
+    return ConversationHandler.END
+
+
 async def merge_vacs(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Объединяет все CSV файлы в один."""
+    """Объединяет все CSV файлы в один и отправляет файл."""
     try:
         await update.message.reply_text("🔄 Начинаю объединение CSV файлов...")
         
         result = processor.merge_all_csv_files()
         
-        message = f"✅ {result}"
-        await update.message.reply_text(message)
+        # Путь к объединенному файлу
+        merged_file_path = os.path.join(processor.output_dir, "merged_results.csv")
+        
+        if os.path.exists(merged_file_path):
+            await update.message.reply_text(f"✅ {result}")
+            
+            # Отправляем файл пользователю
+            with open(merged_file_path, 'rb') as file:
+                await update.message.reply_document(
+                    document=file,
+                    filename="merged_results.csv",
+                    caption="Объединенный CSV файл со всеми обработанными вакансиями"
+                )
+        else:
+            await update.message.reply_text(f"⚠️ {result}")
         
     except Exception as e:
         error_message = f"❌ Ошибка при объединении файлов: {str(e)}"
@@ -264,14 +357,34 @@ async def merge_vacs(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
 
 
 async def merge_by_id(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Объединяет обработанные данные с оригинальным файлом."""
+    """Объединяет обработанные данные с оригинальным файлом (только обработанные строки)."""
     try:
         await update.message.reply_text("🔄 Начинаю объединение с оригинальным файлом...")
+        await update.message.reply_text("📊 Этап 1: Объединяю все CSV файлы...")
         
+        # Сначала мержим все CSV
+        merge_result = processor.merge_all_csv_files()
+        
+        await update.message.reply_text("📋 Этап 2: Объединяю с оригинальным файлом...")
+        
+        # Затем объединяем с оригинальным файлом
         result = processor.merge_with_original()
         
-        message = f"✅ {result}"
-        await update.message.reply_text(message)
+        # Путь к результирующему файлу
+        result_file_path = os.path.join(processor.output_dir, "merged_with_original.xlsx")
+        
+        if os.path.exists(result_file_path):
+            await update.message.reply_text(f"✅ {result}")
+            
+            # Отправляем файл пользователю
+            with open(result_file_path, 'rb') as file:
+                await update.message.reply_document(
+                    document=file,
+                    filename="merged_with_original.xlsx",
+                    caption="Обработанные вакансии с навыками (только обработанные строки)"
+                )
+        else:
+            await update.message.reply_text(f"⚠️ {result}")
         
     except Exception as e:
         error_message = f"❌ Ошибка при объединении с оригинальным файлом: {str(e)}"
@@ -300,10 +413,20 @@ def main() -> None:
     # Создаем приложение
     application = Application.builder().token(BOT_TOKEN).build()
     
+    # Создаем обработчик для диалога get_by_offset
+    get_offset_handler = ConversationHandler(
+        entry_points=[CommandHandler("get_by_offset", get_by_offset_start)],
+        states={
+            GET_OFFSET: [MessageHandler(filters.TEXT & ~filters.COMMAND, get_by_offset_handle)]
+        },
+        fallbacks=[CommandHandler("cancel", cancel_conversation)]
+    )
+    
     # Добавляем обработчики команд
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("get_process", get_process))
+    application.add_handler(get_offset_handler)
     application.add_handler(CommandHandler("start_processing", start_processing))
     application.add_handler(CommandHandler("stop_processing", stop_processing))
     application.add_handler(CommandHandler("merge_vacs", merge_vacs))

@@ -161,16 +161,13 @@ class VacancyProcessor:
             return f"Ошибка объединения файлов: {e}"
     
     def merge_with_original(self, original_file: str = None) -> str:
-        """Объединяет обработанные данные с оригинальным файлом"""
+        """Объединяет обработанные данные с оригинальным файлом (только обработанные строки)"""
         try:
             if original_file is None:
                 original_file = self.excel_file_path
             
-            # Читаем оригинальный файл
-            original_df = pd.read_excel(original_file)
-            
             # Читаем все обработанные файлы
-            csv_files = [f for f in os.listdir(self.output_dir) if f.endswith('.csv')]
+            csv_files = [f for f in os.listdir(self.output_dir) if f.endswith('.csv') and not f.startswith('merged')]
             
             if not csv_files:
                 return "Нет обработанных файлов для объединения"
@@ -183,13 +180,22 @@ class VacancyProcessor:
             
             processed_df = pd.concat(all_processed, ignore_index=True)
             
+            # Получаем уникальные ID обработанных вакансий
+            processed_ids = set(processed_df['id'].tolist())
+            
+            # Читаем оригинальный файл только для обработанных ID
+            original_df = pd.read_excel(original_file, engine='openpyxl')
+            
+            # Фильтруем оригинальный файл - только обработанные вакансии
+            filtered_original = original_df[original_df['id'].isin(processed_ids)].copy()
+            
             # Объединяем по ID
-            merged_df = original_df.merge(processed_df, on='id', how='left')
+            merged_df = filtered_original.merge(processed_df, on='id', how='inner')
             
             # Сохраняем результат
             output_path = os.path.join(self.output_dir, "merged_with_original.xlsx")
-            merged_df.to_excel(output_path, index=False)
+            merged_df.to_excel(output_path, index=False, engine='openpyxl')
             
-            return f"Данные объединены с оригинальным файлом: {output_path}"
+            return f"Объединено {len(merged_df)} обработанных вакансий: {output_path}"
         except Exception as e:
             return f"Ошибка объединения с оригинальным файлом: {e}" 
