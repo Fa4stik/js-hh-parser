@@ -57,13 +57,26 @@ class VacancyProcessor:
     def read_vacancies_batch(self, batch_size: int = 100, start_row: int = 0) -> List[Tuple[int, str]]:
         """Читает батч вакансий из Excel файла"""
         try:
-            # Читаем только нужное количество строк
-            df = pd.read_excel(
-                self.excel_file_path, 
-                skiprows=start_row,
-                nrows=batch_size,
-                usecols=['id', 'description']
-            )
+            # Читаем файл с пропуском заголовка, если start_row > 0
+            if start_row == 0:
+                # Читаем с самого начала включая заголовок
+                df = pd.read_excel(
+                    self.excel_file_path,
+                    nrows=batch_size,
+                    usecols=['id', 'description'],
+                    engine='openpyxl'
+                )
+            else:
+                # Читаем с определенной позиции, пропуская заголовок + start_row строк данных
+                df = pd.read_excel(
+                    self.excel_file_path,
+                    skiprows=start_row + 1,  # +1 для заголовка
+                    nrows=batch_size,
+                    usecols=['id', 'description'],
+                    header=None,
+                    names=['id', 'description'],
+                    engine='openpyxl'
+                )
             
             vacancies = []
             for _, row in df.iterrows():
@@ -121,7 +134,8 @@ class VacancyProcessor:
     def get_total_rows(self) -> int:
         """Получает общее количество строк в Excel файле"""
         try:
-            df = pd.read_excel(self.excel_file_path, usecols=['id'])
+            # Читаем только колонку id для подсчета строк (экономия памяти)
+            df = pd.read_excel(self.excel_file_path, usecols=['id'], engine='openpyxl')
             return len(df)
         except Exception as e:
             print(f"Ошибка получения количества строк: {e}")

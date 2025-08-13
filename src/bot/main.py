@@ -45,11 +45,30 @@ def process_vacancies_background():
             processing_active = False
             return
         
-        # Определяем с какой строки начинать (проверяем уже обработанные)
-        processed_count = processor.get_processed_count()
-        start_row = processed_count
+        # Определяем с какой строки начинать (проверяем уже обработанные файлы)
+        process_dir = processor.output_dir
+        csv_files = []
+        max_offset = 0
         
-        logger.info(f"Уже обработано: {processed_count} вакансий")
+        if os.path.exists(process_dir):
+            csv_files = [f for f in os.listdir(process_dir) if f.endswith('.csv')]
+            if csv_files:
+                # Находим максимальный offset из имен файлов
+                offsets = []
+                for file in csv_files:
+                    try:
+                        offset = int(file.replace('.csv', ''))
+                        offsets.append(offset)
+                    except ValueError:
+                        continue
+                if offsets:
+                    max_offset = max(offsets)
+        
+        start_row = max_offset
+        processed_count = len(csv_files) * 100
+        
+        logger.info(f"Найдено {len(csv_files)} обработанных файлов")
+        logger.info(f"Максимальный offset: {max_offset}")
         logger.info(f"Начинаю с строки: {start_row}")
         
         batch_size = 100
