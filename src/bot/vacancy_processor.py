@@ -57,26 +57,15 @@ class VacancyProcessor:
     def read_vacancies_batch(self, batch_size: int = 100, start_row: int = 0) -> List[Tuple[int, str]]:
         """Читает батч вакансий из Excel файла"""
         try:
-            # Читаем файл с пропуском заголовка, если start_row > 0
-            if start_row == 0:
-                # Читаем с самого начала включая заголовок
-                df = pd.read_excel(
-                    self.excel_file_path,
-                    nrows=batch_size,
-                    usecols=['id', 'description'],
-                    engine='openpyxl'
-                )
-            else:
-                # Читаем с определенной позиции, пропуская заголовок + start_row строк данных
-                df = pd.read_excel(
-                    self.excel_file_path,
-                    skiprows=start_row + 1,  # +1 для заголовка
-                    nrows=batch_size,
-                    usecols=['id', 'description'],
-                    header=None,
-                    names=['id', 'description'],
-                    engine='openpyxl'
-                )
+            # Читаем файл, всегда начиная с нужной строки данных (не заголовка)
+            # start_row=0 означает первую строку данных (после заголовка)
+            df = pd.read_excel(
+                self.excel_file_path,
+                skiprows=range(1, start_row + 1) if start_row > 0 else None,
+                nrows=batch_size,
+                usecols=['id', 'description'],
+                engine='openpyxl'
+            )
             
             vacancies = []
             for _, row in df.iterrows():
@@ -98,7 +87,7 @@ class VacancyProcessor:
         print(f"Обработка батча до {offset}...")
         
         for i, (vacancy_id, description) in enumerate(vacancies):
-            print(f"Обработка вакансии {vacancy_id} ({i+1}/{len(vacancies)})")
+            print(f"Обработка вакансии ID={vacancy_id} ({i+1}/{len(vacancies)})")
             
             # Отправляем запрос к API
             skills = self.send_api_request(description)
