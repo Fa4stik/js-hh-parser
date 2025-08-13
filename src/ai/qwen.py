@@ -153,12 +153,24 @@ class QwenSkillExtractor:
             if hasattr(self.model, 'hf_device_map') and self.model.hf_device_map:
                 # Если используется device_map, показываем распределение
                 device_map = self.model.hf_device_map
-                devices = list(set(str(dev) for dev in device_map.values() if dev != 'disk'))
+                devices = []
+                
+                for device in device_map.values():
+                    if device == 'disk':
+                        continue
+                    elif isinstance(device, int):
+                        # Числовое значение означает GPU с этим индексом
+                        devices.append(f"cuda:{device}")
+                    else:
+                        devices.append(str(device))
+                
+                devices = list(set(devices))  # Убираем дубликаты
                 
                 if any('cuda' in dev for dev in devices):
                     gpu_devices = [dev for dev in devices if 'cuda' in dev]
                     if len(gpu_devices) == 1:
-                        gpu_name = torch.cuda.get_device_name(0) if cuda_available else "GPU"
+                        gpu_index = int(gpu_devices[0].split(':')[1])
+                        gpu_name = torch.cuda.get_device_name(gpu_index) if cuda_available else "GPU"
                         return f"GPU ({gpu_name})"
                     else:
                         return f"Мульти-GPU ({', '.join(gpu_devices)})"
