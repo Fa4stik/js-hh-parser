@@ -39,7 +39,7 @@ class VacancyProcessor:
             payload = {"body": description}
             headers = {"Content-Type": "application/json"}
             
-            response = requests.post(self.api_url, json=payload, headers=headers, timeout=20)
+            response = requests.post(self.api_url, json=payload, headers=headers, timeout=60)
             response.raise_for_status()
             
             result = response.json()
