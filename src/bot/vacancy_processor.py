@@ -200,7 +200,7 @@ class VacancyProcessor:
         except Exception as e:
             return f"Ошибка объединения с оригинальным файлом: {e}"
     
-    def get_empty_skills_from_merged(self) -> List[Tuple[int, str, int]]:
+    def get_empty_skills_from_merged(self, limit: int = None) -> List[Tuple[int, str, int]]:
         """Получает список вакансий с пустыми навыками из merged_results.csv"""
         try:
             merged_file = os.path.join(self.output_dir, "merged_results.csv")
@@ -208,25 +208,34 @@ class VacancyProcessor:
             if not os.path.exists(merged_file):
                 return []
             
+            # Перечитываем файл каждый раз для получения актуальных данных
             df = pd.read_csv(merged_file)
             
-            # Находим строки с пустыми навыками
+            # Находим строки с пустыми навыками (обе колонки пустые)
             empty_mask = (
-                (df['hard_skills'].isna() | (df['hard_skills'] == '')) &
-                (df['soft_skills'].isna() | (df['soft_skills'] == ''))
+                (df['hard_skills'].isna() | (df['hard_skills'] == '') | (df['hard_skills'] == 'nan')) &
+                (df['soft_skills'].isna() | (df['soft_skills'] == '') | (df['soft_skills'] == 'nan'))
             )
             
             empty_rows = df[empty_mask]
             
-            # Получаем описания вакансий из оригинального файла
+            if limit:
+                empty_rows = empty_rows.head(limit)
+            
+            # Получаем описания вакансий из оригинального файла только для найденных ID
+            if empty_rows.empty:
+                return []
+            
+            empty_ids = empty_rows['id'].tolist()
             original_df = pd.read_excel(self.excel_file_path, engine='openpyxl')
+            original_filtered = original_df[original_df['id'].isin(empty_ids)]
             
             result = []
             for _, row in empty_rows.iterrows():
                 vacancy_id = int(row['id'])
                 
                 # Находим описание в оригинальном файле
-                original_row = original_df[original_df['id'] == vacancy_id]
+                original_row = original_filtered[original_filtered['id'] == vacancy_id]
                 if not original_row.empty:
                     description = self.clean_html(original_row.iloc[0]['description'])
                     # Добавляем индекс строки в merged_results.csv для обновления
