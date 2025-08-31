@@ -9,6 +9,7 @@ import os
 import logging
 import asyncio
 import threading
+import time
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters, ConversationHandler
 from vacancy_processor import VacancyProcessor
