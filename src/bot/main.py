@@ -28,6 +28,10 @@ processor = VacancyProcessor("merged_vacs.xlsx")
 processing_active = False
 processing_thread = None
 
+# Флаг для отслеживания заполнения пустых навыков
+filling_empty_active = False
+filling_empty_thread = None
+
 # Состояния для диалогов
 GET_OFFSET = 0
 
@@ -133,6 +137,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 /get_by_offset - получить CSV файл по offset
 /merge_vacs - объединить все CSV файлы в один
 /merge_by_id - объединить обработанные данные с оригинальным файлом (только обработанные)
+/fill_empty - заполнить пустые навыки в merged_results.csv
 /start_processing - запустить обработку вручную
 /stop_processing - остановить обработку
 /help - показать это сообщение
@@ -156,6 +161,9 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 /merge_by_id - Объединяет все обработанные вакансии с исходным файлом
 Возвращает только те строки, которые были обработаны (не весь файл)
+
+/fill_empty - Заполняет пустые навыки в merged_results.csv
+Повторно отправляет запросы к API для вакансий с пустыми навыками
 
 /start_processing - Запускает обработку вакансий вручную
 Полезно если обработка была остановлена
@@ -184,13 +192,21 @@ async def get_process(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
         status_icon = "🔄" if processing_active else "⏸️"
         status_text = "активна" if processing_active else "остановлена"
         
+        fill_status_icon = "🔄" if filling_empty_active else "⏸️"
+        fill_status_text = "активно" if filling_empty_active else "остановлено"
+        
+        # Проверяем количество пустых навыков
+        empty_skills_count = processor.count_empty_skills_in_merged()
+        
         message = f"""
 📊 Статистика обработки вакансий:
 
 {status_icon} Обработка: {status_text}
+{fill_status_icon} Заполнение пустых: {fill_status_text}
 ✅ Обработано вакансий: {processed_count}
 📁 Количество CSV файлов: {len(csv_files)}
 📄 Общее количество вакансий: {total_rows}
+🔍 Пустых навыков: {empty_skills_count}
 
 """
         
@@ -392,6 +408,168 @@ async def merge_by_id(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
         logger.error(f"Error in merge_by_id: {e}")
 
 
+def fill_empty_skills_background():
+    """Фоновое заполнение пустых навыков"""
+    global filling_empty_active
+    
+    try:
+        logger.info("Начинаю заполнение пустых навыков...")
+        
+        # Получаем список вакансий с пустыми навыками
+        empty_vacancies = processor.get_empty_skills_from_merged()
+        
+        if not empty_vacancies:
+            logger.info("Нет вакансий с пустыми навыками")
+            filling_empty_active = False
+            return
+        
+        total_empty = len(empty_vacancies)
+        logger.info(f"Найдено {total_empty} вакансий с пустыми навыками")
+        
+        processed_count = 0
+        
+        for vacancy_id, description, csv_index in empty_vacancies:
+            if not filling_empty_active:
+                logger.info("Заполнение остановлено пользователем")
+                break
+                
+            logger.info(f"Заполняю навыки для вакансии ID={vacancy_id} ({processed_count + 1}/{total_empty})")
+            
+            # Повторяем запросы до получения результата
+            max_attempts = 5
+            attempt = 0
+            skills = None
+            
+            while attempt < max_attempts and filling_empty_active:
+                attempt += 1
+                logger.info(f"Попытка {attempt}/{max_attempts} для вакансии {vacancy_id}")
+                
+                skills = processor.send_api_request(description)
+                
+                # Проверяем, получили ли мы результат
+                if skills and (skills.get("hard") or skills.get("soft")):
+                    logger.info(f"Получены навыки для вакансии {vacancy_id}: hard={len(skills.get('hard', []))}, soft={len(skills.get('soft', []))}")
+                    break
+                else:
+                    logger.warning(f"Пустой ответ для вакансии {vacancy_id}, попытка {attempt}")
+                    time.sleep(1)  # Пауза перед повтором
+            
+            # Обновляем файл, даже если навыки пустые (чтобы не обрабатывать повторно)
+            if skills:
+                success = processor.update_skills_in_merged(
+                    csv_index, 
+                    skills.get("hard", []), 
+                    skills.get("soft", [])
+                )
+                
+                if success:
+                    processed_count += 1
+                    remaining = total_empty - processed_count
+                    logger.info(f"Обновлена вакансия {vacancy_id}. Осталось: {remaining}")
+                else:
+                    logger.error(f"Ошибка обновления вакансии {vacancy_id}")
+            
+            # Небольшая пауза между запросами
+            time.sleep(0.2)
+        
+        logger.info(f"Заполнение завершено! Обработано: {processed_count}/{total_empty}")
+        
+    except Exception as e:
+        logger.error(f"Ошибка в заполнении пустых навыков: {e}")
+    finally:
+        filling_empty_active = False
+
+
+async def fill_empty(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Запускает заполнение пустых навыков"""
+    global filling_empty_active, filling_empty_thread
+    
+    try:
+        # Проверяем, не запущено ли уже заполнение
+        if filling_empty_active:
+            await update.message.reply_text("🔄 Заполнение пустых навыков уже активно!")
+            return
+        
+        # Проверяем существование merged_results.csv
+        merged_file = os.path.join(processor.output_dir, "merged_results.csv")
+        if not os.path.exists(merged_file):
+            await update.message.reply_text("❌ Файл merged_results.csv не найден! Сначала выполните /merge_vacs")
+            return
+        
+        # Подсчитываем количество пустых навыков
+        empty_count = processor.count_empty_skills_in_merged()
+        
+        if empty_count == 0:
+            await update.message.reply_text("✅ Все навыки уже заполнены!")
+            return
+        
+        await update.message.reply_text(
+            f"🚀 Запускаю заполнение пустых навыков...\n"
+            f"Найдено {empty_count} вакансий с пустыми навыками"
+        )
+        
+        # Запускаем фоновое заполнение
+        filling_empty_active = True
+        filling_empty_thread = threading.Thread(target=fill_empty_skills_background)
+        filling_empty_thread.daemon = True
+        filling_empty_thread.start()
+        
+        await update.message.reply_text("✅ Заполнение запущено в фоновом режиме!")
+        
+        # Отправляем периодические обновления
+        await send_fill_progress_updates(update, context)
+        
+    except Exception as e:
+        error_message = f"❌ Ошибка запуска заполнения: {str(e)}"
+        await update.message.reply_text(error_message)
+        logger.error(f"Error in fill_empty: {e}")
+
+
+async def send_fill_progress_updates(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Отправляет обновления прогресса заполнения"""
+    import asyncio
+    
+    initial_count = processor.count_empty_skills_in_merged()
+    
+    while filling_empty_active:
+        await asyncio.sleep(30)  # Обновления каждые 30 секунд
+        
+        if not filling_empty_active:
+            break
+            
+        current_empty = processor.count_empty_skills_in_merged()
+        filled = initial_count - current_empty
+        
+        if filled > 0:
+            progress_message = (
+                f"📈 Прогресс заполнения:\n"
+                f"✅ Заполнено: {filled}\n"
+                f"⏳ Осталось: {current_empty}\n"
+                f"📊 Прогресс: {(filled/initial_count)*100:.1f}%"
+            )
+            
+            try:
+                await update.message.reply_text(progress_message)
+            except Exception as e:
+                logger.error(f"Ошибка отправки прогресса: {e}")
+    
+    # Финальное сообщение
+    if not filling_empty_active:
+        final_empty = processor.count_empty_skills_in_merged()
+        final_filled = initial_count - final_empty
+        
+        final_message = (
+            f"🎉 Заполнение завершено!\n"
+            f"✅ Заполнено навыков: {final_filled}\n"
+            f"⏳ Осталось пустых: {final_empty}"
+        )
+        
+        try:
+            await update.message.reply_text(final_message)
+        except Exception as e:
+            logger.error(f"Ошибка отправки финального сообщения: {e}")
+
+
 async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик ошибок."""
     logger.error(f"Update {update} caused error {context.error}")
@@ -431,6 +609,7 @@ def main() -> None:
     application.add_handler(CommandHandler("stop_processing", stop_processing))
     application.add_handler(CommandHandler("merge_vacs", merge_vacs))
     application.add_handler(CommandHandler("merge_by_id", merge_by_id))
+    application.add_handler(CommandHandler("fill_empty", fill_empty))
     
     # Добавляем обработчик ошибок
     application.add_error_handler(error_handler)
