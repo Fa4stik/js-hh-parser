@@ -37,14 +37,14 @@ class VacancyProcessor:
         """Отправляет POST запрос к API для анализа навыков"""
         try:
             payload = {"body": description}
-            
-            # Добавляем параметр skill если указан
-            if skill_type:
-                payload["skill"] = skill_type
-                
             headers = {"Content-Type": "application/json"}
             
-            response = requests.post(self.api_url, json=payload, headers=headers, timeout=60)
+            # Добавляем параметр skill как query параметр
+            params = {}
+            if skill_type:
+                params["skill"] = skill_type
+            
+            response = requests.post(self.api_url, json=payload, headers=headers, params=params, timeout=60)
             response.raise_for_status()
             
             result = response.json()
