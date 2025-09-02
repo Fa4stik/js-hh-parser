@@ -15,6 +15,7 @@ import uvicorn
 # Pydantic модели
 class VacancyRequest(BaseModel):
     body: str
+    skill: str = None  # 'hard', 'soft' или None для обоих
 
 
 class SkillsResponse(BaseModel):
@@ -44,26 +45,29 @@ class SimpleSkillExtractor:
             with open(hard_path, 'r', encoding='utf-8') as f:
                 self.hard_skills = [line.strip() for line in f.readlines() if line.strip()]
     
-    def extract_skills(self, description: str) -> Dict[str, List[str]]:
+    def extract_skills(self, description: str, skill_type: str = None) -> Dict[str, List[str]]:
         """Простое извлечение навыков на основе ключевых слов"""
         description_lower = description.lower()
         
-        # Ищем совпадения в софт-навыках
-        found_soft = []
-        for skill in self.soft_skills:
-            if skill.lower() in description_lower:
-                found_soft.append(skill)
+        result = {"soft": [], "hard": []}
         
-        # Ищем совпадения в хард-навыках
-        found_hard = []
-        for skill in self.hard_skills:
-            if skill.lower() in description_lower:
-                found_hard.append(skill)
+        # Ищем софт-навыки (если нужны или не указан тип)
+        if skill_type is None or skill_type == "soft":
+            found_soft = []
+            for skill in self.soft_skills:
+                if skill.lower() in description_lower:
+                    found_soft.append(skill)
+            result["soft"] = found_soft[:10]  # Ограничиваем количество
         
-        return {
-            "soft": found_soft[:10],  # Ограничиваем количество
-            "hard": found_hard[:10]
-        }
+        # Ищем хард-навыки (если нужны или не указан тип)
+        if skill_type is None or skill_type == "hard":
+            found_hard = []
+            for skill in self.hard_skills:
+                if skill.lower() in description_lower:
+                    found_hard.append(skill)
+            result["hard"] = found_hard[:10]  # Ограничиваем количество
+        
+        return result
 
 
 # Инициализируем экстрактор
@@ -72,8 +76,8 @@ skill_extractor = SimpleSkillExtractor()
 # Создаем FastAPI приложение
 app = FastAPI(
     title="Simple Vacancy Skills Extractor API",
-    description="Упрощенное API для извлечения навыков без модели Qwen",
-    version="1.0.0"
+    description="Упрощенное API для извлечения навыков без модели Qwen. Поддерживает селективный поиск hard/soft навыков.",
+    version="1.1.0"
 )
 
 
@@ -90,7 +94,11 @@ async def extract_vacancy_skills(request: VacancyRequest):
         if not request.body.strip():
             raise HTTPException(status_code=400, detail="Описание вакансии не может быть пустым")
         
-        skills = skill_extractor.extract_skills(request.body)
+        # Валидация параметра skill
+        if request.skill and request.skill not in ["hard", "soft"]:
+            raise HTTPException(status_code=400, detail="Параметр skill должен быть 'hard', 'soft' или не указан")
+        
+        skills = skill_extractor.extract_skills(request.body, request.skill)
         
         return SkillsResponse(
             soft=skills.get("soft", []),

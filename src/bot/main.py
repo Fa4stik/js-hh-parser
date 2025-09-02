@@ -446,6 +446,17 @@ def fill_empty_skills_background():
                 
                 logger.info(f"Заполняю навыки для вакансии ID={vacancy_id} (партия: {batch_processed + 1}/{current_batch_size}) - нужно: hard={need_hard}, soft={need_soft}")
                 
+                # Определяем тип запроса к API
+                skill_type = None
+                if need_hard and need_soft:
+                    skill_type = None  # Ищем оба типа
+                elif need_hard:
+                    skill_type = "hard"  # Только хард скиллы
+                elif need_soft:
+                    skill_type = "soft"  # Только софт скиллы
+                
+                logger.info(f"Тип запроса к API: {skill_type if skill_type else 'both'}")
+                
                 # Повторяем запросы до получения результата
                 max_attempts = 5
                 attempt = 0
@@ -455,7 +466,7 @@ def fill_empty_skills_background():
                     attempt += 1
                     logger.info(f"Попытка {attempt}/{max_attempts} для вакансии {vacancy_id}")
                     
-                    skills = processor.send_api_request(description)
+                    skills = processor.send_api_request(description, skill_type)
                     
                     # Проверяем, получили ли мы нужные навыки
                     got_needed_skills = False

@@ -33,10 +33,15 @@ class VacancyProcessor:
         
         return cleaned_text.strip()
     
-    def send_api_request(self, description: str) -> Dict[str, List[str]]:
+    def send_api_request(self, description: str, skill_type: str = None) -> Dict[str, List[str]]:
         """Отправляет POST запрос к API для анализа навыков"""
         try:
             payload = {"body": description}
+            
+            # Добавляем параметр skill если указан
+            if skill_type:
+                payload["skill"] = skill_type
+                
             headers = {"Content-Type": "application/json"}
             
             response = requests.post(self.api_url, json=payload, headers=headers, timeout=60)
