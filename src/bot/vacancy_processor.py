@@ -200,8 +200,8 @@ class VacancyProcessor:
         except Exception as e:
             return f"Ошибка объединения с оригинальным файлом: {e}"
     
-    def get_empty_skills_from_merged(self, limit: int = None) -> List[Tuple[int, str, int]]:
-        """Получает список вакансий с пустыми навыками из merged_results.csv"""
+    def get_empty_skills_from_merged(self, limit: int = None) -> List[Tuple[int, str, int, str, str]]:
+        """Получает список вакансий с частично пустыми навыками из merged_results.csv"""
         try:
             merged_file = os.path.join(self.output_dir, "merged_results.csv")
             
@@ -211,11 +211,12 @@ class VacancyProcessor:
             # Перечитываем файл каждый раз для получения актуальных данных
             df = pd.read_csv(merged_file)
             
-            # Находим строки с пустыми навыками (обе колонки пустые)
-            empty_mask = (
-                (df['hard_skills'].isna() | (df['hard_skills'] == '') | (df['hard_skills'] == 'nan')) &
-                (df['soft_skills'].isna() | (df['soft_skills'] == '') | (df['soft_skills'] == 'nan'))
-            )
+            # Находим строки с частично пустыми навыками (хотя бы одна колонка пустая)
+            hard_empty = df['hard_skills'].isna() | (df['hard_skills'] == '') | (df['hard_skills'] == 'nan')
+            soft_empty = df['soft_skills'].isna() | (df['soft_skills'] == '') | (df['soft_skills'] == 'nan')
+            
+            # Берем строки где хотя бы один навык пустой
+            empty_mask = hard_empty | soft_empty
             
             empty_rows = df[empty_mask]
             
@@ -240,7 +241,12 @@ class VacancyProcessor:
                     description = self.clean_html(original_row.iloc[0]['description'])
                     # Добавляем индекс строки в merged_results.csv для обновления
                     csv_index = df[df['id'] == vacancy_id].index[0]
-                    result.append((vacancy_id, description, csv_index))
+                    
+                    # Текущие навыки (чтобы не перезаписывать заполненные)
+                    current_hard = row['hard_skills'] if pd.notna(row['hard_skills']) and str(row['hard_skills']).strip() and str(row['hard_skills']) != 'nan' else ''
+                    current_soft = row['soft_skills'] if pd.notna(row['soft_skills']) and str(row['soft_skills']).strip() and str(row['soft_skills']) != 'nan' else ''
+                    
+                    result.append((vacancy_id, description, csv_index, current_hard, current_soft))
             
             return result
             
@@ -274,8 +280,54 @@ class VacancyProcessor:
             print(f"Ошибка обновления навыков: {e}")
             return False
     
+    def update_skills_in_merged_with_original(self, vacancy_id: int, current_hard: str, current_soft: str, new_hard_skills: List[str], new_soft_skills: List[str]) -> bool:
+        """Обновляет навыки в merged_with_original.xlsx, заполняя только пустые поля"""
+        try:
+            merged_file = os.path.join(self.output_dir, "merged_with_original.xlsx")
+            
+            if not os.path.exists(merged_file):
+                # Если файл не существует, создаем его сначала
+                self.merge_with_original()
+                if not os.path.exists(merged_file):
+                    return False
+            
+            # Читаем Excel файл
+            df = pd.read_excel(merged_file, engine='openpyxl')
+            
+            # Находим строку с нужным ID
+            mask = df['id'] == vacancy_id
+            if not mask.any():
+                print(f"Вакансия {vacancy_id} не найдена в merged_with_original.xlsx")
+                return False
+            
+            row_index = df[mask].index[0]
+            
+            # Определяем, какие навыки нужно обновить
+            final_hard = current_hard
+            final_soft = current_soft
+            
+            # Заполняем только пустые поля
+            if not current_hard and new_hard_skills:
+                final_hard = ",".join(new_hard_skills)
+            
+            if not current_soft and new_soft_skills:
+                final_soft = ",".join(new_soft_skills)
+            
+            # Обновляем навыки
+            df.at[row_index, 'hard_skills'] = final_hard
+            df.at[row_index, 'soft_skills'] = final_soft
+            
+            # Сохраняем файл
+            df.to_excel(merged_file, index=False, engine='openpyxl')
+            
+            return True
+            
+        except Exception as e:
+            print(f"Ошибка обновления навыков в merged_with_original.xlsx: {e}")
+            return False
+    
     def count_empty_skills_in_merged(self) -> int:
-        """Подсчитывает количество вакансий с пустыми навыками в merged_results.csv"""
+        """Подсчитывает количество вакансий с частично пустыми навыками в merged_results.csv"""
         try:
             merged_file = os.path.join(self.output_dir, "merged_results.csv")
             
@@ -284,11 +336,12 @@ class VacancyProcessor:
             
             df = pd.read_csv(merged_file)
             
-            # Считаем строки с пустыми навыками
-            empty_mask = (
-                (df['hard_skills'].isna() | (df['hard_skills'] == '')) &
-                (df['soft_skills'].isna() | (df['soft_skills'] == ''))
-            )
+            # Считаем строки с частично пустыми навыками (хотя бы одна колонка пустая)
+            hard_empty = df['hard_skills'].isna() | (df['hard_skills'] == '') | (df['hard_skills'] == 'nan')
+            soft_empty = df['soft_skills'].isna() | (df['soft_skills'] == '') | (df['soft_skills'] == 'nan')
+            
+            # Берем строки где хотя бы один навык пустой
+            empty_mask = hard_empty | soft_empty
             
             return empty_mask.sum()
             
