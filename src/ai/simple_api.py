@@ -15,6 +15,7 @@ import uvicorn
 # Pydantic модели
 class VacancyRequest(BaseModel):
     body: str
+    skill: str = None  # 'hard', 'soft' или None для обоих
 
 
 class SkillsResponse(BaseModel):
@@ -87,17 +88,17 @@ async def root():
 
 
 @app.post("/api/vacancy", response_model=SkillsResponse)
-async def extract_vacancy_skills(request: VacancyRequest, skill: str = None):
+async def extract_vacancy_skills(request: VacancyRequest):
     """Извлекает навыки из описания вакансии"""
     try:
         if not request.body.strip():
             raise HTTPException(status_code=400, detail="Описание вакансии не может быть пустым")
         
         # Валидация параметра skill
-        if skill and skill not in ["hard", "soft"]:
+        if request.skill and request.skill not in ["hard", "soft"]:
             raise HTTPException(status_code=400, detail="Параметр skill должен быть 'hard', 'soft' или не указан")
         
-        skills = skill_extractor.extract_skills(request.body, skill)
+        skills = skill_extractor.extract_skills(request.body, request.skill)
         
         return SkillsResponse(
             soft=skills.get("soft", []),

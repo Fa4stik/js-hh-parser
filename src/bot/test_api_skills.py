@@ -37,10 +37,9 @@ def test_api_requests():
     
     # Тест 2: Запрос только hard skills
     print("2. Запрос только hard skills:")
-    payload2 = {"body": test_description}
-    params2 = {"skill": "hard"}
+    payload2 = {"body": test_description, "skill": "hard"}
     try:
-        response2 = requests.post(API_URL, json=payload2, params=params2, headers={"Content-Type": "application/json"})
+        response2 = requests.post(API_URL, json=payload2, headers={"Content-Type": "application/json"})
         if response2.status_code == 200:
             result2 = response2.json()
             print(f"   Hard skills: {result2.get('hard', [])}")
@@ -54,10 +53,9 @@ def test_api_requests():
     
     # Тест 3: Запрос только soft skills
     print("3. Запрос только soft skills:")
-    payload3 = {"body": test_description}
-    params3 = {"skill": "soft"}
+    payload3 = {"body": test_description, "skill": "soft"}
     try:
-        response3 = requests.post(API_URL, json=payload3, params=params3, headers={"Content-Type": "application/json"})
+        response3 = requests.post(API_URL, json=payload3, headers={"Content-Type": "application/json"})
         if response3.status_code == 200:
             result3 = response3.json()
             print(f"   Hard skills: {result3.get('hard', [])} (должны быть пустые)")
@@ -71,10 +69,9 @@ def test_api_requests():
     
     # Тест 4: Неверный параметр skill
     print("4. Тест с неверным параметром skill:")
-    payload4 = {"body": test_description}
-    params4 = {"skill": "invalid"}
+    payload4 = {"body": test_description, "skill": "invalid"}
     try:
-        response4 = requests.post(API_URL, json=payload4, params=params4, headers={"Content-Type": "application/json"})
+        response4 = requests.post(API_URL, json=payload4, headers={"Content-Type": "application/json"})
         if response4.status_code == 400:
             print(f"   Ожидаемая ошибка 400: {response4.json()}")
         else:
