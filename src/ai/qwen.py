@@ -15,6 +15,7 @@ CACHE_DIR = "/mnt/kernai_storage02/s.v.sharifulin/model_cache"
 # Pydantic модели для request/response
 class VacancyRequest(BaseModel):
     body: str
+    skill: str = None  # 'hard', 'soft' или None для обоих
 
 
 class SkillsResponse(BaseModel):
@@ -254,14 +255,30 @@ class QwenSkillExtractor:
         """Форматирует список навыков для промта"""
         return "\n".join(f"- {skill}" for skill in skills)
     
-    def _prepare_prompt(self, description: str) -> str:
+    def _prepare_prompt(self, description: str, skill_type: str = None) -> str:
         """Подготавливает промт с заменой переменных"""
         soft_formatted = self._format_skills_list(self.soft_skills)
         hard_formatted = self._format_skills_list(self.hard_skills)
         
         prompt = self.prompt_template.replace("${description}", description)
-        prompt = prompt.replace("${soft}", soft_formatted)
-        prompt = prompt.replace("${hard}", hard_formatted)
+        
+        # Модифицируем промт в зависимости от типа навыков
+        if skill_type == "hard":
+            # Только технические навыки
+            prompt = prompt.replace("${soft}", "")
+            prompt = prompt.replace("${hard}", hard_formatted)
+            # Добавляем инструкцию для поиска только hard skills
+            prompt += "\n\nВАЖНО: Найди только технические (hard) навыки. Игнорируй мягкие навыки."
+        elif skill_type == "soft":
+            # Только мягкие навыки
+            prompt = prompt.replace("${soft}", soft_formatted)
+            prompt = prompt.replace("${hard}", "")
+            # Добавляем инструкцию для поиска только soft skills
+            prompt += "\n\nВАЖНО: Найди только мягкие (soft) навыки. Игнорируй технические навыки."
+        else:
+            # Оба типа навыков
+            prompt = prompt.replace("${soft}", soft_formatted)
+            prompt = prompt.replace("${hard}", hard_formatted)
         
         return prompt
     
@@ -361,12 +378,12 @@ class QwenSkillExtractor:
             "hard": unique_hard
         }
     
-    def extract_skills(self, description: str) -> Dict[str, List[str]]:
+    def extract_skills(self, description: str, skill_type: str = None) -> Dict[str, List[str]]:
         """Извлекает навыки из описания вакансии"""
         self._load_model()
         
-        # Подготавливаем промт
-        prompt = self._prepare_prompt(description)
+        # Подготавливаем промт с учетом типа навыков
+        prompt = self._prepare_prompt(description, skill_type)
         
         # Формируем сообщения для чата
         messages = [
@@ -401,7 +418,15 @@ class QwenSkillExtractor:
         response = self.tokenizer.decode(output_ids, skip_special_tokens=True).strip()
         
         # Парсим результат
-        return self._parse_model_response(response)
+        result = self._parse_model_response(response)
+        
+        # Фильтруем результат в зависимости от типа навыков
+        if skill_type == "hard":
+            return {"soft": [], "hard": result.get("hard", [])}
+        elif skill_type == "soft":
+            return {"soft": result.get("soft", []), "hard": []}
+        else:
+            return result
 
 
 # Инициализируем экстрактор навыков
@@ -410,8 +435,8 @@ skill_extractor = QwenSkillExtractor()
 # Создаем FastAPI приложение
 app = FastAPI(
     title="Vacancy Skills Extractor API",
-    description="API для извлечения навыков из описаний вакансий с помощью Qwen3-8B",
-    version="1.0.0"
+    description="API для извлечения навыков из описаний вакансий с помощью Qwen3-8B. Поддерживает селективный поиск hard/soft навыков.",
+    version="1.1.0"
 )
 
 
@@ -427,7 +452,7 @@ async def extract_vacancy_skills(request: VacancyRequest):
     Извлекает навыки из описания вакансии
     
     Args:
-        request: Объект с описанием вакансии
+        request: Объект с описанием вакансии и опциональным типом навыков
     
     Returns:
         SkillsResponse: Объект с списками софт и хард навыков
@@ -436,8 +461,12 @@ async def extract_vacancy_skills(request: VacancyRequest):
         if not request.body.strip():
             raise HTTPException(status_code=400, detail="Описание вакансии не может быть пустым")
         
-        # Извлекаем навыки
-        skills = skill_extractor.extract_skills(request.body)
+        # Валидация параметра skill
+        if request.skill and request.skill not in ["hard", "soft"]:
+            raise HTTPException(status_code=400, detail="Параметр skill должен быть 'hard', 'soft' или не указан")
+        
+        # Извлекаем навыки с учетом типа
+        skills = skill_extractor.extract_skills(request.body, request.skill)
         
         return SkillsResponse(
             soft=skills.get("soft", []),
@@ -469,6 +498,6 @@ if __name__ == "__main__":
     uvicorn.run(
         "qwen:app",
         host="0.0.0.0", 
-        port=8000,
+        port=6381,
         reload=True
     )

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Тестовый скрипт для проверки API с новым параметром skill
+Тестовый скрипт для проверки Qwen API с новым параметром skill
 """
 
 import requests
