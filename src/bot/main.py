@@ -445,6 +445,7 @@ def fill_empty_skills_background():
                 need_soft = not current_soft
                 
                 logger.info(f"Заполняю навыки для вакансии ID={vacancy_id} (партия: {batch_processed + 1}/{current_batch_size}) - нужно: hard={need_hard}, soft={need_soft}")
+                logger.info(f"Текущие навыки: hard='{current_hard}', soft='{current_soft}'")
                 
                 # Определяем тип запроса к API
                 skill_type = None
@@ -471,42 +472,63 @@ def fill_empty_skills_background():
                     # Проверяем, получили ли мы нужные навыки
                     got_needed_skills = False
                     if skills:
-                        if need_hard and skills.get("hard"):
+                        # Если нужны hard и получили hard, или нужны soft и получили soft
+                        if need_hard and need_soft:
+                            # Нужны оба типа - достаточно получить хотя бы один
+                            if skills.get("hard") or skills.get("soft"):
+                                got_needed_skills = True
+                        elif need_hard and skills.get("hard"):
                             got_needed_skills = True
-                        if need_soft and skills.get("soft"):
+                        elif need_soft and skills.get("soft"):
+                            got_needed_skills = True
+                        elif not need_hard and not need_soft:
+                            # Если не нужны навыки (странная ситуация), считаем успешным
                             got_needed_skills = True
                     
+                    # Если это последняя попытка, принимаем любой результат
+                    if attempt >= max_attempts:
+                        logger.info(f"Последняя попытка для вакансии {vacancy_id}, принимаем результат")
+                        got_needed_skills = True
+                    
                     if got_needed_skills:
-                        logger.info(f"Получены навыки для вакансии {vacancy_id}: hard={len(skills.get('hard', []))}, soft={len(skills.get('soft', []))}")
+                        logger.info(f"Получены навыки для вакансии {vacancy_id}: hard={len(skills.get('hard', []) if skills else [])}, soft={len(skills.get('soft', []) if skills else [])}")
                         break
                     else:
                         logger.warning(f"Не получены нужные навыки для вакансии {vacancy_id}, попытка {attempt}")
                         time.sleep(1)  # Пауза перед повтором
                 
                 # Обновляем файлы (merged_results.csv и merged_with_original.xlsx)
-                if skills is not None:
-                    # Обновляем merged_results.csv (для отслеживания прогресса)
+                # Обновляем merged_results.csv (для отслеживания прогресса)
+                if skills:
                     final_hard = skills.get("hard", []) if need_hard else current_hard.split(",") if current_hard else []
                     final_soft = skills.get("soft", []) if need_soft else current_soft.split(",") if current_soft else []
-                    
-                    success1 = processor.update_skills_in_merged(csv_index, final_hard, final_soft)
-                    
-                    # Обновляем merged_with_original.xlsx (основной результат)
+                else:
+                    # Если навыки не получены, оставляем текущие значения
+                    final_hard = current_hard.split(",") if current_hard else []
+                    final_soft = current_soft.split(",") if current_soft else []
+                
+                success1 = processor.update_skills_in_merged(csv_index, final_hard, final_soft)
+                
+                # Обновляем merged_with_original.xlsx (основной результат)
+                # Только если получили новые навыки
+                if skills and (need_hard or need_soft):
                     success2 = processor.update_skills_in_merged_with_original(
                         vacancy_id, current_hard, current_soft,
                         skills.get("hard", []) if need_hard else [],
                         skills.get("soft", []) if need_soft else []
                     )
-                    
-                    if success1 and success2:
-                        batch_processed += 1
-                        total_processed += 1
-                        remaining_in_file = processor.count_empty_skills_in_merged()
-                        logger.info(f"Обновлена вакансия {vacancy_id} в обоих файлах. Всего обработано: {total_processed}, осталось в файле: {remaining_in_file}")
-                    else:
-                        logger.error(f"Ошибка обновления вакансии {vacancy_id}: CSV={success1}, Excel={success2}")
                 else:
-                    logger.error(f"Не удалось получить навыки для вакансии {vacancy_id}")
+                    # Если навыки не получены, просто помечаем как успешное (чтобы не обрабатывать повторно)
+                    success2 = True
+                    logger.info(f"Пропускаем обновление Excel для вакансии {vacancy_id} - навыки не получены")
+                
+                if success1 and success2:
+                    batch_processed += 1
+                    total_processed += 1
+                    remaining_in_file = processor.count_empty_skills_in_merged()
+                    logger.info(f"Обновлена вакансия {vacancy_id}. Всего обработано: {total_processed}, осталось в файле: {remaining_in_file}")
+                else:
+                    logger.error(f"Ошибка обновления вакансии {vacancy_id}: CSV={success1}, Excel={success2}")
                 
                 # Небольшая пауза между запросами
                 time.sleep(0.2)

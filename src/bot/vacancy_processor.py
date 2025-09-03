@@ -290,14 +290,34 @@ class VacancyProcessor:
         try:
             merged_file = os.path.join(self.output_dir, "merged_with_original.xlsx")
             
+            # Проверяем существование и корректность файла
             if not os.path.exists(merged_file):
-                # Если файл не существует, создаем его сначала
+                print(f"Файл {merged_file} не существует, создаем его заново...")
                 self.merge_with_original()
                 if not os.path.exists(merged_file):
+                    print("Не удалось создать merged_with_original.xlsx")
                     return False
             
-            # Читаем Excel файл
-            df = pd.read_excel(merged_file, engine='openpyxl')
+            # Проверяем, не поврежден ли файл
+            try:
+                # Пробуем прочитать файл
+                df = pd.read_excel(merged_file, engine='openpyxl')
+            except Exception as read_error:
+                print(f"Файл {merged_file} поврежден ({read_error}), пересоздаем...")
+                # Удаляем поврежденный файл
+                try:
+                    os.remove(merged_file)
+                except:
+                    pass
+                
+                # Создаем заново
+                self.merge_with_original()
+                if not os.path.exists(merged_file):
+                    print("Не удалось пересоздать merged_with_original.xlsx")
+                    return False
+                
+                # Пробуем прочитать снова
+                df = pd.read_excel(merged_file, engine='openpyxl')
             
             # Находим строку с нужным ID
             mask = df['id'] == vacancy_id
@@ -322,10 +342,20 @@ class VacancyProcessor:
             df.at[row_index, 'hard_skills'] = final_hard
             df.at[row_index, 'soft_skills'] = final_soft
             
-            # Сохраняем файл
-            df.to_excel(merged_file, index=False, engine='openpyxl')
-            
-            return True
+            # Сохраняем файл с дополнительными проверками
+            try:
+                df.to_excel(merged_file, index=False, engine='openpyxl')
+                
+                # Проверяем, что файл сохранился корректно
+                test_df = pd.read_excel(merged_file, engine='openpyxl', nrows=1)
+                if test_df.empty:
+                    raise Exception("Сохраненный файл пуст")
+                    
+                return True
+                
+            except Exception as save_error:
+                print(f"Ошибка сохранения файла: {save_error}")
+                return False
             
         except Exception as e:
             print(f"Ошибка обновления навыков в merged_with_original.xlsx: {e}")
