@@ -369,4 +369,75 @@ class VacancyProcessor:
             
         except Exception as e:
             print(f"Ошибка подсчета пустых навыков: {e}")
-            return 0 
+            return 0
+    
+    def get_statistics_from_merged_with_original(self) -> Dict[str, int]:
+        """Получает статистику по файлу merged_with_original.xlsx"""
+        try:
+            merged_file = os.path.join(self.output_dir, "merged_with_original.xlsx")
+            
+            if not os.path.exists(merged_file):
+                return {
+                    "total": 0,
+                    "missing_hard_only": 0,
+                    "missing_soft_only": 0,
+                    "missing_both": 0,
+                    "has_both": 0,
+                    "error": "Файл merged_with_original.xlsx не найден"
+                }
+            
+            try:
+                df = pd.read_excel(merged_file, engine='openpyxl')
+            except Exception as read_error:
+                return {
+                    "total": 0,
+                    "missing_hard_only": 0,
+                    "missing_soft_only": 0,
+                    "missing_both": 0,
+                    "has_both": 0,
+                    "error": f"Ошибка чтения файла: {read_error}"
+                }
+            
+            # Проверяем наличие нужных колонок
+            required_columns = ['hard_skills', 'soft_skills']
+            missing_columns = [col for col in required_columns if col not in df.columns]
+            if missing_columns:
+                return {
+                    "total": 0,
+                    "missing_hard_only": 0,
+                    "missing_soft_only": 0,
+                    "missing_both": 0,
+                    "has_both": 0,
+                    "error": f"Отсутствуют колонки: {missing_columns}"
+                }
+            
+            total_vacancies = len(df)
+            
+            # Определяем пустые навыки
+            hard_empty = df['hard_skills'].isna() | (df['hard_skills'] == '') | (df['hard_skills'] == 'nan')
+            soft_empty = df['soft_skills'].isna() | (df['soft_skills'] == '') | (df['soft_skills'] == 'nan')
+            
+            # Подсчитываем статистику
+            missing_hard_only = (hard_empty & ~soft_empty).sum()  # Пустые hard, но есть soft
+            missing_soft_only = (~hard_empty & soft_empty).sum()  # Пустые soft, но есть hard
+            missing_both = (hard_empty & soft_empty).sum()        # Пустые оба
+            has_both = (~hard_empty & ~soft_empty).sum()          # Есть оба
+            
+            return {
+                "total": total_vacancies,
+                "missing_hard_only": int(missing_hard_only),
+                "missing_soft_only": int(missing_soft_only),
+                "missing_both": int(missing_both),
+                "has_both": int(has_both),
+                "error": None
+            }
+            
+        except Exception as e:
+            return {
+                "total": 0,
+                "missing_hard_only": 0,
+                "missing_soft_only": 0,
+                "missing_both": 0,
+                "has_both": 0,
+                "error": f"Ошибка анализа: {e}"
+            } 

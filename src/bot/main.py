@@ -140,6 +140,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 /merge_by_id - объединить обработанные данные с оригинальным файлом (только обработанные)
 /fill_empty - заполнить пустые навыки в merged_results.csv
 /stop_fill_empty - остановить заполнение пустых навыков
+/statistic - показать статистику по merged_with_original.xlsx
 /start_processing - запустить обработку вручную
 /stop_processing - остановить обработку
 /help - показать это сообщение
@@ -168,6 +169,9 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 Заполняет только пустые поля и записывает результат в merged_with_original.xlsx
 
 /stop_fill_empty - Останавливает процесс заполнения пустых навыков
+
+/statistic - Показывает статистику по файлу merged_with_original.xlsx
+Анализирует количество вакансий с пропущенными навыками
 
 /start_processing - Запускает обработку вакансий вручную
 Полезно если обработка была остановлена
@@ -659,6 +663,61 @@ async def stop_fill_empty(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         logger.error(f"Error in stop_fill_empty: {e}")
 
 
+async def statistic(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Показывает статистику по файлу merged_with_original.xlsx"""
+    try:
+        await update.message.reply_text("📊 Анализирую файл merged_with_original.xlsx...")
+        
+        stats = processor.get_statistics_from_merged_with_original()
+        
+        if stats.get("error"):
+            error_message = f"❌ Ошибка: {stats['error']}"
+            await update.message.reply_text(error_message)
+            return
+        
+        # Формируем сообщение со статистикой
+        total = stats["total"]
+        missing_hard_only = stats["missing_hard_only"]
+        missing_soft_only = stats["missing_soft_only"]
+        missing_both = stats["missing_both"]
+        has_both = stats["has_both"]
+        
+        # Подсчитываем проценты
+        if total > 0:
+            missing_hard_pct = (missing_hard_only / total) * 100
+            missing_soft_pct = (missing_soft_only / total) * 100
+            missing_both_pct = (missing_both / total) * 100
+            has_both_pct = (has_both / total) * 100
+        else:
+            missing_hard_pct = missing_soft_pct = missing_both_pct = has_both_pct = 0
+        
+        message = f"""
+📊 **Статистика по merged_with_original.xlsx**
+
+📄 **Общее количество вакансий:** {total:,}
+
+🔴 **Вакансии без навыков:** {missing_both:,} ({missing_both_pct:.1f}%)
+
+🟡 **Вакансии с одним пропуском:**
+• Нет hard skills: {missing_hard_only:,} ({missing_hard_pct:.1f}%)
+• Нет soft skills: {missing_soft_only:,} ({missing_soft_pct:.1f}%)
+
+🟢 **Вакансии с полными навыками:** {has_both:,} ({has_both_pct:.1f}%)
+
+📈 **Сводка пропусков:**
+• Всего с пропусками: {missing_hard_only + missing_soft_only + missing_both:,} ({((missing_hard_only + missing_soft_only + missing_both) / total * 100 if total > 0 else 0):.1f}%)
+• Только один тип пропущен: {missing_hard_only + missing_soft_only:,}
+• Оба типа пропущены: {missing_both:,}
+"""
+        
+        await update.message.reply_text(message, parse_mode='Markdown')
+        
+    except Exception as e:
+        error_message = f"❌ Ошибка получения статистики: {str(e)}"
+        await update.message.reply_text(error_message)
+        logger.error(f"Error in statistic: {e}")
+
+
 async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик ошибок."""
     logger.error(f"Update {update} caused error {context.error}")
@@ -700,6 +759,7 @@ def main() -> None:
     application.add_handler(CommandHandler("merge_by_id", merge_by_id))
     application.add_handler(CommandHandler("fill_empty", fill_empty))
     application.add_handler(CommandHandler("stop_fill_empty", stop_fill_empty))
+    application.add_handler(CommandHandler("statistic", statistic))
     
     # Добавляем обработчик ошибок
     application.add_error_handler(error_handler)
