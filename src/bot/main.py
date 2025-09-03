@@ -499,36 +499,40 @@ def fill_empty_skills_background():
                 
                 # Обновляем файлы (merged_results.csv и merged_with_original.xlsx)
                 # Обновляем merged_results.csv (для отслеживания прогресса)
-                if skills:
+                if skills and (skills.get("hard") or skills.get("soft")):
+                    # Получили навыки - обновляем с новыми
                     final_hard = skills.get("hard", []) if need_hard else current_hard.split(",") if current_hard else []
                     final_soft = skills.get("soft", []) if need_soft else current_soft.split(",") if current_soft else []
-                else:
-                    # Если навыки не получены, оставляем текущие значения
-                    final_hard = current_hard.split(",") if current_hard else []
-                    final_soft = current_soft.split(",") if current_soft else []
-                
-                success1 = processor.update_skills_in_merged(csv_index, final_hard, final_soft)
-                
-                # Обновляем merged_with_original.xlsx (основной результат)
-                # Только если получили новые навыки
-                if skills and (need_hard or need_soft):
+                    
+                    # Обновляем CSV
+                    success1 = processor.update_skills_in_merged(csv_index, final_hard, final_soft)
+                    
+                    # Обновляем Excel только если есть новые навыки
                     success2 = processor.update_skills_in_merged_with_original(
                         vacancy_id, current_hard, current_soft,
                         skills.get("hard", []) if need_hard else [],
                         skills.get("soft", []) if need_soft else []
                     )
+                    
+                    if success1 and success2:
+                        batch_processed += 1
+                        total_processed += 1
+                        remaining_in_file = processor.count_empty_skills_in_merged()
+                        logger.info(f"Обновлена вакансия {vacancy_id} с новыми навыками. Всего обработано: {total_processed}, осталось в файле: {remaining_in_file}")
+                    else:
+                        logger.error(f"Ошибка обновления вакансии {vacancy_id}: CSV={success1}, Excel={success2}")
                 else:
-                    # Если навыки не получены, просто помечаем как успешное (чтобы не обрабатывать повторно)
-                    success2 = True
-                    logger.info(f"Пропускаем обновление Excel для вакансии {vacancy_id} - навыки не получены")
-                
-                if success1 and success2:
+                    # Навыки не получены - помечаем как обработанную, чтобы не повторять
+                    final_hard = current_hard.split(",") if current_hard else []
+                    final_soft = current_soft.split(",") if current_soft else []
+                    
+                    # Обновляем только CSV для отслеживания прогресса
+                    success1 = processor.update_skills_in_merged(csv_index, final_hard, final_soft)
+                    
                     batch_processed += 1
                     total_processed += 1
                     remaining_in_file = processor.count_empty_skills_in_merged()
-                    logger.info(f"Обновлена вакансия {vacancy_id}. Всего обработано: {total_processed}, осталось в файле: {remaining_in_file}")
-                else:
-                    logger.error(f"Ошибка обновления вакансии {vacancy_id}: CSV={success1}, Excel={success2}")
+                    logger.info(f"Пропущена вакансия {vacancy_id} - навыки не получены. Всего обработано: {total_processed}, осталось в файле: {remaining_in_file}")
                 
                 # Небольшая пауза между запросами
                 time.sleep(0.2)
