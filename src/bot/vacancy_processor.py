@@ -440,4 +440,153 @@ class VacancyProcessor:
                 "missing_both": 0,
                 "has_both": 0,
                 "error": f"Ошибка анализа: {e}"
-            } 
+            }
+    
+    def get_missing_hard_skills_from_merged_with_original(self, limit: int = None) -> List[Tuple[int, str, int]]:
+        """Получает список вакансий с пустыми hard_skills из merged_with_original.xlsx"""
+        try:
+            merged_file = os.path.join(self.output_dir, "merged_with_original.xlsx")
+            
+            if not os.path.exists(merged_file):
+                print(f"Файл {merged_file} не найден")
+                return []
+            
+            # Читаем файл
+            try:
+                df = pd.read_excel(merged_file, engine='openpyxl')
+            except Exception as read_error:
+                print(f"Ошибка чтения файла {merged_file}: {read_error}")
+                return []
+            
+            # Проверяем наличие нужных колонок
+            if 'hard_skills' not in df.columns or 'id' not in df.columns or 'description' not in df.columns:
+                print("Отсутствуют необходимые колонки в файле")
+                return []
+            
+            # Находим строки с пустыми hard_skills
+            hard_empty = df['hard_skills'].isna() | (df['hard_skills'] == '') | (df['hard_skills'] == 'nan')
+            empty_rows = df[hard_empty]
+            
+            if limit:
+                empty_rows = empty_rows.head(limit)
+            
+            result = []
+            for _, row in empty_rows.iterrows():
+                vacancy_id = int(row['id'])
+                description = self.clean_html(row['description'])
+                # Индекс строки в DataFrame для обновления
+                df_index = df[df['id'] == vacancy_id].index[0]
+                result.append((vacancy_id, description, df_index))
+            
+            return result
+            
+        except Exception as e:
+            print(f"Ошибка получения вакансий с пустыми hard_skills: {e}")
+            return []
+    
+    def save_hard_skills_batch(self, batch_data: List[Tuple[int, List[str]]], offset: int) -> bool:
+        """Сохраняет батч hard skills в CSV файл в папке fill_hard"""
+        try:
+            # Создаем папку fill_hard если не существует
+            fill_hard_dir = os.path.join(self.output_dir, "fill_hard")
+            os.makedirs(fill_hard_dir, exist_ok=True)
+            
+            # Формируем данные для CSV
+            csv_data = []
+            for vacancy_id, hard_skills in batch_data:
+                hard_skills_str = ",".join(hard_skills) if hard_skills else ""
+                csv_data.append({
+                    "id": vacancy_id,
+                    "hard_skills": hard_skills_str
+                })
+            
+            # Сохраняем в файл
+            output_file = os.path.join(fill_hard_dir, f"{offset}.csv")
+            with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
+                fieldnames = ['id', 'hard_skills']
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(csv_data)
+            
+            print(f"Сохранен батч hard skills в {output_file}")
+            return True
+            
+        except Exception as e:
+            print(f"Ошибка сохранения батча hard skills: {e}")
+            return False
+    
+    def merge_hard_skills_with_original(self) -> str:
+        """Объединяет hard skills из папки fill_hard с оригинальным файлом"""
+        try:
+            merged_file = os.path.join(self.output_dir, "merged_with_original.xlsx")
+            fill_hard_dir = os.path.join(self.output_dir, "fill_hard")
+            
+            if not os.path.exists(merged_file):
+                return "Файл merged_with_original.xlsx не найден"
+            
+            if not os.path.exists(fill_hard_dir):
+                return "Папка fill_hard не найдена"
+            
+            # Читаем оригинальный файл
+            try:
+                df = pd.read_excel(merged_file, engine='openpyxl')
+            except Exception as read_error:
+                return f"Ошибка чтения файла: {read_error}"
+            
+            # Получаем все CSV файлы из папки fill_hard
+            csv_files = [f for f in os.listdir(fill_hard_dir) if f.endswith('.csv')]
+            
+            if not csv_files:
+                return "Нет CSV файлов в папке fill_hard"
+            
+            # Читаем все hard skills
+            all_hard_skills = {}
+            for csv_file in csv_files:
+                file_path = os.path.join(fill_hard_dir, csv_file)
+                try:
+                    hard_df = pd.read_csv(file_path)
+                    for _, row in hard_df.iterrows():
+                        vacancy_id = int(row['id'])
+                        hard_skills = row['hard_skills'] if pd.notna(row['hard_skills']) and row['hard_skills'] else ""
+                        all_hard_skills[vacancy_id] = hard_skills
+                except Exception as e:
+                    print(f"Ошибка чтения файла {csv_file}: {e}")
+                    continue
+            
+            # Обновляем hard_skills в оригинальном файле
+            updated_count = 0
+            for vacancy_id, hard_skills in all_hard_skills.items():
+                mask = df['id'] == vacancy_id
+                if mask.any():
+                    # Обновляем только если hard_skills пустые
+                    current_hard = df.loc[mask, 'hard_skills'].iloc[0]
+                    if pd.isna(current_hard) or current_hard == '' or current_hard == 'nan':
+                        df.loc[mask, 'hard_skills'] = hard_skills
+                        updated_count += 1
+            
+            # Сохраняем обновленный файл
+            df.to_excel(merged_file, index=False, engine='openpyxl')
+            
+            return f"Обновлено {updated_count} вакансий с hard skills из {len(csv_files)} файлов"
+            
+        except Exception as e:
+            return f"Ошибка объединения hard skills: {e}"
+    
+    def count_missing_hard_skills_in_merged_with_original(self) -> int:
+        """Подсчитывает количество вакансий с пустыми hard_skills в merged_with_original.xlsx"""
+        try:
+            merged_file = os.path.join(self.output_dir, "merged_with_original.xlsx")
+            
+            if not os.path.exists(merged_file):
+                return 0
+            
+            df = pd.read_excel(merged_file, engine='openpyxl')
+            
+            # Считаем строки с пустыми hard_skills
+            hard_empty = df['hard_skills'].isna() | (df['hard_skills'] == '') | (df['hard_skills'] == 'nan')
+            
+            return hard_empty.sum()
+            
+        except Exception as e:
+            print(f"Ошибка подсчета пустых hard_skills: {e}")
+            return 0 

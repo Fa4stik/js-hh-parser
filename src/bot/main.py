@@ -33,6 +33,10 @@ processing_thread = None
 filling_empty_active = False
 filling_empty_thread = None
 
+# Флаг для отслеживания заполнения hard skills
+filling_hard_skills_active = False
+filling_hard_skills_thread = None
+
 # Состояния для диалогов
 GET_OFFSET = 0
 
@@ -141,6 +145,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 /fill_empty - заполнить пустые навыки в merged_results.csv
 /stop_fill_empty - остановить заполнение пустых навыков
 /statistic - показать статистику по merged_with_original.xlsx
+/fill_hard_skills - заполнить пустые hard_skills из merged_with_original.xlsx
+/merge_hard_with_original - объединить hard_skills с оригинальным файлом
 /start_processing - запустить обработку вручную
 /stop_processing - остановить обработку
 /help - показать это сообщение
@@ -172,6 +178,12 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 /statistic - Показывает статистику по файлу merged_with_original.xlsx
 Анализирует количество вакансий с пропущенными навыками
+
+/fill_hard_skills - Заполняет пустые hard_skills из merged_with_original.xlsx
+Обрабатывает по 100 вакансий, сохраняет в папку fill_hard
+
+/merge_hard_with_original - Объединяет hard_skills с оригинальным файлом
+Вставляет заполненные hard_skills обратно в merged_with_original.xlsx
 
 /start_processing - Запускает обработку вакансий вручную
 Полезно если обработка была остановлена
@@ -718,6 +730,160 @@ async def statistic(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         logger.error(f"Error in statistic: {e}")
 
 
+def fill_hard_skills_background():
+    """Фоновое заполнение hard skills из merged_with_original.xlsx"""
+    global filling_hard_skills_active
+    
+    try:
+        logger.info("Начинаю заполнение hard skills из merged_with_original.xlsx...")
+        
+        total_processed = 0
+        batch_size = 100
+        notification_interval = 10  # Уведомления каждые 10 вакансий
+        
+        while filling_hard_skills_active:
+            # Получаем следующую партию вакансий с пустыми hard_skills
+            missing_hard_vacancies = processor.get_missing_hard_skills_from_merged_with_original(limit=batch_size)
+            
+            if not missing_hard_vacancies:
+                logger.info("Больше нет вакансий с пустыми hard_skills")
+                break
+            
+            current_batch_size = len(missing_hard_vacancies)
+            logger.info(f"Обрабатываю партию из {current_batch_size} вакансий с пустыми hard_skills...")
+            
+            batch_results = []
+            batch_processed = 0
+            
+            for vacancy_id, description, df_index in missing_hard_vacancies:
+                if not filling_hard_skills_active:
+                    logger.info("Заполнение hard skills остановлено пользователем")
+                    break
+                    
+                logger.info(f"Заполняю hard skills для вакансии ID={vacancy_id} (партия: {batch_processed + 1}/{current_batch_size})")
+                
+                # Отправляем запрос к API только для hard skills
+                max_attempts = 3
+                attempt = 0
+                skills = None
+                
+                while attempt < max_attempts and filling_hard_skills_active:
+                    attempt += 1
+                    logger.info(f"Попытка {attempt}/{max_attempts} для вакансии {vacancy_id}")
+                    
+                    skills = processor.send_api_request(description, "hard")  # Только hard skills
+                    
+                    # Проверяем, получили ли мы hard skills
+                    if skills and skills.get("hard"):
+                        logger.info(f"Получены hard skills для вакансии {vacancy_id}: {len(skills.get('hard', []))}")
+                        break
+                    else:
+                        logger.warning(f"Не получены hard skills для вакансии {vacancy_id}, попытка {attempt}")
+                        time.sleep(1)
+                
+                # Сохраняем результат
+                if skills and skills.get("hard"):
+                    batch_results.append((vacancy_id, skills.get("hard", [])))
+                    batch_processed += 1
+                    total_processed += 1
+                    
+                    # Отправляем уведомление каждые 10 вакансий
+                    if total_processed % notification_interval == 0:
+                        remaining = processor.count_missing_hard_skills_in_merged_with_original()
+                        logger.info(f"🔥 Обработано {total_processed} вакансий с hard skills, осталось примерно: {remaining}")
+                        
+                        # TODO: Отправить уведомление в Telegram
+                        # Здесь нужно будет добавить отправку сообщения в чат
+                else:
+                    # Даже если не получили навыки, считаем обработанной
+                    batch_results.append((vacancy_id, []))
+                    batch_processed += 1
+                    total_processed += 1
+                
+                time.sleep(0.2)  # Пауза между запросами
+            
+            # Сохраняем батч в CSV
+            if batch_results:
+                offset = total_processed
+                success = processor.save_hard_skills_batch(batch_results, offset)
+                if success:
+                    logger.info(f"Батч hard skills сохранен как {offset}.csv")
+                else:
+                    logger.error(f"Ошибка сохранения батча {offset}")
+            
+            logger.info(f"Партия завершена! Обработано в партии: {batch_processed}/{current_batch_size}")
+            
+            # Пауза между партиями
+            if filling_hard_skills_active:
+                time.sleep(1)
+        
+        logger.info(f"Заполнение hard skills завершено! Всего обработано: {total_processed}")
+        
+    except Exception as e:
+        logger.error(f"Ошибка в заполнении hard skills: {e}")
+    finally:
+        filling_hard_skills_active = False
+
+
+async def fill_hard_skills(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Запускает заполнение hard skills"""
+    global filling_hard_skills_active, filling_hard_skills_thread
+    
+    try:
+        # Проверяем, не запущено ли уже заполнение
+        if filling_hard_skills_active:
+            await update.message.reply_text("🔄 Заполнение hard skills уже активно!")
+            return
+        
+        # Проверяем существование файла merged_with_original.xlsx
+        merged_file = os.path.join(processor.output_dir, "merged_with_original.xlsx")
+        if not os.path.exists(merged_file):
+            await update.message.reply_text("❌ Файл merged_with_original.xlsx не найден!")
+            return
+        
+        # Подсчитываем количество пустых hard_skills
+        missing_count = processor.count_missing_hard_skills_in_merged_with_original()
+        
+        if missing_count == 0:
+            await update.message.reply_text("✅ Все hard skills уже заполнены!")
+            return
+        
+        await update.message.reply_text(
+            f"🚀 Запускаю заполнение hard skills...\n"
+            f"Найдено {missing_count} вакансий с пустыми hard skills\n"
+            f"📁 Результаты будут сохраняться в папку fill_hard/\n"
+            f"📱 Уведомления каждые 10 вакансий"
+        )
+        
+        # Запускаем фоновое заполнение
+        filling_hard_skills_active = True
+        filling_hard_skills_thread = threading.Thread(target=fill_hard_skills_background)
+        filling_hard_skills_thread.daemon = True
+        filling_hard_skills_thread.start()
+        
+        await update.message.reply_text("✅ Заполнение hard skills запущено в фоновом режиме!")
+        
+    except Exception as e:
+        error_message = f"❌ Ошибка запуска заполнения hard skills: {str(e)}"
+        await update.message.reply_text(error_message)
+        logger.error(f"Error in fill_hard_skills: {e}")
+
+
+async def merge_hard_with_original(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Объединяет hard skills с оригинальным файлом"""
+    try:
+        await update.message.reply_text("🔄 Начинаю объединение hard skills с оригинальным файлом...")
+        
+        result = processor.merge_hard_skills_with_original()
+        
+        await update.message.reply_text(f"✅ {result}")
+        
+    except Exception as e:
+        error_message = f"❌ Ошибка объединения hard skills: {str(e)}"
+        await update.message.reply_text(error_message)
+        logger.error(f"Error in merge_hard_with_original: {e}")
+
+
 async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик ошибок."""
     logger.error(f"Update {update} caused error {context.error}")
@@ -760,6 +926,8 @@ def main() -> None:
     application.add_handler(CommandHandler("fill_empty", fill_empty))
     application.add_handler(CommandHandler("stop_fill_empty", stop_fill_empty))
     application.add_handler(CommandHandler("statistic", statistic))
+    application.add_handler(CommandHandler("fill_hard_skills", fill_hard_skills))
+    application.add_handler(CommandHandler("merge_hard_with_original", merge_hard_with_original))
     
     # Добавляем обработчик ошибок
     application.add_error_handler(error_handler)
