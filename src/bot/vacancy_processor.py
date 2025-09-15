@@ -463,9 +463,25 @@ class VacancyProcessor:
                 print("Отсутствуют необходимые колонки в файле")
                 return []
             
-            # Находим строки с пустыми hard_skills
+            # Получаем список уже обработанных ID из папки fill_hard
+            processed_ids = set()
+            fill_hard_dir = os.path.join(self.output_dir, "fill_hard")
+            if os.path.exists(fill_hard_dir):
+                csv_files = [f for f in os.listdir(fill_hard_dir) if f.endswith('.csv')]
+                for csv_file in csv_files:
+                    try:
+                        file_path = os.path.join(fill_hard_dir, csv_file)
+                        hard_df = pd.read_csv(file_path)
+                        for _, row in hard_df.iterrows():
+                            processed_ids.add(int(row['id']))
+                    except Exception as e:
+                        print(f"Ошибка чтения файла {csv_file}: {e}")
+                        continue
+            
+            # Находим строки с пустыми hard_skills, исключая уже обработанные
             hard_empty = df['hard_skills'].isna() | (df['hard_skills'] == '') | (df['hard_skills'] == 'nan')
-            empty_rows = df[hard_empty]
+            not_processed = ~df['id'].isin(processed_ids)
+            empty_rows = df[hard_empty & not_processed]
             
             if limit:
                 empty_rows = empty_rows.head(limit)

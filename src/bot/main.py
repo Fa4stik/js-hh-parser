@@ -147,6 +147,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 /statistic - показать статистику по merged_with_original.xlsx
 /fill_hard_skills - заполнить пустые hard_skills из merged_with_original.xlsx
 /merge_hard_with_original - объединить hard_skills с оригинальным файлом
+/clear_fill_hard - очистить папку fill_hard для начала заново
 /start_processing - запустить обработку вручную
 /stop_processing - остановить обработку
 /help - показать это сообщение
@@ -184,6 +185,9 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 /merge_hard_with_original - Объединяет hard_skills с оригинальным файлом
 Вставляет заполненные hard_skills обратно в merged_with_original.xlsx
+
+/clear_fill_hard - Очищает папку fill_hard для начала заново
+Удаляет все CSV файлы из папки fill_hard
 
 /start_processing - Запускает обработку вакансий вручную
 Полезно если обработка была остановлена
@@ -737,9 +741,29 @@ def fill_hard_skills_background():
     try:
         logger.info("Начинаю заполнение hard skills из merged_with_original.xlsx...")
         
-        total_processed = 0
+        # Определяем начальный offset на основе существующих файлов
+        fill_hard_dir = os.path.join(processor.output_dir, "fill_hard")
+        os.makedirs(fill_hard_dir, exist_ok=True)
+        
+        existing_files = [f for f in os.listdir(fill_hard_dir) if f.endswith('.csv')]
+        max_offset = 0
+        if existing_files:
+            offsets = []
+            for file in existing_files:
+                try:
+                    offset = int(file.replace('.csv', ''))
+                    offsets.append(offset)
+                except ValueError:
+                    continue
+            if offsets:
+                max_offset = max(offsets)
+        
+        current_offset = max_offset
+        total_processed = len(existing_files) * 100  # Примерное количество уже обработанных
         batch_size = 100
         notification_interval = 10  # Уведомления каждые 10 вакансий
+        
+        logger.info(f"Найдено {len(existing_files)} существующих файлов, начинаю с offset: {current_offset}")
         
         while filling_hard_skills_active:
             # Получаем следующую партию вакансий с пустыми hard_skills
@@ -802,14 +826,14 @@ def fill_hard_skills_background():
                 
                 time.sleep(0.2)  # Пауза между запросами
             
-            # Сохраняем батч в CSV
+            # Сохраняем батч в CSV с правильным offset
             if batch_results:
-                offset = total_processed
-                success = processor.save_hard_skills_batch(batch_results, offset)
+                current_offset += len(batch_results)
+                success = processor.save_hard_skills_batch(batch_results, current_offset)
                 if success:
-                    logger.info(f"Батч hard skills сохранен как {offset}.csv")
+                    logger.info(f"Батч hard skills сохранен как {current_offset}.csv")
                 else:
-                    logger.error(f"Ошибка сохранения батча {offset}")
+                    logger.error(f"Ошибка сохранения батча {current_offset}")
             
             logger.info(f"Партия завершена! Обработано в партии: {batch_processed}/{current_batch_size}")
             
@@ -884,6 +908,43 @@ async def merge_hard_with_original(update: Update, context: ContextTypes.DEFAULT
         logger.error(f"Error in merge_hard_with_original: {e}")
 
 
+async def clear_fill_hard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Очищает папку fill_hard для начала заново"""
+    try:
+        fill_hard_dir = os.path.join(processor.output_dir, "fill_hard")
+        
+        if not os.path.exists(fill_hard_dir):
+            await update.message.reply_text("📁 Папка fill_hard не существует")
+            return
+        
+        # Получаем список файлов
+        csv_files = [f for f in os.listdir(fill_hard_dir) if f.endswith('.csv')]
+        
+        if not csv_files:
+            await update.message.reply_text("📁 Папка fill_hard уже пуста")
+            return
+        
+        # Удаляем все CSV файлы
+        deleted_count = 0
+        for csv_file in csv_files:
+            file_path = os.path.join(fill_hard_dir, csv_file)
+            try:
+                os.remove(file_path)
+                deleted_count += 1
+            except Exception as e:
+                logger.error(f"Ошибка удаления файла {csv_file}: {e}")
+        
+        await update.message.reply_text(
+            f"🗑️ Очищена папка fill_hard\n"
+            f"Удалено файлов: {deleted_count}/{len(csv_files)}"
+        )
+        
+    except Exception as e:
+        error_message = f"❌ Ошибка очистки папки fill_hard: {str(e)}"
+        await update.message.reply_text(error_message)
+        logger.error(f"Error in clear_fill_hard: {e}")
+
+
 async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Обработчик ошибок."""
     logger.error(f"Update {update} caused error {context.error}")
@@ -928,6 +989,7 @@ def main() -> None:
     application.add_handler(CommandHandler("statistic", statistic))
     application.add_handler(CommandHandler("fill_hard_skills", fill_hard_skills))
     application.add_handler(CommandHandler("merge_hard_with_original", merge_hard_with_original))
+    application.add_handler(CommandHandler("clear_fill_hard", clear_fill_hard))
     
     # Добавляем обработчик ошибок
     application.add_error_handler(error_handler)
