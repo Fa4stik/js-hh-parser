@@ -1,4 +1,5 @@
 import { transform, isObject, isArray } from 'lodash'
+import { parentPort } from 'worker_threads'
 
 export const flattenObject = <T extends object>(obj: T): Record<string, string> => {
 	return transform<T, Record<string, string>>(
@@ -41,22 +42,24 @@ export const executeWithRetry = async <T>(
 	return
 }
 
-type Fn<T, K> = [(...args: K[]) => Promise<T>, args: K[]]
-export const chainFnPromises = async <TReturn, TArgs>(
+type Fn<T, TArgs extends unknown[]> = [(...args: TArgs) => Promise<T>, TArgs]
+export const chainFnPromises = async <TReturn, TArgs extends unknown[]>(
 	promises: Fn<TReturn, TArgs>[],
 	kd: number,
-	onResolve?: (results: TReturn, fnArgs: TArgs[]) => void,
+	onResolve?: (results: TReturn, fnArgs: TArgs, i?: number) => void,
+	isCollect = false,
+	retryDelay: [number, number] = [4_000, 5_500],
+	retryCount = 20,
 ) => {
 	const values: TReturn[] = []
 
 	let i = 0
 	for (const [fn, args] of promises) {
-		const result = await executeWithRetry(() => fn(...args), [4_000, 5_500], 20)
+		const result = await executeWithRetry(() => fn(...args), retryDelay, retryCount)
 		if (!result) continue
-		onResolve && onResolve(result, args)
-		console.log(`chain value of ${++i} to ${promises.length}`)
+		onResolve && onResolve(result, args, ++i)
 		await waitFor(kd)
-		!onResolve && values.push(result)
+		;(!onResolve || isCollect) && values.push(result)
 	}
 
 	return values
@@ -72,4 +75,24 @@ export const convertParamsToQuery = (params: Record<string, string>, ignore: str
 		query.append(key, params[key])
 	}
 	return query.toString()
+}
+
+const getCallerName = (): string => {
+	const stack = new Error().stack
+	if (!stack) return 'unknown'
+
+	const stackLines = stack.split('\n')
+	// Пропускаем первую строку (Error), вторую (getCallerName), третью (log) и берем четвертую (вызывающая функция)
+	const callerLine = stackLines[3]
+	if (!callerLine) return 'unknown'
+
+	// Парсим строку стека для извлечения имени функции
+	// Формат: "    at functionName (file:line:column)" или "    at Object.functionName (file:line:column)"
+	const match = callerLine.match(/at\s+(?:Object\.)?(\w+)\s*\(/)
+	return match ? match[1] : 'unknown'
+}
+
+export const log = (...ags: Parameters<typeof console.log>) => {
+	const callerName = getCallerName()
+	console.log(`[${new Date().toISOString()}]`, `[${callerName}]`, ...ags)
 }

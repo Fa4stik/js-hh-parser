@@ -102,8 +102,8 @@ const VacancyCommon = z.object({
 	type: IdNamedSchema,
 	video_vacancy: z
 		.object({
-			snippet_picture_url: z.string().nullable(),
-			snippet_video_url: z.string().nullable(),
+			snippet_picture_url: z.string().nullable().optional(),
+			snippet_video_url: z.string().nullable().optional(),
 			video_url: z.string(),
 			cover_picture: z.object({
 				resized_height: z.number(),

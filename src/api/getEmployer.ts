@@ -12,7 +12,6 @@ export const getEmployer = <TUri extends string>(
 	httpsAgent?: HttpsProxyAgent<TUri>,
 ): Promise<Company> => apiInstance(CompanySchema).get({ path: `/employers/${id}`, httpsAgent })
 
-const userAgent = new UserAgent().data.userAgent
 export const getEmployerPage = <TUri extends string>(
 	{ query }: { query: string },
 	httpsAgent?: HttpsProxyAgent<TUri>,
