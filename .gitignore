@@ -3,3 +3,5 @@ qwen.py.backup
 *.html
 src/context/*
 .idea
+*.csv
+*.xlsx
