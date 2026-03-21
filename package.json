@@ -6,7 +6,10 @@
 	"scripts": {
 		"_dev": "nodemon src/index.ts",
 		"dev": "ts-node src/index.ts",
-		"merge": "go run src/utils/go/mergeXLSXs.go --dir ./src/context/vacs",
+		"merge:v": "go run src/utils/go/mergeXLSXs.go --dir ./src/context/vacs",
+		"merge:e": "go run src/utils/go/mergeXLSXs.go --dir ./src/context/employers",
+		"ai:watch": "ollama serve & sleep 2 && cd src/ai && python qwen.py",
+		"ai:unload": "ollama stop qwen2.5:7b",
 		"analyze": "ts-node src/disco/disco-analyzer.ts",
 		"format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
 		"api": "python start_api.py",

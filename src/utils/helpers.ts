@@ -1,5 +1,6 @@
 import { transform, isObject, isArray } from 'lodash'
-import { parentPort } from 'worker_threads'
+import * as fs from 'node:fs'
+import * as path from 'node:path'
 
 export const flattenObject = <T extends object>(obj: T): Record<string, string> => {
 	return transform<T, Record<string, string>>(
@@ -95,4 +96,23 @@ const getCallerName = (): string => {
 export const log = (...ags: Parameters<typeof console.log>) => {
 	const callerName = getCallerName()
 	console.log(`[${new Date().toISOString()}]`, `[${callerName}]`, ...ags)
+}
+
+export const writeError = ({
+	id,
+	body,
+	message,
+	trg,
+}: {
+	id: string | number
+	message: string
+	body: object
+	trg: 'employer' | 'vac'
+}) => {
+	const errorsDir = path.resolve(__dirname, '../context/errors')
+	if (!fs.existsSync(errorsDir)) {
+		fs.mkdirSync(errorsDir, { recursive: true })
+	}
+	const errorFile = path.resolve(errorsDir, `${trg}_${id}_${Date.now()}.json`)
+	fs.writeFileSync(errorFile, JSON.stringify({ id: id, error: message, body }, null, 2))
 }

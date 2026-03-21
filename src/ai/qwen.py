@@ -1,21 +1,19 @@
 import json
-import os
 from pathlib import Path
 from typing import List, Dict
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM
+import httpx
 import uvicorn
 
-# Константа для кеша модели
-CACHE_DIR = "/mnt/kernai_storage02/s.v.sharifulin/model_cache"
+OLLAMA_BASE_URL = "http://localhost:11434"
+OLLAMA_MODEL = "qwen2.5:7b"
 
-# Pydantic модели для request/response
+
 class VacancyRequest(BaseModel):
     body: str
-    skill: str = None  # 'hard', 'soft' или None для обоих
+    skill: str = None  # 'hard', 'soft' or None for both
 
 
 class SkillsResponse(BaseModel):
@@ -25,309 +23,87 @@ class SkillsResponse(BaseModel):
 
 class QwenSkillExtractor:
     def __init__(self):
-        self.model = None
-        self.tokenizer = None
         self.soft_skills = []
         self.hard_skills = []
         self.prompt_template = ""
         self._load_skills_and_prompt()
-        
+
     def _load_skills_and_prompt(self):
-        """Загружает навыки и промт из файлов"""
         base_path = Path(__file__).parent.parent
-        
-        # Загружаем софт-скиллы
+
         soft_path = base_path / "disco" / "skils" / "soft.txt"
         with open(soft_path, 'r', encoding='utf-8') as f:
             self.soft_skills = [line.strip() for line in f.readlines() if line.strip()]
-            
-        # Загружаем хард-скиллы
+
         hard_path = base_path / "disco" / "skils" / "hard.txt"
         with open(hard_path, 'r', encoding='utf-8') as f:
             self.hard_skills = [line.strip() for line in f.readlines() if line.strip()]
-            
-        # Загружаем промт
+
         prompt_path = base_path / "ai" / "promt.txt"
         with open(prompt_path, 'r', encoding='utf-8') as f:
             self.prompt_template = f.read().strip()
-    
-    def _print_cuda_diagnostics(self):
-        """Выводит диагностическую информацию о CUDA"""
-        print("=" * 50)
-        print("🔍 ДИАГНОСТИКА CUDA")
-        print("=" * 50)
-        
-        # Основная информация о PyTorch
-        print(f"PyTorch версия: {torch.__version__}")
-        print(f"CUDA доступна: {torch.cuda.is_available()}")
-        
-        if torch.cuda.is_available():
-            print(f"CUDA версия (PyTorch): {torch.version.cuda}")
-            print(f"Количество GPU: {torch.cuda.device_count()}")
-            
-            # Информация о каждом GPU
-            for i in range(torch.cuda.device_count()):
-                props = torch.cuda.get_device_properties(i)
-                memory_gb = props.total_memory / (1024**3)
-                print(f"GPU {i}: {props.name} ({memory_gb:.1f} GB)")
-                
-                # Проверяем доступную память
-                free_memory = torch.cuda.get_device_properties(i).total_memory - torch.cuda.memory_reserved(i)
-                free_gb = free_memory / (1024**3)
-                print(f"        Свободная память: {free_gb:.1f} GB")
-        else:
-            print("❌ CUDA недоступна!")
-            print("Возможные причины:")
-            print("1. PyTorch установлен без поддержки CUDA")
-            print("2. NVIDIA драйверы не установлены")
-            print("3. CUDA toolkit не установлен")
-            print("4. Несовместимость версий")
-            
-            # Проверяем версию PyTorch
-            if "+cpu" in torch.__version__:
-                print("⚠️  Обнаружена CPU-версия PyTorch!")
-                print("💡 Установите PyTorch с поддержкой CUDA:")
-                print("   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121")
-        
-        print("=" * 50)
-    
-    def _print_model_device_details(self):
-        """Выводит детальную информацию о размещении модели"""
-        if self.model is None:
-            return
-            
-        print("\n" + "=" * 50)
-        print("📊 ДЕТАЛИ РАЗМЕЩЕНИЯ МОДЕЛИ")
-        print("=" * 50)
-        
-        try:
-            # Проверяем device_map
-            if hasattr(self.model, 'hf_device_map') and self.model.hf_device_map:
-                print("Device Map:")
-                for layer, device in self.model.hf_device_map.items():
-                    print(f"  {layer}: {device}")
-            
-            # Проверяем устройства параметров
-            device_counts = {}
-            total_params = 0
-            
-            for name, param in self.model.named_parameters():
-                device = str(param.device)
-                if device not in device_counts:
-                    device_counts[device] = 0
-                device_counts[device] += param.numel()
-                total_params += param.numel()
-            
-            print(f"\nРаспределение параметров ({total_params:,} всего):")
-            for device, count in device_counts.items():
-                percentage = (count / total_params) * 100
-                print(f"  {device}: {count:,} параметров ({percentage:.1f}%)")
-            
-            # Проверяем использование памяти GPU
-            if torch.cuda.is_available():
-                for i in range(torch.cuda.device_count()):
-                    allocated = torch.cuda.memory_allocated(i) / (1024**3)
-                    reserved = torch.cuda.memory_reserved(i) / (1024**3)
-                    total = torch.cuda.get_device_properties(i).total_memory / (1024**3)
-                    
-                    if allocated > 0:
-                        print(f"\nGPU {i} память:")
-                        print(f"  Использовано: {allocated:.2f} GB")
-                        print(f"  Зарезервировано: {reserved:.2f} GB")
-                        print(f"  Всего: {total:.1f} GB")
-                        print(f"  Свободно: {total - reserved:.1f} GB")
-            
-        except Exception as e:
-            print(f"Ошибка при получении деталей: {e}")
-        
-        print("=" * 50)
-    
-    def _get_device_info(self) -> str:
-        """Определяет информацию об устройстве модели"""
-        if self.model is None:
-            return "Модель не загружена"
-        
-        try:
-            # Проверяем доступность CUDA
-            cuda_available = torch.cuda.is_available()
-            
-            if hasattr(self.model, 'hf_device_map') and self.model.hf_device_map:
-                # Если используется device_map, показываем распределение
-                device_map = self.model.hf_device_map
-                devices = []
-                
-                for device in device_map.values():
-                    if device == 'disk':
-                        continue
-                    elif isinstance(device, int):
-                        # Числовое значение означает GPU с этим индексом
-                        devices.append(f"cuda:{device}")
-                    else:
-                        devices.append(str(device))
-                
-                devices = list(set(devices))  # Убираем дубликаты
-                
-                if any('cuda' in dev for dev in devices):
-                    gpu_devices = [dev for dev in devices if 'cuda' in dev]
-                    if len(gpu_devices) == 1:
-                        gpu_index = int(gpu_devices[0].split(':')[1])
-                        gpu_name = torch.cuda.get_device_name(gpu_index) if cuda_available else "GPU"
-                        return f"GPU ({gpu_name})"
-                    else:
-                        return f"Мульти-GPU ({', '.join(gpu_devices)})"
-                else:
-                    return "CPU"
-            else:
-                # Проверяем устройство первого параметра модели
-                first_param_device = next(self.model.parameters()).device
-                if first_param_device.type == 'cuda':
-                    gpu_name = torch.cuda.get_device_name(first_param_device.index) if cuda_available else "GPU"
-                    return f"GPU ({gpu_name})"
-                else:
-                    return "CPU"
-                    
-        except Exception as e:
-            return f"Неизвестно (ошибка: {e})"
-    
-    def _load_model(self):
-        """Загружает модель Qwen3-8B"""
-        if self.model is None:
-            print("Загружаем модель Qwen3-8B...")
-            model_name = "Qwen/Qwen3-8B"
-            
-            # Диагностика CUDA
-            self._print_cuda_diagnostics()
-            
-            # Создаем директорию кеша, если не существует
-            cache_dir = Path(CACHE_DIR)
-            cache_dir.mkdir(parents=True, exist_ok=True)
-            print(f"Кеш модели будет сохранен в: {cache_dir}")
-            
-            try:
-                # Загружаем токенайзер
-                self.tokenizer = AutoTokenizer.from_pretrained(
-                    model_name,
-                    cache_dir=CACHE_DIR
-                )
-                
-                # Определяем device_map для принудительного использования GPU
-                if torch.cuda.is_available():
-                    print("💡 Принудительно загружаем модель на GPU...")
-                    device_map = {"": 0}  # Загружаем всю модель на GPU 0
-                    torch_dtype = torch.float16  # Используем float16 для экономии памяти
-                else:
-                    print("⚠️  GPU недоступна, используем CPU...")
-                    device_map = "cpu"
-                    torch_dtype = "auto"
-                
-                # Загружаем модель
-                self.model = AutoModelForCausalLM.from_pretrained(
-                    model_name,
-                    torch_dtype=torch_dtype,
-                    device_map=device_map,
-                    cache_dir=CACHE_DIR,
-                    low_cpu_mem_usage=True  # Оптимизация использования памяти
-                )
-                
-                # Проверяем устройство модели
-                device_info = self._get_device_info()
-                print(f"Модель загружена успешно")
-                print(f"🖥️  Устройство: {device_info}")
-                
-                # Показываем детальную информацию о размещении модели
-                self._print_model_device_details()
-                
-            except Exception as e:
-                error_msg = str(e)
-                if "Qwen2Tokenizer" in error_msg:
-                    print("❌ Ошибка: Устаревшая версия transformers!")
-                    print("📋 Решение: Обновите transformers до версии >= 4.51.0")
-                    print("🔧 Команда: pip install transformers>=4.51.0 --upgrade")
-                    print("🚀 Или запустите: python update_requirements.py")
-                elif "Connection" in error_msg or "timeout" in error_msg.lower():
-                    print("❌ Ошибка: Проблемы с интернет соединением")
-                    print("📋 Проверьте подключение и повторите попытку")
-                else:
-                    print(f"❌ Ошибка при загрузке модели: {e}")
-                raise
-    
+
     def _format_skills_list(self, skills: List[str]) -> str:
-        """Форматирует список навыков для промта"""
         return "\n".join(f"- {skill}" for skill in skills)
-    
+
     def _prepare_prompt(self, description: str, skill_type: str = None) -> str:
-        """Подготавливает промт с заменой переменных"""
         soft_formatted = self._format_skills_list(self.soft_skills)
         hard_formatted = self._format_skills_list(self.hard_skills)
-        
+
         prompt = self.prompt_template.replace("${description}", description)
-        
-        # Модифицируем промт в зависимости от типа навыков
+
         if skill_type == "hard":
-            # Только технические навыки
             prompt = prompt.replace("${soft}", "")
             prompt = prompt.replace("${hard}", hard_formatted)
-            # Добавляем инструкцию для поиска только hard skills
             prompt += "\n\nВАЖНО: Найди только технические (hard) навыки. Игнорируй мягкие навыки."
         elif skill_type == "soft":
-            # Только мягкие навыки
             prompt = prompt.replace("${soft}", soft_formatted)
             prompt = prompt.replace("${hard}", "")
-            # Добавляем инструкцию для поиска только soft skills
             prompt += "\n\nВАЖНО: Найди только мягкие (soft) навыки. Игнорируй технические навыки."
         else:
-            # Оба типа навыков
             prompt = prompt.replace("${soft}", soft_formatted)
             prompt = prompt.replace("${hard}", hard_formatted)
-        
+
         return prompt
-    
+
     def _parse_model_response(self, response: str) -> Dict[str, List[str]]:
-        """Парсит ответ модели и извлекает JSON"""
         try:
-            # Ищем JSON в ответе
             start_idx = response.find('{')
             end_idx = response.rfind('}')
-            
+
             if start_idx == -1 or end_idx == -1:
-                raise ValueError("JSON не найден в ответе модели")
-            
+                raise ValueError("JSON not found in model response")
+
             json_str = response[start_idx:end_idx + 1]
             result = json.loads(json_str)
-            
-            # Валидируем структуру
-            if not isinstance(result.get('soft'), list) or not isinstance(result.get('hard'), list):
-                raise ValueError("Неверная структура JSON ответа")
-            
-            # Фильтруем навыки - оставляем только существующие
-            filtered_result = self._validate_and_filter_skills(result)
-            
-            return filtered_result
-            
+
+            if 'soft' not in result:
+                result['soft'] = []
+            if 'hard' not in result:
+                result['hard'] = []
+
+            if not isinstance(result['soft'], list) or not isinstance(result['hard'], list):
+                raise ValueError("Invalid JSON structure in response")
+
+            return self._validate_and_filter_skills(result)
+
         except (json.JSONDecodeError, ValueError) as e:
-            print(f"Ошибка парсинга ответа модели: {e}")
-            print(f"Ответ модели: {response}")
-            
-            # Возвращаем пустой результат в случае ошибки
+            print(f"Error parsing model response: {e}")
+            print(f"Model response: {response}")
             return {"soft": [], "hard": []}
-    
+
     def _validate_and_filter_skills(self, result: Dict[str, List[str]]) -> Dict[str, List[str]]:
-        """Валидирует и фильтрует навыки, оставляя только существующие и уникальные"""
-        
         def normalize_skill(skill: str) -> str:
-            """Нормализует навык для сравнения"""
             return skill.strip().lower()
-        
+
         def find_exact_skill(skill_to_find: str, skills_list: List[str]) -> str:
-            """Находит точное соответствие навыка в списке"""
             normalized_to_find = normalize_skill(skill_to_find)
             for original_skill in skills_list:
                 if normalize_skill(original_skill) == normalized_to_find:
                     return original_skill
             return None
-        
+
         def remove_duplicates(skills_list: List[str]) -> List[str]:
-            """Удаляет дубликаты, сохраняя порядок и оригинальный регистр"""
             seen = set()
             unique_skills = []
             for skill in skills_list:
@@ -336,91 +112,52 @@ class QwenSkillExtractor:
                     seen.add(normalized)
                     unique_skills.append(skill)
             return unique_skills
-        
-        # Фильтруем софт-скиллы
+
         filtered_soft = []
         for skill in result.get('soft', []):
             exact_skill = find_exact_skill(skill, self.soft_skills)
             if exact_skill:
                 filtered_soft.append(exact_skill)
-            else:
-                print(f"❌ Навык '{skill}' не найден в списке софт-скиллов")
-        
-        # Фильтруем хард-скиллы
+
         filtered_hard = []
         for skill in result.get('hard', []):
             exact_skill = find_exact_skill(skill, self.hard_skills)
             if exact_skill:
                 filtered_hard.append(exact_skill)
-            else:
-                print(f"❌ Навык '{skill}' не найден в списке хард-скиллов")
-        
-        # Удаляем дубликаты
-        soft_before_dedup = len(filtered_soft)
-        hard_before_dedup = len(filtered_hard)
-        
+
         unique_soft = remove_duplicates(filtered_soft)
         unique_hard = remove_duplicates(filtered_hard)
-        
-        # Логируем информацию о дубликатах
-        soft_duplicates = soft_before_dedup - len(unique_soft)
-        hard_duplicates = hard_before_dedup - len(unique_hard)
-        
-        if soft_duplicates > 0:
-            print(f"🔄 Удалено дубликатов софт-скиллов: {soft_duplicates}")
-        if hard_duplicates > 0:
-            print(f"🔄 Удалено дубликатов хард-скиллов: {hard_duplicates}")
-        
-        print(f"✅ Валидация завершена. Софт: {len(unique_soft)}/{len(result.get('soft', []))}, Хард: {len(unique_hard)}/{len(result.get('hard', []))}")
-        
+
+        print(f"Validation done. Soft: {len(unique_soft)}/{len(result.get('soft', []))}, Hard: {len(unique_hard)}/{len(result.get('hard', []))}")
+
         return {
             "soft": unique_soft,
             "hard": unique_hard
         }
-    
-    def extract_skills(self, description: str, skill_type: str = None) -> Dict[str, List[str]]:
-        """Извлекает навыки из описания вакансии"""
-        self._load_model()
-        
-        # Подготавливаем промт с учетом типа навыков
+
+    async def extract_skills(self, description: str, skill_type: str = None) -> Dict[str, List[str]]:
         prompt = self._prepare_prompt(description, skill_type)
-        
-        # Формируем сообщения для чата
-        messages = [
-            {"role": "user", "content": prompt}
-        ]
-        
-        # Применяем шаблон чата
-        text = self.tokenizer.apply_chat_template(
-            messages,
-            tokenize=False,
-            add_generation_prompt=True,
-            enable_thinking=False  # Отключаем thinking mode для простоты
-        )
-        
-        # Токенизируем
-        model_inputs = self.tokenizer([text], return_tensors="pt").to(self.model.device)
-        
-        # Генерируем ответ с параметрами для non-thinking mode
-        with torch.no_grad():
-            generated_ids = self.model.generate(
-                **model_inputs,
-                max_new_tokens=1000,
-                temperature=0.7,
-                top_p=0.8,
-                top_k=20,
-                do_sample=True,
-                pad_token_id=self.tokenizer.eos_token_id
+
+        async with httpx.AsyncClient(timeout=120.0) as client:
+            response = await client.post(
+                f"{OLLAMA_BASE_URL}/api/chat",
+                json={
+                    "model": OLLAMA_MODEL,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "stream": False,
+                    "options": {
+                        "temperature": 0.7,
+                        "top_p": 0.8,
+                        "top_k": 20,
+                    }
+                }
             )
-        
-        # Декодируем только новую часть
-        output_ids = generated_ids[0][len(model_inputs.input_ids[0]):].tolist()
-        response = self.tokenizer.decode(output_ids, skip_special_tokens=True).strip()
-        
-        # Парсим результат
-        result = self._parse_model_response(response)
-        
-        # Фильтруем результат в зависимости от типа навыков
+            response.raise_for_status()
+            data = response.json()
+            model_response = data["message"]["content"]
+
+        result = self._parse_model_response(model_response)
+
         if skill_type == "hard":
             return {"soft": [], "hard": result.get("hard", [])}
         elif skill_type == "soft":
@@ -429,75 +166,65 @@ class QwenSkillExtractor:
             return result
 
 
-# Инициализируем экстрактор навыков
 skill_extractor = QwenSkillExtractor()
 
-# Создаем FastAPI приложение
 app = FastAPI(
     title="Vacancy Skills Extractor API",
-    description="API для извлечения навыков из описаний вакансий с помощью Qwen3-8B. Поддерживает селективный поиск hard/soft навыков.",
-    version="1.1.0"
+    description="API for extracting skills from vacancy descriptions using Qwen2.5-7B via Ollama.",
+    version="2.0.0"
 )
 
 
 @app.get("/")
 async def root():
-    """Проверка работоспособности API"""
-    return {"message": "Vacancy Skills Extractor API работает"}
+    return {"message": "Vacancy Skills Extractor API is running"}
 
 
 @app.post("/api/vacancy", response_model=SkillsResponse)
 async def extract_vacancy_skills(request: VacancyRequest):
-    """
-    Извлекает навыки из описания вакансии
-    
-    Args:
-        request: Объект с описанием вакансии и опциональным типом навыков
-    
-    Returns:
-        SkillsResponse: Объект с списками софт и хард навыков
-    """
     try:
         if not request.body.strip():
-            raise HTTPException(status_code=400, detail="Описание вакансии не может быть пустым")
-        
-        # Валидация параметра skill
+            raise HTTPException(status_code=400, detail="Vacancy description cannot be empty")
+
         if request.skill and request.skill not in ["hard", "soft"]:
-            raise HTTPException(status_code=400, detail="Параметр skill должен быть 'hard', 'soft' или не указан")
-        
-        # Извлекаем навыки с учетом типа
-        skills = skill_extractor.extract_skills(request.body, request.skill)
-        
+            raise HTTPException(status_code=400, detail="skill must be 'hard', 'soft' or omitted")
+
+        skills = await skill_extractor.extract_skills(request.body, request.skill)
+
         return SkillsResponse(
             soft=skills.get("soft", []),
             hard=skills.get("hard", [])
         )
-        
+
+    except httpx.HTTPError as e:
+        print(f"Ollama request error: {e}")
+        raise HTTPException(status_code=502, detail=f"Ollama error: {str(e)}")
     except Exception as e:
-        print(f"Ошибка при обработке вакансии: {e}")
-        raise HTTPException(status_code=500, detail=f"Ошибка обработки: {str(e)}")
+        print(f"Error processing vacancy: {e}")
+        raise HTTPException(status_code=500, detail=f"Processing error: {str(e)}")
 
 
 @app.get("/health")
 async def health_check():
-    """Проверка состояния модели"""
     try:
-        model_loaded = skill_extractor.model is not None
-        return {
-            "status": "healthy",
-            "model_loaded": model_loaded,
-            "soft_skills_count": len(skill_extractor.soft_skills),
-            "hard_skills_count": len(skill_extractor.hard_skills)
-        }
-    except Exception as e:
-        return {"status": "unhealthy", "error": str(e)}
+        async with httpx.AsyncClient(timeout=5.0) as client:
+            resp = await client.get(f"{OLLAMA_BASE_URL}/api/tags")
+            ollama_ok = resp.status_code == 200
+    except Exception:
+        ollama_ok = False
+
+    return {
+        "status": "healthy" if ollama_ok else "degraded",
+        "ollama_connected": ollama_ok,
+        "model": OLLAMA_MODEL,
+        "soft_skills_count": len(skill_extractor.soft_skills),
+        "hard_skills_count": len(skill_extractor.hard_skills)
+    }
 
 
 if __name__ == "__main__":
-    # Запускаем сервер
     uvicorn.run(
         "qwen:app",
-        host="0.0.0.0", 
-        port=6381,
-        reload=True
+        host="0.0.0.0",
+        port=6380,
     )

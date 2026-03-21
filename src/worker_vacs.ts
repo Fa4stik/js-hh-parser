@@ -1,10 +1,11 @@
 import { HttpsProxyAgent } from 'https-proxy-agent'
 import { workerData as _workerData, parentPort } from 'worker_threads'
 import { getVacancies, getVacancy } from './api/getVacncies'
-import { chainFnPromises, convertParamsToQuery, waitFor } from './utils/helpers'
+import { chainFnPromises, convertParamsToQuery, waitFor, writeError } from './utils/helpers'
 import { convertVacanciesToExcel } from './utils/converts'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
+import { AxiosError } from 'axios'
 
 export interface IWorkerVacsData {
 	path: string
@@ -48,14 +49,8 @@ const OFFSET = 5_000
 				[
 					vacancy,
 					httpsAgent,
-					(err: Error) => {
-						const errorsDir = path.resolve(__dirname, './context/errors')
-						if (!fs.existsSync(errorsDir)) {
-							fs.mkdirSync(errorsDir, { recursive: true })
-						}
-						const errorFile = path.resolve(errorsDir, `${vacancy.id}_${Date.now()}.json`)
-						fs.writeFileSync(errorFile, JSON.stringify({ id: vacancy.id, error: err.message, body: err }, null, 2))
-
+					(err) => {
+						writeError({ id: vacancy.id, body: err.response?.data as object, message: err.message, trg: 'vac' })
 						parentPort?.postMessage(
 							`ERROR FOR VACANCY ID ${vacancy.id} BY PARAMS ${logParams}, DESC ${err}, NEXT RETRY BETWEEN 15s AND 30s, PROXY ${proxy}`,
 						)

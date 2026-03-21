@@ -1,14 +1,18 @@
 import 'dotenv/config'
 
-import { getVacancies } from './api/getVacncies'
-import { VacancyGlobalParams } from './model'
+import * as cheerio from 'cheerio'
+
 import * as fs from 'node:fs'
 import * as path from 'node:path'
+
+import { getVacancies } from './api/getVacncies'
+import { VacancyGlobalParams } from './model'
 import { log, waitFor } from './utils/helpers'
 import { Worker } from 'worker_threads'
 import { omit } from 'lodash'
-import { getEmployersFieldFromExcel } from './utils/converts'
+import { getFieldFromExcel, createSkillsExcel, getProcessedSkillIds, appendSkillRow } from './utils/converts'
 import { IWorkerVacsData } from './worker_vacs'
+import { extractSkills } from './api/ai'
 
 const THREADS_AMOUNT = Number(process.env.THREADS_AMOUNT)
 
@@ -140,13 +144,14 @@ const generateVacancies = async () => {
 }
 
 const generateEmployers = async (workerName: string) => {
-	const info =
+	const fieldDescriptor =
 		workerName === 'worker_employers'
-			? { field: 'employer.id', type: Number }
-			: { field: 'employer.name', type: String }
+			? { key: 'employer.id', type: Number as NumberConstructor }
+			: { key: 'employer.name', type: String as StringConstructor }
 
-	const ids = await getEmployersFieldFromExcel(path.resolve(__dirname, '../merged_vacs.xlsx'), info.field, info.type)
-	if (!ids) return
+	const rows = await getFieldFromExcel(path.resolve(__dirname, './context/vacs/merged.xlsx'), [fieldDescriptor])
+	if (!rows) return
+	const ids = [...new Set(rows.map(r => r[fieldDescriptor.key]).filter(Boolean))]
 
 	const proxies = fs.readFileSync(path.resolve(__dirname, './context/proxy.txt')).toString().split('\n').filter(Boolean)
 
@@ -161,10 +166,7 @@ const generateEmployers = async (workerName: string) => {
 	const chunkedByThread = Array(threads)
 		.fill(0)
 		.map((_, threadIndex) => {
-			const threadProxies = proxies.slice(
-				threadIndex * uniqProxiesOnThread,
-				(threadIndex + 1) * uniqProxiesOnThread,																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										м
-			)
+			const threadProxies = proxies.slice(threadIndex * uniqProxiesOnThread, (threadIndex + 1) * uniqProxiesOnThread)
 			return threadProxies
 				.map((proxy, proxyIndex) => {
 					const globalProxyIndex = threadIndex * uniqProxiesOnThread + proxyIndex
@@ -183,6 +185,50 @@ const generateEmployers = async (workerName: string) => {
 	})
 }
 
+const generateSkills = async () => {
+	const sourceDir = path.resolve(__dirname, './context/vacs')
+	const mergedPath = sourceDir + '/merged.xlsx'
+	const skillsPath = sourceDir + '/skills.xlsx'
+
+	const rows = await getFieldFromExcel(mergedPath, [
+		{ key: 'id', type: Number },
+		{ key: 'description', type: String },
+	])
+	if (!rows) return
+
+	if (!fs.existsSync(skillsPath)) {
+		await createSkillsExcel(skillsPath)
+		log('SKILLS FILE CREATED')
+	}
+
+	const processedIds = await getProcessedSkillIds(skillsPath)
+	const pendingRows = rows.filter(r => !processedIds.has(Number(r.id)))
+
+	log(
+		`VACANCIES TOTAL ${rows.length}, ALREADY PROCESSED ${processedIds.size}, PENDING ${pendingRows.length}`,
+	)
+	if (!pendingRows.length) return
+
+	const sanitizedRows = pendingRows.map(r => ({
+		id: Number(r.id),
+		description: cheerio.load(String(r.description)).text().trim(),
+	}))
+
+	const processRow = async (index: number): Promise<void> => {
+		if (index >= sanitizedRows.length) return
+		const row = sanitizedRows[index]
+
+		const { data } = await extractSkills(row.description, 'local')
+		log(`[${index + 1}/${sanitizedRows.length}] ID ${row.id} | soft: ${data.soft.length} hard: ${data.hard.length}`)
+
+		const rowIndex = processedIds.size + index + 2
+		await Promise.all([appendSkillRow(skillsPath, rowIndex, row.id, data.soft, data.hard), processRow(index + 1)])
+	}
+
+	await processRow(0)
+	log('SKILLS GENERATION COMPLETE')
+}
+
 const bootstrap = async () => {
 	await generateLinks(prRole)
 	log('Links were generated to folder /src/context/links.txt')
@@ -190,5 +236,7 @@ const bootstrap = async () => {
 	log('Vacancies were generated to folder /src/context/vacs')
 	await generateEmployers('worker_employers')
 	log('Employers were generated to folder /src/context/employers')
+	await generateSkills()
+	log('Skills were generated to folder /src/context/vacs')
 }
 bootstrap()

@@ -1,16 +1,22 @@
 import { apiInstance } from './index'
 import { Company, CompanyPage, CompanyPageSchema, CompanySchema } from '../model/companyResponse'
-import { executeWithRetry } from '../utils/helpers'
-import { Vacancy } from '../model'
 import { HttpsProxyAgent } from 'https-proxy-agent'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import UserAgent from 'user-agents'
 import { JSDOM } from 'jsdom'
+import { writeError } from '../utils/helpers'
 
 export const getEmployer = <TUri extends string>(
 	{ id }: { id: number },
 	httpsAgent?: HttpsProxyAgent<TUri>,
-): Promise<Company> => apiInstance(CompanySchema).get({ path: `/employers/${id}`, httpsAgent })
+): Promise<Company | 'not found'> =>
+	apiInstance(CompanySchema)
+		.get({ path: `/employers/${id}`, httpsAgent })
+		.catch((err: AxiosError<object>) => {
+			writeError({ id, message: err.message, body: err.response?.data as object, trg: 'employer' })
+			if (err.status === 404) return 'not found' as const
+			return Promise.reject(err)
+		})
 
 export const getEmployerPage = <TUri extends string>(
 	{ query }: { query: string },

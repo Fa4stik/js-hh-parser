@@ -1,6 +1,5 @@
 node_modules
-*.md
 qwen.py.backup
 *.html
-src/context/
+src/context/*
 .idea

@@ -1,6 +1,5 @@
-import { workerData as _workerData } from 'worker_threads'
+import { workerData as _workerData, parentPort } from 'worker_threads'
 import { HttpsProxyAgent } from 'https-proxy-agent'
-import { getVacancies } from './api/getVacncies'
 import { getEmployer } from './api/getEmployer'
 import { chainFnPromises } from './utils/helpers'
 import { convertEmployersToExcel } from './utils/converts'
@@ -18,11 +17,12 @@ workerData.group.forEach(({ proxy, ids }, i) => {
 	const [login, pass, ip, port] = proxy.split('@').flatMap(v => v.split(':'))
 	const proxyUrl = `http://${login}:${pass}@${ip}:${port}`
 	const httpsAgent = new HttpsProxyAgent(proxyUrl)
-	console.log(`start for ${proxyUrl}, amount ${ids.length}`)
+	parentPort?.postMessage(`start for ${proxyUrl}, amount ${ids.length}`)
 	const promises = ids.map(id => [getEmployer, [{ id }, httpsAgent]])
 	// @ts-ignore
 	chainFnPromises(promises, 0).then(employers => {
-		console.log(`done for ${ip}_${port}`)
-		convertEmployersToExcel(employers, `${ip}_${port}_${i}`)
+		const filteredEmployers = employers.filter(e => e !== 'not found')
+		parentPort?.postMessage(`done for ${ip}_${port}. Filtered ${employers.length - filteredEmployers.length}`)
+		convertEmployersToExcel(filteredEmployers, `${ip}_${port}_${i}`)
 	})
 })

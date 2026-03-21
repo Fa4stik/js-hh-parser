@@ -1,0 +1,15 @@
+FROM node:18-slim
+
+WORKDIR /app
+
+COPY package.json pnpm-lock.yaml ./
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
+
+COPY tsconfig.json ./
+COPY environment.d.ts ./
+COPY worker.js ./
+COPY src/ ./src/
+
+RUN mkdir -p src/context/vacs src/context/employers src/context/errors
+
+CMD ["npx", "ts-node", "src/index.ts"]
